@@ -13,7 +13,7 @@
   home.stateVersion = "24.05"; 
   home.packages = [
     (pkgs.writeShellScriptBin "nrs" ''
-      git commit -m "update config" && git push && sudo nixos-rebuild switch --flake "/home/shlok/nixos-config" | lolcat -f
+      git add . && git commit -m "update config" && git push && sudo nixos-rebuild switch --flake "/home/shlok/nixos-config" | lolcat -f
     '')
     pkgs.lolcat
     pkgs.kitty
