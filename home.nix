@@ -12,11 +12,8 @@
 
   home.stateVersion = "24.05"; 
   home.packages = [
-    (pkgs.writeShellScriptBin "hms" ''
-      home-manager switch -f "/home/shlok/myflake/home.nix" | lolcat -f
-    '')
     (pkgs.writeShellScriptBin "nrs" ''
-      sudo nixos-rebuild switch --flake /home/shlok/myflake | lolcat -f
+      git commit -m "update config" && git push && sudo nixos-rebuild switch --flake "/home/shlok/nixos-config" | lolcat -f
     '')
     pkgs.lolcat
     pkgs.kitty

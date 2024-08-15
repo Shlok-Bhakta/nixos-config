@@ -29,6 +29,7 @@
     hyprpaper
     waybar
     wofi
+    discord
   ];
 
   system.stateVersion = "24.05"; 
