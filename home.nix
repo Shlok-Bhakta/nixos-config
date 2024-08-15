@@ -205,7 +205,7 @@
       ll = "ls -l";
       update = "sudo nixos-rebuild switch";
       gnrs = "git add . && git commit -m "update config" && git push && sudo nixos-rebuild switch --flake "/home/shlok/nixos-config" | lolcat -f";
-      nrs = "sudo nixos-rebuild switch --flake "/home/shlok/nixos-config" | lolcat -f"
+      nrs = "sudo nixos-rebuild switch --flake "/home/shlok/nixos-config" | lolcat -f";
     };
     history = {
       size = 10000;
