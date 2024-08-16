@@ -22,6 +22,7 @@
     pkgs.cowsay
     pkgs.fzf
     pkgs.bat
+    inputs.UNSTABLE.legacyPackages.${pkgs.system}.vspacedrive
   ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
@@ -255,6 +256,15 @@
     userName  = "Shlok Bhakta";
     userEmail = "shlokbhakta1@gmail.com";
   };
+
+  programs.rofi = {
+    enable = true;
+    programs.rofi.font = "CaskaydiaCove Nerd Font";
+    location = center;
+    plugins = [
+      pkgs.rofni
+    ]
+  }
 }
 
 
