@@ -61,6 +61,7 @@
   openvdb,
   openxr-loader,
   pkg-config,
+  pkgs ? import <nixpkgs> {},
   potrace,
   pugixml,
   python3Packages, # must use instead of python3.pkgs, see https://githubmaterialx.com/NixOS/nixpkgs/issues/211340
@@ -78,9 +79,26 @@
 }:
 
 let
-  python3 = python3Packages.python;
+  python3 = pkgs.python3;
   pyPkgsOpenusd = python3Packages.openusd.override { withOsl = false; };
+  python3Packages.materialx = pkgs.python3Packages.buildPythonPackage rec {
+  name = "materialx";
+  version = "1.38.0";
 
+  src = pkgs.fetchurl {
+    url = "https://github.com/AcademySoftwareFoundation/materialx/archive/v${version}.tar.gz";
+    sha256 = lib.fakeSha256;
+  };
+
+  buildInputs = with pkgs.python3Packages; [ pybind11 ];
+
+  meta = with pkgs.lib; {
+    description = "A C++ library for material description and material processing";
+    homepage = "https://www.materialx.org/";
+    license = licenses.asl20;
+    maintainers = with maintainers; [ ];
+    };
+  };
   libdecor' = libdecor.overrideAttrs (old: {
     # Blender uses private APIs, need to patch to expose them
     patches = (old.patches or [ ]) ++ [ ./libdecor.patch ];
