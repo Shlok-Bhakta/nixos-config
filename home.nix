@@ -267,8 +267,8 @@
       pkgs.rofi-rbw
       pkgs.rofi-calc
       pkgs.rofi-screenshot
-    ]
-    terminal = "kitty"
+    ];
+    terminal = "kitty";
   };
 }
 
