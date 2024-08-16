@@ -257,14 +257,14 @@
     userEmail = "shlokbhakta1@gmail.com";
   };
 
-  programs.rofi = {
-    enable = true;
-    programs.rofi.font = "CaskaydiaCove Nerd Font";
-    location = center;
-    plugins = [
-      pkgs.rofni
-    ]
-  }
+  # programs.rofi = {
+  #   enable = true;
+  #   programs.rofi.font = "CaskaydiaCove Nerd Font";
+  #   location = center;
+  #   plugins = [
+  #     pkgs.rofni
+  #   ]
+  # };
 }
 
 
