@@ -260,7 +260,7 @@
 
   programs.rofi = {
     enable = true;
-    font = "CaskaydiaCove Nerd Font";
+    font = "/nix/store/nl0aa2y8bixahcx6vmmcajpd3jn06hzm-nerdfonts-3.2.1/share/fonts/truetype/NerdFonts/CaskaydiaCoveNerdFont-Regular.ttf";
     location = "center";
     plugins = [
       pkgs.rofimoji
