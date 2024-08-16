@@ -271,7 +271,6 @@
     terminal = "kitty";
     extraConfig = {
       modi = "run,drun,window";
-      show-icons = true;
       drun-display-format = "{name}";
       location = 0;
       disable-history = false;
