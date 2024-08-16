@@ -10,6 +10,7 @@
     };
     stylix.url = "github:danth/stylix";
     # hyprland.url = "github:hyprwm/Hyprland";
+    goo-engine.url = "path:./goo";
   };
 
   outputs = { self, nixpkgs, home-manager, stylix, ... } @ inputs: {
