@@ -1,6 +1,9 @@
-{ config, pkgs, inputs, ... }:
-
-{
+{ lib, config, pkgs, inputs, ... }:
+let
+  unstable = inputs.UNSTABLE.legacyPackages.${pkgs.system};
+  wallpaper-path = /home/shlok/nixos-config/dotfiles/wallpaper/wallpaper.png;
+  goo-engine = pkgs.callPackage ./goo-engine.nix {};
+in{
   home.username = "shlok";
   home.homeDirectory = "/home/shlok";
 
@@ -13,7 +16,6 @@
   home.stateVersion = "24.05"; 
   home.packages = [
     pkgs.lolcat
-    pkgs.kitty
     pkgs.direnv
     pkgs.python313
     pkgs.cmatrix
@@ -22,10 +24,11 @@
     pkgs.cowsay
     pkgs.fzf
     pkgs.bat
-    inputs.UNSTABLE.legacyPackages.${pkgs.system}.p7zip
-    inputs.UNSTABLE.legacyPackages.${pkgs.system}.tailscale
-    inputs.UNSTABLE.legacyPackages.${pkgs.system}.yazi-unwrapped
-    inputs.UNSTABLE.legacyPackages.${pkgs.system}.localsend
+    unstable.p7zip
+    unstable.tailscale
+    unstable.localsend
+    unstable.swww
+    goo-engine
   ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
@@ -44,11 +47,18 @@
     # '';
 
   };
+
+
   wayland.windowManager.hyprland = {
     enable = true;
-    package = inputs.UNSTABLE.legacyPackages.${pkgs.system}.hyprland;
+    package = unstable.hyprland;
     # extraConfig = builtins.readFile ./dotfiles/hyprland.conf;  
     settings = {
+      exec-once = [
+        "waybar"
+        "swww img ${wallpaper-path}"
+        "swww-daemon --format xrgb"
+      ]; 
       monitor = [
         "DP-1, 1920x1080@144, 0x0, 1"
         "HDMI-A-1, 1920x1080@144, -1080x-650, 1, transform, 1"
@@ -135,7 +145,7 @@
       "$mainMod, R, exec, $menu"
       "$mainMod, P, pseudo, # dwindle"
       "$mainMod, J, togglesplit, # dwindle"
-      "$mainMod, S, exec, rofi -show drun"
+      "$mainMod, W, exec, rofi -show drun"
       "$mainMod, B, exec, brave"
 
       # Move focus with mainMod + arrow keys
@@ -186,10 +196,26 @@
     };
   };
 
+  # services.hyprpaper = {
+  #   enable = true;
+  #   settings = {
+  #     ipc = "on";
+  #     splash = false;
+
+  #     preload =
+  #       [ "${wallpaper-path}" ];
+
+  #     wallpaper = [
+  #       "DP-1,${wallpaper-path}"
+  #       "HDMI-A-1,${wallpaper-path}"
+  #     ];
+  #   };
+  # };
+
   programs.vscode = {
     enable = true;
-    package = inputs.UNSTABLE.legacyPackages.${pkgs.system}.vscodium;
-    extensions = with inputs.UNSTABLE.legacyPackages.${pkgs.system}.vscode-extensions; [
+    package = unstable.vscodium;
+    extensions = with unstable.vscode-extensions; [
       catppuccin.catppuccin-vsc
       catppuccin.catppuccin-vsc-icons
       vscodevim.vim
@@ -197,7 +223,10 @@
       jnoortheen.nix-ide
     ];
   };
-
+  
+  programs.kitty = {
+    enable = true;
+  };
   programs.zsh = {
     # zsh conf
     enable = true;
@@ -243,7 +272,7 @@
 
   programs.chromium = {
     enable = true;
-    package = inputs.UNSTABLE.legacyPackages.${pkgs.system}.brave;
+    package = unstable.brave;
     extensions = [
       { id = "cjpalhdlnbpafiamejdnhcphjbkeiagm"; } # ublock origin
       { id = "nngceckbapebfimnlniiiahkandclblb"; } # bitwarden
@@ -285,7 +314,21 @@
     
     # theme = builtins.readFile ./dotfiles/rofi/theme.rasi;
   };
+  programs.btop = {
+    enable = true;
+  };
 
+
+  programs.yazi = {
+    enable = true;
+    package = unstable.yazi-unwrapped;
+  };
+
+  # programs.hyprlock = {
+  #   enable = true;
+  #   package = pkgs.hyprlock;
+
+  # };
 }
 
 
