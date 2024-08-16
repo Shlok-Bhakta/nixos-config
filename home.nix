@@ -2,7 +2,7 @@
 let
   unstable = inputs.UNSTABLE.legacyPackages.${pkgs.system};
   wallpaper-path = /home/shlok/nixos-config/dotfiles/wallpaper/wallpaper.png;
-  goo-engine = pkgs.callPackage ./goo-engine.nix {};
+  goo-engine = pkgs.callPackage ./goo/goo-engine.nix {};
 in{
   home.username = "shlok";
   home.homeDirectory = "/home/shlok";

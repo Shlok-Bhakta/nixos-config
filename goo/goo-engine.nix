@@ -63,7 +63,7 @@
   pkg-config,
   potrace,
   pugixml,
-  python3Packages, # must use instead of python3.pkgs, see https://github.com/NixOS/nixpkgs/issues/211340
+  python3Packages, # must use instead of python3.pkgs, see https://githubmaterialx.com/NixOS/nixpkgs/issues/211340
   rocmPackages, # comes with a significantly larger closure size
   runCommand,
   spaceNavSupport ? stdenv.isLinux,
@@ -245,7 +245,7 @@ stdenv.mkDerivation (finalAttrs: {
       potrace
       pugixml
       python3
-      python3Packages.materialx
+
       tbb
       zlib
       zstd
@@ -412,7 +412,6 @@ stdenv.mkDerivation (finalAttrs: {
     ];
     # the current apple sdk is too old (currently 11_0) and fails to build "metal" on x86_64-darwin
     broken = stdenv.hostPlatform.system == "x86_64-darwin";
-    maintainers = with lib.maintainers; [ veprbl ];
     mainProgram = "Goo Engine";
   };
 })
