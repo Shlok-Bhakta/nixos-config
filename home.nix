@@ -22,7 +22,7 @@
     pkgs.cowsay
     pkgs.fzf
     pkgs.bat
-    inputs.UNSTABLE.legacyPackages.${pkgs.system}.spacedrive
+    inputs.UNSTABLE.legacyPackages.${pkgs.system}.p7zip
     inputs.UNSTABLE.legacyPackages.${pkgs.system}.tailscale
   ];
 
@@ -258,14 +258,14 @@
     userEmail = "shlokbhakta1@gmail.com";
   };
 
-  # programs.rofi = {
-  #   enable = true;
-  #   programs.rofi.font = "CaskaydiaCove Nerd Font";
-  #   location = center;
-  #   plugins = [
-  #     pkgs.rofni
-  #   ]
-  # };
+  programs.rofi = {
+    enable = true;
+    programs.rofi.font = "CaskaydiaCove Nerd Font";
+    location = center;
+    plugins = [
+      pkgs.rofni
+    ]
+  };
 }
 
 
