@@ -260,7 +260,7 @@
 
   programs.rofi = {
     enable = true;
-    font = "CaskaydiaCove Nerd Font";
+    font = "CaskaydiaCove Nerd Font 14";
     location = "center";
     plugins = [
       pkgs.rofimoji
@@ -284,7 +284,7 @@
       sidebar-mode = true;
     };
     
-    theme = builtins.readFile ./dotfiles/rofi/theme.rasi;
+    # theme = builtins.readFile ./dotfiles/rofi/theme.rasi;
   };
 }
 
