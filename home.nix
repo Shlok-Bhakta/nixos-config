@@ -261,7 +261,7 @@
   programs.rofi = {
     enable = true;
     programs.rofi.font = "CaskaydiaCove Nerd Font";
-    location = center;
+    location = "center";
     plugins = [
       pkgs.rofimoji
       pkgs.rofi-rbw
