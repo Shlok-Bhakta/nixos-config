@@ -65,6 +65,7 @@
   potrace,
   pugixml,
   python3Packages, # must use instead of python3.pkgs, see https://githubmaterialx.com/NixOS/nixpkgs/issues/211340
+  python311Packages, # must use instead of python3.pkgs, see https://githubmaterialx.com/NixOS/nixpkgs/issues/211340
   rocmPackages, # comes with a significantly larger closure size
   runCommand,
   spaceNavSupport ? stdenv.isLinux,
@@ -76,29 +77,15 @@
   waylandSupport ? stdenv.isLinux,
   zlib,
   zstd,
+  inputs,
 }:
 
 let
-  python3 = pkgs.python3;
-  pyPkgsOpenusd = python3Packages.openusd.override { withOsl = false; };
-  python3Packages.materialx = pkgs.python3Packages.buildPythonPackage rec {
-  name = "materialx";
-  version = "1.38.0";
+  python3 = pkgs.python311;
+  pyPkgsOpenusd = python311Packages.openusd.override { withOsl = false; };
+  
 
-  src = pkgs.fetchurl {
-    url = "https://github.com/AcademySoftwareFoundation/materialx/archive/v${version}.tar.gz";
-    sha256 = lib.fakeSha256;
-  };
 
-  buildInputs = with pkgs.python3Packages; [ pybind11 ];
-
-  meta = with pkgs.lib; {
-    description = "A C++ library for material description and material processing";
-    homepage = "https://www.materialx.org/";
-    license = licenses.asl20;
-    maintainers = with maintainers; [ ];
-    };
-  };
   libdecor' = libdecor.overrideAttrs (old: {
     # Blender uses private APIs, need to patch to expose them
     patches = (old.patches or [ ]) ++ [ ./libdecor.patch ];
@@ -121,7 +108,7 @@ stdenv.mkDerivation (finalAttrs: {
       url = "https://github.com/dillongoostudios/goo-engine.git";
       rev = "2afd9e530aa1754f1d35a4914a996cbdbd3e2f30";
       fetchLFS = true;
-      hash = lib.fakeSha256;
+      sha256 = lib.fakeSha256;
     })
   ];
 
@@ -141,7 +128,7 @@ stdenv.mkDerivation (finalAttrs: {
       substituteInPlace source/creator/CMakeLists.txt \
         --replace-fail '${"$"}{LIBDIR}/python' \
                   '${python3}' \
-        --replace-fail '${"$"}{LIBDIR}/materialx/' '${python3Packages.materialx}/'
+        --replace-fail '${"$"}{LIBDIR}/materialx/' '${inputs.UNSTABLE.legacyPackages.${pkgs.system}.python311Packages.materialx}/'
       substituteInPlace build_files/cmake/platform/platform_apple.cmake \
         --replace-fail '${"$"}{LIBDIR}/brotli/lib/libbrotlicommon-static.a' \
                   '${lib.getLib brotli}/lib/libbrotlicommon.dylib' \
@@ -160,8 +147,8 @@ stdenv.mkDerivation (finalAttrs: {
       "-DPYTHON_INCLUDE_DIR=${python3}/include/${python3.libPrefix}"
       "-DPYTHON_LIBPATH=${python3}/lib"
       "-DPYTHON_LIBRARY=${python3.libPrefix}"
-      "-DPYTHON_NUMPY_INCLUDE_DIRS=${python3Packages.numpy}/${python3.sitePackages}/numpy/core/include"
-      "-DPYTHON_NUMPY_PATH=${python3Packages.numpy}/${python3.sitePackages}"
+      "-DPYTHON_NUMPY_INCLUDE_DIRS=${python311Packages.numpy}/${python3.sitePackages}/numpy/core/include"
+      "-DPYTHON_NUMPY_PATH=${python311Packages.numpy}/${python3.sitePackages}"
       "-DPYTHON_VERSION=${python3.pythonVersion}"
       "-DWITH_ALEMBIC=ON"
       "-DWITH_CODEC_FFMPEG=ON"
@@ -169,7 +156,7 @@ stdenv.mkDerivation (finalAttrs: {
       "-DWITH_FFTW3=ON"
       "-DWITH_IMAGE_OPENJPEG=ON"
       "-DWITH_INSTALL_PORTABLE=OFF"
-      "-DMaterialX_DIR=${python3Packages.materialx}/lib/cmake/MaterialX"
+      "-DMaterialX_DIR=${inputs.UNSTABLE.legacyPackages.${pkgs.system}.python311Packages.materialx}/lib/cmake/MaterialX"
       "-DWITH_MOD_OCEANSIM=ON"
       "-DWITH_OPENCOLLADA=${if colladaSupport then "ON" else "OFF"}"
       "-DWITH_OPENCOLORIO=ON"
@@ -225,7 +212,7 @@ stdenv.mkDerivation (finalAttrs: {
       cmake
       llvmPackages.llvm.dev
       makeWrapper
-      python3Packages.wrapPython
+      python311Packages.wrapPython
     ]
     ++ lib.optionals cudaSupport [
       addDriverRunpath
@@ -263,7 +250,7 @@ stdenv.mkDerivation (finalAttrs: {
       potrace
       pugixml
       python3
-      python3Packages.materialx
+      inputs.UNSTABLE.legacyPackages.${pkgs.system}.python311Packages.materialx
       tbb
       zlib
       zstd
@@ -311,10 +298,10 @@ stdenv.mkDerivation (finalAttrs: {
 
   pythonPath =
     let
-      ps = python3Packages;
+      ps = python311Packages;
     in
     [
-      ps.materialx
+      inputs.UNSTABLE.legacyPackages.${pkgs.system}.python311Packages.materialx
       ps.numpy
       ps.requests
       ps.zstandard

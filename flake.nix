@@ -22,6 +22,7 @@
         ./configuration.nix
         ./hardware-configuration.nix
         ./system-settings.nix
+        ./goo/goo-engine.nix
         home-manager.nixosModules.home-manager
         {
           home-manager.useGlobalPkgs = true;
