@@ -8,10 +8,11 @@
       url = "github:nix-community/home-manager/release-24.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    stylix.url = "github:danth/stylix";
     # hyprland.url = "github:hyprwm/Hyprland";
   };
 
-  outputs = { self, nixpkgs, home-manager, ... } @ inputs: {
+  outputs = { self, nixpkgs, home-manager, stylix, ... } @ inputs: {
     nixosConfigurations.ShlokPCNIX = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
       specialArgs = {
@@ -30,6 +31,7 @@
             inherit inputs;
           };
         }
+        stylix.nixosModules.stylix
       ];
     };
 

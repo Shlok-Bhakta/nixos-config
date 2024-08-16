@@ -24,6 +24,8 @@
     pkgs.bat
     inputs.UNSTABLE.legacyPackages.${pkgs.system}.p7zip
     inputs.UNSTABLE.legacyPackages.${pkgs.system}.tailscale
+    inputs.UNSTABLE.legacyPackages.${pkgs.system}.yazi-unwrapped
+    inputs.UNSTABLE.legacyPackages.${pkgs.system}.localsend
   ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
@@ -59,8 +61,8 @@
         gaps_out = 20;
         border_size = 2;
         # https://wiki.hyprland.org/Configuring/Variables/#variable-types for info about colors
-        "col.active_border" = "rgba(33ccffee) rgba(00ff99ee) 45deg";
-        "col.inactive_border" = "rgba(595959aa)";
+        # "col.active_border" = "rgba(33ccffee) rgba(00ff99ee) 45deg";
+        # "col.inactive_border" = "rgba(595959aa)";
         # Set to true enable resizing windows by clicking and dragging on borders and gaps
         resize_on_border = false; 
         # Please see https://wiki.hyprland.org/Configuring/Tearing/ before you turn this on
@@ -75,7 +77,7 @@
         drop_shadow = true;
         shadow_range = 4;
         shadow_render_power = 3;
-        "col.shadow" = "rgba(1a1a1aee)";
+        # "col.shadow" = "rgba(1a1a1aee)";
         # https://wiki.hyprland.org/Configuring/Variables/#blur
         blur = {
             enabled = true;
@@ -260,7 +262,6 @@
 
   programs.rofi = {
     enable = true;
-    font = "CaskaydiaCove Nerd Font 14";
     location = "center";
     plugins = [
       pkgs.rofimoji
@@ -284,6 +285,7 @@
     
     # theme = builtins.readFile ./dotfiles/rofi/theme.rasi;
   };
+
 }
 
 
