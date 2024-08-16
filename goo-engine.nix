@@ -402,7 +402,7 @@ stdenv.mkDerivation (finalAttrs: {
     # OptiX, enabled with cudaSupport, is non-free.
     license =
       with lib.licenses;
-      [ gpl2Plus ] ++ lib.optional;
+      [ gpl2Plus ] ++ lib.optional cudaSupport (unfree // { shortName = "NVidia OptiX EULA"; });
 
     platforms = [
       "aarch64-linux"
