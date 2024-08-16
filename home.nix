@@ -133,7 +133,7 @@
       "$mainMod, R, exec, $menu"
       "$mainMod, P, pseudo, # dwindle"
       "$mainMod, J, togglesplit, # dwindle"
-      "$mainMod, S, exec, rofi -show  drun -show-icons"
+      "$mainMod, S, exec, rofi -show drun"
       "$mainMod, B, exec, brave"
 
       # Move focus with mainMod + arrow keys
@@ -260,7 +260,7 @@
 
   programs.rofi = {
     enable = true;
-    font = "CaskaydiaCove NF";
+    font = "CaskaydiaCove Nerd Font";
     location = "center";
     plugins = [
       pkgs.rofimoji
@@ -269,6 +269,22 @@
       pkgs.rofi-screenshot
     ];
     terminal = "kitty";
+    extraConfig = {
+      modi = "run,drun,window";
+      icon-theme = "Oranchelo";
+      show-icons = true;
+      drun-display-format = "{icon} {name}";
+      location = 0;
+      disable-history = false;
+      hide-scrollbar = true;
+      display-drun = "   Apps ";
+      display-run = "   Run ";
+      display-window = " 󰕰  Window";
+      display-Network = " 󰤨  Network";
+      sidebar-mode = true;
+    };
+    
+    theme = builtins.readFile ./dotfiles/rofi/theme.rasi;
   };
 }
 
