@@ -2,7 +2,7 @@
 let
   unstable = inputs.UNSTABLE.legacyPackages.${pkgs.system};
   wallpaper-path = /home/shlok/nixos-config/dotfiles/wallpaper/wallpaper.png;
-  
+  goo-engine = pkgs.callPackage ./goo/goo-engine.nix {};
 in{
   home.username = "shlok";
   home.homeDirectory = "/home/shlok";
@@ -28,7 +28,7 @@ in{
     unstable.tailscale
     unstable.localsend
     unstable.swww
-    pkgs.tree
+    goo-engine
   ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
