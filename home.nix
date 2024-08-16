@@ -22,7 +22,7 @@
     pkgs.cowsay
     pkgs.fzf
     pkgs.bat
-    inputs.UNSTABLE.legacyPackages.${pkgs.system}.vspacedrive
+    inputs.UNSTABLE.legacyPackages.${pkgs.system}.vspacedrive;
   ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
