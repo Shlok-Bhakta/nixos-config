@@ -28,7 +28,7 @@
     hypridle
     hyprpaper
     waybar
-    wofi
+    rofi
     discord
   ];
 
