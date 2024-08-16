@@ -263,8 +263,12 @@
     programs.rofi.font = "CaskaydiaCove Nerd Font";
     location = center;
     plugins = [
-      pkgs.rofni
+      pkgs.rofimoji
+      pkgs.rofi-rbw
+      pkgs.rofi-calc
+      pkgs.rofi-screenshot
     ]
+    terminal = "kitty"
   };
 }
 
