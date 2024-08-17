@@ -29,6 +29,7 @@ in{
     unstable.p7zip
     unstable.localsend
     unstable.swww
+    unstable.hypridle
     pkgs.cliphist
     # goo-engine
   ];
@@ -207,15 +208,36 @@ in{
     package = unstable.hyprlock;
     # settings = builtins.imprty
     extraConfig = builtins.readFile ./dotfiles/hypr/hyprlock.conf;
-
   };
 
-  programs.hypridle = {
+  services.hypridle = {
     enable = true;
     package = unstable.hypridle;
     # settings = builtins.imprty
-    extraConfig = builtins.readFile ./dotfiles/hypr/hypridle.conf;
+    settings = {
+      "$lock_cmd" = "pidof hyprlock || hyprlock";
+      "$suspend_cmd" = "pidof steam || systemctl suspend || loginctl suspend"; # f*** nvidia
+      general = {
+          lock_cmd = "$lock_cmd";
+          before_sleep_cmd = "loginctl lock-session";
+      };
 
+      listener = [
+        {
+          timeout = 180; # 3mins
+          on-timeout = "loginctl lock-session";
+        }
+        {
+          timeout = 240; # 4mins
+          on-timeout = "hyprctl dispatch dpms off";
+          on-resume = "hyprctl dispatch dpms on";
+        }
+        {
+          timeout = 540; # 9mins
+          on-timeout = "$suspend_cmd";
+        }
+      ];
+    };
   };
 
   programs.vscode = {
