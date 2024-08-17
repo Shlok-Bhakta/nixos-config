@@ -31,7 +31,7 @@ in{
     unstable.swww
     unstable.hypridle
     pkgs.cliphist
-    pkgs.nautilus
+    pkgs.gnome.nautilus
     # goo-engine
   ];
 
