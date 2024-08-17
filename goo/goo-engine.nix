@@ -61,7 +61,6 @@
   openvdb,
   openxr-loader,
   pkg-config,
-  pkgs ? import <nixpkgs-unstable> {},
   potrace,
   pugixml,
   python3Packages, # must use instead of python3.pkgs, see https://githubmaterialx.com/NixOS/nixpkgs/issues/211340
@@ -76,11 +75,16 @@
   wayland-protocols,
   waylandSupport ? stdenv.isLinux,
   zlib,
-  zstd
+  zstd,
+  vulkan-loader,
+  vulkan-headers,
+  shaderc,
+  imath,
+  pkgs ? import <nixpkgs-unstable> {}
 }:
 
 let
-  python3 = pkgs.python311;
+  python3 = python311Packages.python;
   pyPkgsOpenusd = python311Packages.openusd.override { withOsl = false; };
 
 
@@ -106,39 +110,58 @@ stdenv.mkDerivation (finalAttrs: {
       url = "https://github.com/dillongoostudios/goo-engine.git";
       rev = "2afd9e530aa1754f1d35a4914a996cbdbd3e2f30";
       fetchLFS = true;
-      sha256 = lib.fakeSha256;
+      sha256 = "RDT+8arG282e4vNSDmwUFsF/phtNuSPBFgGj2q21OVA=";
     })
   ];
 
   postUnpack = ''
     chmod -R u+w *
-    rm -r assets/working
-    mv assets --target-directory source/release/datafiles/
+    ./build_files/utils/make_update.py --use-linux-libraries
+    make update
+    echo "Contents of All:"
+    find . -maxdepth 2 -type d
   '';
 
-  sourceRoot = "source";
+  sourceRoot = "./assets";
 
-  patches = [ ./draco.patch ] ++ lib.optional stdenv.isDarwin ./darwin.patch;
+  # postFetch = ''
+  #   ./build_files/utils/make_update.py --use-linux-libraries
+  #   make update
+  #   make
+  #   find . -maxdepth 2 -type d
+  # '';
 
-  postPatch =
-    (lib.optionalString stdenv.isDarwin ''
-      : > build_files/cmake/platform/platform_apple_xcode.cmake
-      substituteInPlace source/creator/CMakeLists.txt \
-        --replace-fail '${"$"}{LIBDIR}/python' \
-                  '${python3}' \
-        --replace-fail '${"$"}{LIBDIR}/materialx/' '${pkgs.python311Packages.materialx}/'
-      substituteInPlace build_files/cmake/platform/platform_apple.cmake \
-        --replace-fail '${"$"}{LIBDIR}/brotli/lib/libbrotlicommon-static.a' \
-                  '${lib.getLib brotli}/lib/libbrotlicommon.dylib' \
-        --replace-fail '${"$"}{LIBDIR}/brotli/lib/libbrotlidec-static.a' \
-                  '${lib.getLib brotli}/lib/libbrotlidec.dylib'
-    '')
-    + (lib.optionalString hipSupport ''
-      substituteInPlace extern/hipew/src/hipew.c --replace '"/opt/rocm/hip/lib/libamdhip64.so"' '"${rocmPackages.clr}/lib/libamdhip64.so"'
-      substituteInPlace extern/hipew/src/hipew.c --replace '"opt/rocm/hip/bin"' '"${rocmPackages.clr}/bin"'
-    '');
+  patches = [ 
+              ./draco.patch
+              ./openimage-imath.patch
+            ];
 
-  env.NIX_CFLAGS_COMPILE = "-I${python3}/include/${python3.libPrefix}";
+  # postPatch =
+  #   (lib.optionalString stdenv.isDarwin ''
+  #     : > build_files/cmake/platform/platform_apple_xcode.cmake
+  #     substituteInPlace source/creator/CMakeLists.txt \
+  #       --replace-fail '${"$"}{LIBDIR}/python' \
+  #                 '${python3}' \
+  #       --replace-fail '${"$"}{LIBDIR}/materialx/' '${pkgs.python311Packages.materialx}/'
+  #     substituteInPlace build_files/cmake/platform/platform_apple.cmake \
+  #       --replace-fail '${"$"}{LIBDIR}/brotli/lib/libbrotlicommon-static.a' \
+  #                 '${lib.getLib brotli}/lib/libbrotlicommon.dylib' \
+  #       --replace-fail '${"$"}{LIBDIR}/brotli/lib/libbrotlidec-static.a' \
+  #                 '${lib.getLib brotli}/lib/libbrotlidec.dylib'
+  #   '')
+  #   + (lib.optionalString hipSupport ''
+  #     substituteInPlace extern/hipew/src/hipew.c --replace '"/opt/rocm/hip/lib/libamdhip64.so"' '"${rocmPackages.clr}/lib/libamdhip64.so"'
+  #     substituteInPlace extern/hipew/src/hipew.c --replace '"opt/rocm/hip/bin"' '"${rocmPackages.clr}/bin"'
+  #   '');
+
+  # env.NIX_CFLAGS_COMPILE = "-I${python3}/include/${python3.libPrefix}";
+
+  env.NIX_CFLAGS_COMPILE = toString ([
+    "-I${imath}/include"
+    "-I${openexr.dev}/include"
+    "-I${openimageio}/include"
+    "-I${python3}/include/${python3.libPrefix}"
+  ]);
 
   cmakeFlags =
     [
@@ -170,6 +193,10 @@ stdenv.mkDerivation (finalAttrs: {
       # Blender supplies its own FindAlembic.cmake (incompatible with the Alembic-supplied config file)
       "-DALEMBIC_INCLUDE_DIR=${lib.getDev alembic}/include"
       "-DALEMBIC_LIBRARY=${lib.getLib alembic}/lib/libAlembic${stdenv.hostPlatform.extensions.sharedLibrary}"
+
+      # imath garbage
+    "-DIMATH_INCLUDE_DIR=${imath}/include"
+    "-DOPENEXR_INCLUDE_DIR=${openexr.dev}/include"
     ]
     ++ lib.optionals waylandSupport [
       "-DWITH_GHOST_WAYLAND=ON"
@@ -241,6 +268,7 @@ stdenv.mkDerivation (finalAttrs: {
       opencolorio
       openexr
       openimageio
+      imath
       openjpeg
       openpgl
       (opensubdiv.override { inherit cudaSupport; })
@@ -252,35 +280,23 @@ stdenv.mkDerivation (finalAttrs: {
       tbb
       zlib
       zstd
-    ]
-    ++ lib.optionals (!stdenv.isAarch64 && stdenv.isLinux) [
+      vulkan-loader
+      vulkan-headers
+      shaderc
       embree
       (openimagedenoise.override { inherit cudaSupport; })
-    ]
-    ++ (
-      if (!stdenv.isDarwin) then
-        [
-          libGL
-          libGLU
-          libX11
-          libXext
-          libXi
-          libXrender
-          libXxf86vm
-          openal
-          openxr-loader
-          pyPkgsOpenusd
+      libGL
+      libGLU
+      libX11
+      libXext
+      libXi
+      libXrender
+      libXxf86vm
+      openal
+      openxr-loader
+      pyPkgsOpenusd
         ]
-      else
-        [
-          SDL
-          brotli
-          embree
-          llvmPackages.openmp
-          (openimagedenoise.override { inherit cudaSupport; })
-          sse2neon
-        ]
-    )
+
     ++ lib.optionals cudaSupport [ cudaPackages.cuda_cudart ]
     ++ lib.optionals waylandSupport [
       dbus
@@ -300,25 +316,19 @@ stdenv.mkDerivation (finalAttrs: {
     in
     [
       pkgs.python311Packages.materialx
-      ps.numpy
-      ps.requests
-      ps.zstandard
+      pkgs.python311Packages.numpy
+      pkgs.python311Packages.requests
+      pkgs.python311Packages.zstandard
     ]
     ++ lib.optionals (!stdenv.isDarwin) [ pyPkgsOpenusd ];
 
   blenderExecutable =
     placeholder "out"
-    + (if stdenv.isDarwin then "/Applications/Blender.app/Contents/MacOS/Blender" else "/bin/blender");
+    + (if stdenv.isDarwin then "/Applications/Blender.app/Contents/MacOS/Blender" else "./assets/build_linux/bin");
 
   postInstall =
-    lib.optionalString stdenv.isDarwin ''
-      mkdir $out/Applications
-      mv $out/Blender.app $out/Applications
-    ''
-    + lib.optionalString stdenv.isLinux ''
+    lib.optionalString stdenv.isLinux ''
       mv $out/share/blender/${lib.versions.majorMinor finalAttrs.version}/python{,-ext}
-    ''
-    + ''
       buildPythonPath "$pythonPath"
       wrapProgram $blenderExecutable \
         --prefix PATH : $program_PATH \
@@ -328,74 +338,74 @@ stdenv.mkDerivation (finalAttrs: {
 
   # Set RUNPATH so that libcuda and libnvrtc in /run/opengl-driver(-32)/lib can be
   # found. See the explanation in libglvnd.
-  postFixup =
-    lib.optionalString cudaSupport ''
-      for program in $out/bin/blender $out/bin/.blender-wrapped; do
-        isELF "$program" || continue
-        addDriverRunpath "$program"
-      done
-    ''
-    + lib.optionalString stdenv.isDarwin ''
-      makeWrapper $out/Applications/Blender.app/Contents/MacOS/Blender $out/bin/blender
-    '';
+  # postFixup =
+  #   lib.optionalString cudaSupport ''
+  #     for program in $out/bin/blender $out/bin/.blender-wrapped; do
+  #       isELF "$program" || continue
+  #       addDriverRunpath "$program"
+  #     done
+  #   ''
+  #   + lib.optionalString stdenv.isDarwin ''
+  #     makeWrapper $out/Applications/Blender.app/Contents/MacOS/Blender $out/bin/blender
+  #   '';
 
-  passthru = {
-    python = python3;
-    pythonPackages = python3Packages;
+  # passthru = {
+  #   python = python3;
+  #   pythonPackages = python3Packages;
 
-    withPackages =
-      f:
-      (callPackage ./wrapper.nix { }).override {
-        blender = finalAttrs.finalPackage;
-        extraModules = (f python3Packages);
-      };
+  #   withPackages =
+  #     f:
+  #     (callPackage ./wrapper.nix { }).override {
+  #       blender = finalAttrs.finalPackage;
+  #       extraModules = (f python3Packages);
+  #     };
 
-    tests = {
-      render = runCommand "${finalAttrs.pname}-test" { nativeBuildInputs = [ mesa.llvmpipeHook ]; } ''
-        set -euo pipefail
-        cat <<'PYTHON' > scene-config.py
-        import bpy
-        bpy.context.scene.eevee.taa_render_samples = 32
-        bpy.context.scene.cycles.samples = 32
-        if ${if (stdenv.isAarch64 && stdenv.isLinux) then "True" else "False"}:
-            bpy.context.scene.cycles.use_denoising = False
-        bpy.context.scene.render.resolution_x = 100
-        bpy.context.scene.render.resolution_y = 100
-        bpy.context.scene.render.threads_mode = 'FIXED'
-        bpy.context.scene.render.threads = 1
-        PYTHON
+  #   tests = {
+  #     render = runCommand "${finalAttrs.pname}-test" { nativeBuildInputs = [ mesa.llvmpipeHook ]; } ''
+  #       set -euo pipefail
+  #       cat <<'PYTHON' > scene-config.py
+  #       import bpy
+  #       bpy.context.scene.eevee.taa_render_samples = 32
+  #       bpy.context.scene.cycles.samples = 32
+  #       if ${if (stdenv.isAarch64 && stdenv.isLinux) then "True" else "False"}:
+  #           bpy.context.scene.cycles.use_denoising = False
+  #       bpy.context.scene.render.resolution_x = 100
+  #       bpy.context.scene.render.resolution_y = 100
+  #       bpy.context.scene.render.threads_mode = 'FIXED'
+  #       bpy.context.scene.render.threads = 1
+  #       PYTHON
 
-        mkdir $out
-        for engine in BLENDER_EEVEE_NEXT CYCLES; do
-          echo "Rendering with $engine..."
-          # Beware that argument order matters
-          ${lib.getExe finalAttrs.finalPackage} \
-            --background \
-            -noaudio \
-            --factory-startup \
-            --python-exit-code 1 \
-            --python scene-config.py \
-            --engine "$engine" \
-            --render-output "$out/$engine" \
-            --render-frame 1
-        done
-      '';
-      tester-cudaAvailable = cudaPackages.writeGpuTestPython { } ''
-        import subprocess
-        subprocess.run([${
-          lib.concatMapStringsSep ", " (x: ''"${x}"'') [
-            (lib.getExe (blender.override { cudaSupport = true; }))
-            "--background"
-            "-noaudio"
-            "--python-exit-code"
-            "1"
-            "--python"
-            "${./test-cuda.py}"
-          ]
-        }], check=True)  # noqa: E501
-      '';
-    };
-  };
+  #       mkdir $out
+  #       for engine in BLENDER_EEVEE_NEXT CYCLES; do
+  #         echo "Rendering with $engine..."
+  #         # Beware that argument order matters
+  #         ${lib.getExe finalAttrs.finalPackage} \
+  #           --background \
+  #           -noaudio \
+  #           --factory-startup \
+  #           --python-exit-code 1 \
+  #           --python scene-config.py \
+  #           --engine "$engine" \
+  #           --render-output "$out/$engine" \
+  #           --render-frame 1
+  #       done
+  #     '';
+  #     tester-cudaAvailable = cudaPackages.writeGpuTestPython { } ''
+  #       import subprocess
+  #       subprocess.run([${
+  #         lib.concatMapStringsSep ", " (x: ''"${x}"'') [
+  #           (lib.getExe (blender.override { cudaSupport = true; }))
+  #           "--background"
+  #           "-noaudio"
+  #           "--python-exit-code"
+  #           "1"
+  #           "--python"
+  #           "${./test-cuda.py}"
+  #         ]
+  #       }], check=True)  # noqa: E501
+  #     '';
+  #   };
+  # };
 
   meta = {
     description = "3D Creation/Animation/Publishing System";
@@ -413,8 +423,6 @@ stdenv.mkDerivation (finalAttrs: {
       "x86_64-linux"
       "aarch64-darwin"
     ];
-    # the current apple sdk is too old (currently 11_0) and fails to build "metal" on x86_64-darwin
-    broken = stdenv.hostPlatform.system == "x86_64-darwin";
     mainProgram = "Goo Engine";
   };
 })

@@ -1,0 +1,13 @@
+diff --git a/include/OpenImageIO/Imath.h b/include/OpenImageIO/Imath.h
+index xxxxxxx..yyyyyyy 100644
+--- a/include/OpenImageIO/Imath.h
++++ b/include/OpenImageIO/Imath.h
+@@ -19,7 +19,7 @@
+ #    define OIIO_IMATH_H_INCLUDED
+ 
+ #    if defined(OIIO_USING_IMATH)
+-#   include <Imath/ImathColor.h>
++#   include <ImathColor.h>
+ #    else
+ #        include <OpenEXR/ImathColor.h>
+ #    endif
