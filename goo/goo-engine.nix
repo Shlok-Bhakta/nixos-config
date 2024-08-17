@@ -116,10 +116,11 @@ stdenv.mkDerivation (finalAttrs: {
 
   postUnpack = ''
     chmod -R u+w *
-    ./build_files/utils/make_update.py --use-linux-libraries
+    find . -maxdepth 2 -type d
+    ./assets/build_files/utils/make_update.py --use-linux-libraries
+    cd assets
     make update
     echo "Contents of All:"
-    find . -maxdepth 2 -type d
   '';
 
   sourceRoot = "./assets";
