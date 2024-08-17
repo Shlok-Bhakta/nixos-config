@@ -206,7 +206,15 @@ in{
     enable = true;
     package = unstable.hyprlock;
     # settings = builtins.imprty
-    extraConfig = builtins.readFile ./dotfiles/hyprlock.conf;
+    extraConfig = builtins.readFile ./dotfiles/hypr/hyprlock.conf;
+
+  };
+
+  programs.hypridle = {
+    enable = true;
+    package = unstable.hypridle;
+    # settings = builtins.imprty
+    extraConfig = builtins.readFile ./dotfiles/hypr/hypridle.conf;
 
   };
 
