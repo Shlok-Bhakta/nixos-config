@@ -1,7 +1,7 @@
 { lib, config, pkgs, inputs, ... }:
 let
   wallpaper-path = /home/shlok/nixos-config/dotfiles/wallpaper/wallpaper.png;
-
+  unstable = inputs.UNSTABLE.legacyPackages.${pkgs.system};
 in{
   # imports = [
   #   inputs.home-manager.nixosModules.home-manager
@@ -37,7 +37,7 @@ in{
   ];
 
   system.stateVersion = "24.05"; 
-
+  security.pam.services.swaylock = {};
   fonts.packages = with pkgs; [
     (nerdfonts.override { fonts = [ "CascadiaCode" ]; })
   ];
@@ -90,6 +90,9 @@ in{
       };
     };
   };
-  
+  services.tailscale = {
+    enable = true;
+    package = unstable.tailscale;
+  };
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 }

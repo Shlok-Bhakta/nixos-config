@@ -27,9 +27,9 @@ in{
     pkgs.fzf
     pkgs.bat
     unstable.p7zip
-    unstable.tailscale
     unstable.localsend
     unstable.swww
+    pkgs.cliphist
     # goo-engine
   ];
 
@@ -60,14 +60,15 @@ in{
         "waybar"
         "swww img ${wallpaper-path}"
         "swww-daemon --format xrgb"
+        "wl-paste --type [text|image] --watch cliphist store"
       ]; 
       monitor = [
         "DP-1, 1920x1080@144, 0x0, 1"
         "HDMI-A-1, 1920x1080@144, -1080x-650, 1, transform, 1"
       ];
       "$terminal" = "kitty";
-      "$fileManager" = "dolphin";
-      "$menu" = "wofi --show drun";
+      "$fileManager" = "yazi";
+      "$menu" = "rofi --show drun";
       general = { 
         gaps_in = 5;
         gaps_out = 20;
@@ -143,12 +144,14 @@ in{
       "$mainMod, C, killactive,"
       "$mainMod, M, exit,"
       "$mainMod, E, exec, $fileManager"
-      "$mainMod, V, togglefloating,"
+      "$mainMod, F, togglefloating,"
       "$mainMod, R, exec, $menu"
       "$mainMod, P, pseudo, # dwindle"
       "$mainMod, J, togglesplit, # dwindle"
       "$mainMod, W, exec, rofi -show drun"
+      "$mainMod, V, exec, cliphist list | rofi -dmenu | cliphist decode | wl-copy"
       "$mainMod, B, exec, brave"
+      "$mainMod, Y, exec, codium"
 
       # Move focus with mainMod + arrow keys
       "$mainMod, left, movefocus, l"
@@ -198,21 +201,14 @@ in{
     };
   };
 
-  # services.hyprpaper = {
-  #   enable = true;
-  #   settings = {
-  #     ipc = "on";
-  #     splash = false;
 
-  #     preload =
-  #       [ "${wallpaper-path}" ];
+  programs.hyprlock = {
+    enable = true;
+    package = unstable.hyprlock;
+    # settings = builtins.imprty
+    extraConfig = builtins.readFile ./dotfiles/hyprlock.conf;
 
-  #     wallpaper = [
-  #       "DP-1,${wallpaper-path}"
-  #       "HDMI-A-1,${wallpaper-path}"
-  #     ];
-  #   };
-  # };
+  };
 
   programs.vscode = {
     enable = true;
@@ -324,6 +320,11 @@ in{
   programs.yazi = {
     enable = true;
     package = unstable.yazi-unwrapped;
+  };
+
+  services.cliphist = {
+    enable = true;
+    allowImages = true;
   };
 
   # programs.hyprlock = {
