@@ -139,6 +139,11 @@ button:hover {
     margin-right: 0;
 }
 
+#custom-media {
+    color: @teal;
+    border-bottom: 2px solid @teal;
+}
+
 #custom-vpn {
     color: @lavender;
     border-radius: 15px;

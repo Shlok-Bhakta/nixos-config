@@ -113,6 +113,17 @@
         "exec": "tailscale status | grep -q 'stopped.' && echo '' || echo ''",
         "interval": 30
     },
+    "custom/media": {
+        "format": "{icon} {}",
+        "escape": true,
+        "max-length": 40,
+        "on-click": "playerctl play-pause",
+        "on-click-right": "playerctl stop",
+        "on-scroll-up": "playerctl next",
+        "on-scroll-down": "playerctl previous",
+        "interval": 10,
+        "exec": "playerctl status | grep -q 'Stopped' && echo '' || playerctl metadata -f '{{xesam:artist}}:{{xesam:title}}'"
+    },
     "network": {
         "format-wifi": " {essid} ({signalStrength}%)",
         "format-ethernet": "⬇{bandwidthDownBytes} ⬆{bandwidthUpBytes}",

@@ -46,7 +46,7 @@
             inherit inputs self;
           };
         }
-        stylix.nixosModules.stylix
+        
       ];
     };
 

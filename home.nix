@@ -8,7 +8,10 @@ let
 
 
 in{
-  imports = [ inputs.ags.homeManagerModules.default ];
+  imports = [ 
+    inputs.ags.homeManagerModules.default 
+    inputs.stylix.homeManagerModules.stylix
+  ];
   home.username = "shlok";
   home.homeDirectory = "/home/shlok";
 
@@ -35,7 +38,6 @@ in{
     unstable.hypridle
     pkgs.cliphist
     unstable.nautilus
-    pkgs.brightnessctl
     pkgs.playerctl
     # hypkgs.hyprpanel
     # goo-engine
@@ -243,6 +245,55 @@ in{
     extraConfig = builtins.readFile ./dotfiles/hypr/hyprlock.conf;
   };
 
+
+  stylix =  {
+    enable = true;
+    targets = {
+      vscode.enable = false;
+      fuzzel.enable = false;
+    };
+    base16Scheme = { 
+      base00 = "1e1e2e"; # base
+      base01 = "181825"; # mantle
+      base02 = "313244"; # surface0
+      base03 = "45475a"; # surface1
+      base04 = "585b70"; # surface2
+      base05 = "cdd6f4"; # text
+      base06 = "f5e0dc"; # rosewater
+      base07 = "b4befe"; # lavender
+      base08 = "f38ba8"; # red
+      base09 = "fab387"; # peach
+      base0A = "f9e2af"; # yellow
+      base0B = "a6e3a1"; # green
+      base0C = "94e2d5"; # teal
+      base0D = "89b4fa"; # blue
+      base0E = "cba6f7"; # mauve
+      base0F = "f2cdcd"; # flamingo
+    };
+    image = wallpaper-path;
+    polarity = "dark";
+    fonts = {
+      serif = {
+        package = pkgs.dejavu_fonts;
+        name = "CaskaydiaCove Nerd Font";
+      };
+
+      sansSerif = { 
+        package = pkgs.dejavu_fonts;
+        name = "CaskaydiaCove Nerd Font";
+      };
+
+      monospace = {
+        package = pkgs.dejavu_fonts;
+        name = "CaskaydiaCove Nerd Font Mono";
+      };
+
+      emoji = {
+        package = pkgs.noto-fonts-emoji;
+        name = "Noto Color Emoji";
+      };
+    };
+  };
   services.hypridle = {
     enable = true;
     package = unstable.hypridle;
@@ -257,16 +308,16 @@ in{
 
       listener = [
         {
-          timeout = 180; # 3mins
+          timeout = 1200; # 20mins
           on-timeout = "loginctl lock-session";
         }
         {
-          timeout = 240; # 4mins
+          timeout = 1500; # 25mins
           on-timeout = "hyprctl dispatch dpms off";
           on-resume = "hyprctl dispatch dpms on";
         }
         {
-          timeout = 540; # 9mins
+          timeout = 1800; # 30mins
           on-timeout = "$suspend_cmd";
         }
       ];
@@ -338,6 +389,7 @@ in{
       { id = "cjpalhdlnbpafiamejdnhcphjbkeiagm"; } # ublock origin
       { id = "nngceckbapebfimnlniiiahkandclblb"; } # bitwarden
       { id = "clngdbkpkpeebahjckkjfobafhncgmne"; } # stylus
+      { id = "bkkmolkhemgaeaeggcmfbghljjjoofoh"; } # catppuccin mocha
     ];
     commandLineArgs = [
       "--disable-features=WebRtcAllowInputVolumeAdjustment"
@@ -356,26 +408,18 @@ in{
       main = {
         terminal = "kitty";
         layer = "overlay";
+        font = "CaskaydiaCove Nerd Font:size=20";
+        anchor = "center";
+        lines = 15;
+        width = 45;
+
+
       };
     };
-    # terminal = "kitty";
-    # extraConfig = {
-    #   modi = "run,drun,window";
-    #   drun-display-format = "{name}";
-    #   location = 0;
-    #   disable-history = false;
-    #   hide-scrollbar = true;
-    #   display-drun = "   Apps ";
-    #   display-run = "   Run ";
-    #   display-window = " 󰕰  Window";
-    #   display-Network = " 󰤨  Network";
-    #   sidebar-mode = true;
-    # };
   };
   programs.btop = {
     enable = true;
   };
-
 
   programs.yazi = {
     enable = true;
@@ -390,12 +434,6 @@ in{
   programs.waybar = {
     enable = true;
   };
-
-  # programs.hyprlock = {
-  #   enable = true;
-  #   package = pkgs.hyprlock;
-
-  # };
 }
 
 
