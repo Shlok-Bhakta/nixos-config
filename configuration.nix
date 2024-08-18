@@ -17,7 +17,6 @@ in{
   users.defaultUserShell = pkgs.zsh;
 
   programs.firefox.enable = true;
-
   nixpkgs.config.allowUnfree = true;
   environment.systemPackages = with pkgs; [
     home-manager
@@ -34,6 +33,7 @@ in{
       withVencord = true;
     })
     vesktop
+    
   ];
 
   system.stateVersion = "24.05"; 
@@ -94,5 +94,7 @@ in{
     enable = true;
     package = unstable.tailscale;
   };
+
+  
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 }

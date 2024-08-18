@@ -11,21 +11,26 @@
     stylix.url = "github:danth/stylix";
     # hyprland.url = "github:hyprwm/Hyprland";
     ags.url = "github:Aylur/ags";
-    inputs.hyprpanel.url = "github:Jas-SinghFSU/HyprPanel";
+    # hyprpanel.url = "github:Jas-SinghFSU/HyprPanel";
     # impurity.url = "github:outfoxxed/impurity.nix";
-  };
+    # fufexan-dotfiles = {
+    #   url = "github:fufexan/dotfiles";
+    #   inputs.nixpkgs.follows = "nixpkgs";
+    # };
+};
 
-  outputs = { self, nixpkgs, home-manager, stylix, ... } @ inputs: {
+  outputs = { self, nixpkgs, home-manager, stylix, ... } @ inputs: let 
+      system = "x86_64-linux";
+      # hypkgs = import nixpkgs {
+      #   inherit system;
+      #   overlays = [
+      #       inputs.hyprpanel.overlay.${system}
+      #   ];
+      # };
+  in {
     nixosConfigurations.ShlokPCNIX = nixpkgs.lib.nixosSystem {
       specialArgs = {
         inherit inputs;
-      };
-      system = "x86_64-linux";
-      pkgs = import nixpkgs {
-        inherit system;
-        overlays = [
-            inputs.hyprpanel.overlay.${system}
-        ];
       };
       modules = [
         ./configuration.nix

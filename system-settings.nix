@@ -51,11 +51,9 @@
     nvidia.modesetting.enable = true;
   };
 
-  # Configure keymap in X11
-  services.xserver.xkb = {
-    layout = "us";
-    variant = "";
-  };
+  boot.kernelParams = [
+    "initcall_blacklist=simpledrm_platform_driver_init"
+  ];
 
   # Enable CUPS to print documents.
   services.printing.enable = true;

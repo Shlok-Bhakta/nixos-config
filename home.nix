@@ -5,6 +5,8 @@ let
   # goo-engine = pkgs.callPackage ./goo/goo-engine.nix {
   #   pkgs = unstable;
   # };
+
+
 in{
   imports = [ inputs.ags.homeManagerModules.default ];
   home.username = "shlok";
@@ -32,9 +34,14 @@ in{
     unstable.swww
     unstable.hypridle
     pkgs.cliphist
-    pkgs.hyprpanel
+    unstable.nautilus
+    pkgs.brightnessctl
+    pkgs.playerctl
+    # hypkgs.hyprpanel
     # goo-engine
+    # agsconf
   ];
+
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
   # plain files is through 'home.file'.
@@ -55,7 +62,8 @@ in{
   };
 
   xdg.configFile = {
-    "ags".source = ./dotfiles/ags;
+    # "ags".source = ./dotfiles/ags;
+    "waybar".source = ./dotfiles/waybar;
   };
   wayland.windowManager.hyprland = {
     enable = true;
@@ -63,7 +71,7 @@ in{
     # extraConfig = builtins.readFile ./dotfiles/hyprland.conf;  
     settings = {
       exec-once = [
-        # "ags"
+        "waybar"
         "swww img ${wallpaper-path}"
         "swww-daemon --format xrgb"
         "wl-paste --type [text|image] --watch cliphist store"
@@ -74,7 +82,7 @@ in{
       ];
       "$terminal" = "kitty";
       "$fileManager" = "yazi";
-      "$menu" = "rofi --show drun";
+      "$menu" = "fuzzel";
       general = { 
         gaps_in = 5;
         gaps_out = 20;
@@ -154,8 +162,8 @@ in{
       "$mainMod, R, exec, $menu"
       "$mainMod, P, pseudo, # dwindle"
       "$mainMod, J, togglesplit, # dwindle"
-      "$mainMod, W, exec, rofi -show drun"
-      "$mainMod, V, exec, cliphist list | rofi -dmenu | cliphist decode | wl-copy"
+      "$mainMod, W, exec, fuzzel"
+      "$mainMod, V, exec, cliphist list | fuzzel -d | cliphist decode | wl-copy"
       "$mainMod, B, exec, brave"
       "$mainMod, Y, exec, codium"
 
@@ -213,6 +221,20 @@ in{
       # null or path, leave as null if you don't want hm to manage the config
       # configDir = ./dotfiles/ags1;
       configDir = null;
+
+      extraPackages = with pkgs; [
+        gtksourceview
+        gtksourceview4
+        ollama
+        python311Packages.material-color-utilities
+        python311Packages.pywayland
+        pywal
+        sassc
+        webkitgtk
+        webp-pixbuf-loader
+        ydotool
+        sass
+      ];
     };
   programs.hyprlock = {
     enable = true;
@@ -328,30 +350,27 @@ in{
     userEmail = "shlokbhakta1@gmail.com";
   };
 
-  programs.rofi = {
+  programs.fuzzel = {
     enable = true;
-    location = "center";
-    plugins = [
-      pkgs.rofimoji
-      pkgs.rofi-rbw
-      pkgs.rofi-calc
-      pkgs.rofi-screenshot
-    ];
-    terminal = "kitty";
-    extraConfig = {
-      modi = "run,drun,window";
-      drun-display-format = "{name}";
-      location = 0;
-      disable-history = false;
-      hide-scrollbar = true;
-      display-drun = "   Apps ";
-      display-run = "   Run ";
-      display-window = " 󰕰  Window";
-      display-Network = " 󰤨  Network";
-      sidebar-mode = true;
+    settings = {
+      main = {
+        terminal = "kitty";
+        layer = "overlay";
+      };
     };
-    
-    # theme = builtins.readFile ./dotfiles/rofi/theme.rasi;
+    # terminal = "kitty";
+    # extraConfig = {
+    #   modi = "run,drun,window";
+    #   drun-display-format = "{name}";
+    #   location = 0;
+    #   disable-history = false;
+    #   hide-scrollbar = true;
+    #   display-drun = "   Apps ";
+    #   display-run = "   Run ";
+    #   display-window = " 󰕰  Window";
+    #   display-Network = " 󰤨  Network";
+    #   sidebar-mode = true;
+    # };
   };
   programs.btop = {
     enable = true;
@@ -366,6 +385,10 @@ in{
   services.cliphist = {
     enable = true;
     allowImages = true;
+  };
+
+  programs.waybar = {
+    enable = true;
   };
 
   # programs.hyprlock = {
