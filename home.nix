@@ -6,6 +6,7 @@ let
   #   pkgs = unstable;
   # };
 in{
+  imports = [ inputs.ags.homeManagerModules.default ];
   home.username = "shlok";
   home.homeDirectory = "/home/shlok";
 
@@ -31,7 +32,7 @@ in{
     unstable.swww
     unstable.hypridle
     pkgs.cliphist
-    pkgs.gnome.nautilus
+    pkgs.hyprpanel
     # goo-engine
   ];
 
@@ -39,6 +40,7 @@ in{
   # plain files is through 'home.file'.
   programs.home-manager.enable = true;
   home.file = {
+    # "ags".source = "./dotfiles/ags";
     # # Building this configuration will create a copy of 'dotfiles/screenrc' in
     # # the Nix store. Activating the configuration will then make '~/.screenrc' a
     # # symlink to the Nix store copy.
@@ -52,14 +54,16 @@ in{
 
   };
 
-
+  xdg.configFile = {
+    "ags".source = ./dotfiles/ags;
+  };
   wayland.windowManager.hyprland = {
     enable = true;
     package = unstable.hyprland;
     # extraConfig = builtins.readFile ./dotfiles/hyprland.conf;  
     settings = {
       exec-once = [
-        "waybar"
+        # "ags"
         "swww img ${wallpaper-path}"
         "swww-daemon --format xrgb"
         "wl-paste --type [text|image] --watch cliphist store"
@@ -203,7 +207,13 @@ in{
     };
   };
 
+  programs.ags = {
+      enable = true;
 
+      # null or path, leave as null if you don't want hm to manage the config
+      # configDir = ./dotfiles/ags1;
+      configDir = null;
+    };
   programs.hyprlock = {
     enable = true;
     package = unstable.hyprlock;

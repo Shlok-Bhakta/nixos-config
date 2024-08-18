@@ -10,13 +10,22 @@
     };
     stylix.url = "github:danth/stylix";
     # hyprland.url = "github:hyprwm/Hyprland";
+    ags.url = "github:Aylur/ags";
+    inputs.hyprpanel.url = "github:Jas-SinghFSU/HyprPanel";
+    # impurity.url = "github:outfoxxed/impurity.nix";
   };
 
   outputs = { self, nixpkgs, home-manager, stylix, ... } @ inputs: {
     nixosConfigurations.ShlokPCNIX = nixpkgs.lib.nixosSystem {
-      system = "x86_64-linux";
       specialArgs = {
         inherit inputs;
+      };
+      system = "x86_64-linux";
+      pkgs = import nixpkgs {
+        inherit system;
+        overlays = [
+            inputs.hyprpanel.overlay.${system}
+        ];
       };
       modules = [
         ./configuration.nix
@@ -27,8 +36,9 @@
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
           home-manager.users.shlok = import ./home.nix;
+          home-manager.backupFileExtension = "old";
           home-manager.extraSpecialArgs = {
-            inherit inputs;
+            inherit inputs self;
           };
         }
         stylix.nixosModules.stylix
