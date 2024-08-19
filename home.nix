@@ -41,6 +41,8 @@ in{
     pkgs.playerctl
     pkgs.dbus
     pkgs.wl-clipboard
+    pkgs.grim
+    pkgs.slurp
     # hypkgs.hyprpanel
     # goo-engine
     # agsconf
@@ -172,6 +174,7 @@ in{
       "$mainMod, B, exec, brave"
       "$mainMod, Y, exec, codium"
       "$mainMod, L, exec, hyprlock"
+      ''SUPER_SHIFT, S, exec, grim -g "$(slurp -d)" - | wl-copy''
 
       # Move focus with mainMod + arrow keys
       "$mainMod, left, movefocus, l"
@@ -204,8 +207,8 @@ in{
       "$mainMod SHIFT, 0, movetoworkspace, 10"
 
       # Example special workspace (scratchpad)
-      "$mainMod, S, togglespecialworkspace, magic"
-      "$mainMod SHIFT, S, movetoworkspace, special:magic"
+      "$mainMod, D, togglespecialworkspace, magic"
+      "$mainMod SHIFT, D, movetoworkspace, special:magic"
 
       # Scroll through existing workspaces with mainMod + scroll
       "$mainMod, mouse_down, workspace, e+1"
