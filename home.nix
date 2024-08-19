@@ -39,6 +39,7 @@ in{
     pkgs.cliphist
     unstable.nautilus
     pkgs.playerctl
+    pkgs.dbus
     # hypkgs.hyprpanel
     # goo-engine
     # agsconf
@@ -74,6 +75,7 @@ in{
     settings = {
       exec-once = [
         "waybar"
+        "swaync"
         "swww img ${wallpaper-path}"
         "swww-daemon --format xrgb"
         "wl-paste --type [text|image] --watch cliphist store"
@@ -168,6 +170,7 @@ in{
       "$mainMod, V, exec, cliphist list | fuzzel -d | cliphist decode | wl-copy"
       "$mainMod, B, exec, brave"
       "$mainMod, Y, exec, codium"
+      "$mainMod, L, exec, hyprlock"
 
       # Move focus with mainMod + arrow keys
       "$mainMod, left, movefocus, l"
@@ -408,12 +411,21 @@ in{
       main = {
         terminal = "kitty";
         layer = "overlay";
-        font = "CaskaydiaCove Nerd Font:size=20";
         anchor = "center";
         lines = 15;
         width = 45;
-
-
+        font = "CaskaydiaCove Nerd Font:size=20";
+      };
+      colors = {
+        background = "#11111bff";
+        text = "#cdd6f4ff";
+        match = "#181825ff";
+        selection = "#1e1e2eff";
+        selection-text = "#b4befeff";
+        border = "#89b4faff";
+      };
+      border = {
+        width = 2;
       };
     };
   };
@@ -433,6 +445,27 @@ in{
 
   programs.waybar = {
     enable = true;
+  };
+
+  services.swaync = {
+    enable = true;
+    settings = {
+      positionX = "right";
+      positionY = "top";
+      layer = "overlay";
+      control-center-layer = "top";
+      layer-shell = true;
+      cssPriority = "application";
+      control-center-margin-top = 0;
+      control-center-margin-bottom = 0;
+      control-center-margin-right = 0;
+      control-center-margin-left = 0;
+      notification-2fa-action = true;
+      notification-inline-replies = false;
+      notification-icon-size = 64;
+      notification-body-image-height = 100;
+      notification-body-image-width = 200;
+    };
   };
 }
 

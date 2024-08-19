@@ -144,6 +144,15 @@ button:hover {
     border-bottom: 2px solid @teal;
 }
 
+#custom-notification {
+    color: @green;
+    border-bottom: 2px solid @green;
+    padding: 0px 4px;
+}
+
+#custom-rightpad {
+    padding-left: 2px;
+}
 #custom-vpn {
     color: @lavender;
     border-radius: 15px;
