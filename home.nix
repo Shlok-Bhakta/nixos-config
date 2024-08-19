@@ -40,6 +40,7 @@ in{
     unstable.nautilus
     pkgs.playerctl
     pkgs.dbus
+    pkgs.wl-clipboard
     # hypkgs.hyprpanel
     # goo-engine
     # agsconf
