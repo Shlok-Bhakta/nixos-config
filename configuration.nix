@@ -43,6 +43,16 @@ in{
     package = unstable.tailscale;
   };
 
-  
+  virtualisation.docker = {
+    enable = true; 
+    rootless = {
+      enable = true;
+      setSocketVariable = true;
+    };
+    daemon.settings = {
+      data-root = "/home/shlok/Docker";
+    };
+  };
+
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 }

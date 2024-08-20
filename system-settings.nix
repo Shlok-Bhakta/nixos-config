@@ -73,7 +73,7 @@
   users.users.shlok = {
     isNormalUser = true;
     description = "Shlok Bhakta";
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = [ "networkmanager" "wheel"];
   };
 
   # Some programs need SUID wrappers, can be configured further or are

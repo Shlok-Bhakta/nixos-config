@@ -43,6 +43,7 @@ in{
     pkgs.wl-clipboard
     pkgs.grim
     pkgs.slurp
+    unstable.onlyoffice-bin
     # hypkgs.hyprpanel
     # goo-engine
     # agsconf
