@@ -44,6 +44,8 @@ in{
     pkgs.grim
     pkgs.slurp
     unstable.onlyoffice-bin
+    pkgs.openssl
+    pkgs.bemoji
     # hypkgs.hyprpanel
     # goo-engine
     # agsconf
@@ -176,6 +178,7 @@ in{
       "$mainMod, Y, exec, codium"
       "$mainMod, L, exec, hyprlock"
       ''SUPER_SHIFT, S, exec, grim -g "$(slurp -d)" - | wl-copy''
+      "$mainMod, T, exec, bemoji"
 
       # Move focus with mainMod + arrow keys
       "$mainMod, left, movefocus, l"
@@ -259,6 +262,7 @@ in{
     targets = {
       vscode.enable = false;
       fuzzel.enable = false;
+      kitty.enable = false;
     };
     base16Scheme = { 
       base00 = "1e1e2e"; # base
@@ -346,6 +350,9 @@ in{
   
   programs.kitty = {
     enable = true;
+    font.name = "CaskaydiaCove Nerd Font";
+    theme = "Catppuccin-Mocha";
+
   };
   programs.zsh = {
     # zsh conf
@@ -471,6 +478,18 @@ in{
       notification-body-image-height = 100;
       notification-body-image-width = 200;
     };
+  };
+
+  programs.wlogout = {
+    enable = true;
+    layout = [
+      {
+      label = "shutdown";
+      action = "systemctl poweroff";
+      text = "Shutdown";
+      keybind = "s";
+      }
+    ];
   };
 }
 
