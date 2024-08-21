@@ -29,7 +29,7 @@ in{
       withVencord = true;
     })
     vesktop
-    
+    wireshark
   ];
 
   system.stateVersion = "24.05"; 
@@ -55,4 +55,7 @@ in{
   };
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  programs.wireshark = {
+    enable = true;
+  };
 }

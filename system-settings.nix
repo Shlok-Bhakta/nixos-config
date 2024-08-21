@@ -15,7 +15,9 @@
   # Configure network proxy if necessary
   # networking.proxy.default = "http://user:password@proxy:port/";
   # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
-
+  environment.sessionVariables = {
+    FLAKE = "/home/shlok/nixos-config";
+  };
   # Enable networking
   networking.networkmanager.enable = true;
 
@@ -73,7 +75,7 @@
   users.users.shlok = {
     isNormalUser = true;
     description = "Shlok Bhakta";
-    extraGroups = [ "networkmanager" "wheel"];
+    extraGroups = [ "networkmanager" "wheel" "wireshark"];
   };
 
   # Some programs need SUID wrappers, can be configured further or are
