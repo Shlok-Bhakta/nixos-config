@@ -30,6 +30,7 @@ in{
     })
     vesktop
     wireshark
+    v4l-utils
   ];
 
   system.stateVersion = "24.05"; 
@@ -42,7 +43,9 @@ in{
     enable = true;
     package = unstable.tailscale;
   };
-
+  environment.sessionVariables = {
+    NIXOS_OZONE_WL = "1";
+  };
   virtualisation.docker = {
     enable = true; 
     rootless = {

@@ -5,7 +5,7 @@ let
   # goo-engine = pkgs.callPackage ./goo/goo-engine.nix {
   #   pkgs = unstable;
   # };
-
+  fabric-ai = import ./pkgs/fabric/package.nix;
 
 in{
   imports = [ 
@@ -49,6 +49,9 @@ in{
     pkgs.youtube-music
     pkgs.nh
     pkgs.nix-output-monitor
+    pkgs.wtype
+    pkgs.nodejs_22
+    fabric-ai
     # hypkgs.hyprpanel
     # goo-engine
     # agsconf
@@ -357,6 +360,10 @@ in{
     theme = "Catppuccin-Mocha";
 
   };
+  programs.obs-studio = {
+    enable = true;
+    package = unstable.obs-studio;
+  };
   programs.zsh = {
     # zsh conf
     enable = true;
@@ -457,7 +464,6 @@ in{
     enable = true;
     allowImages = true;
   };
-
   programs.waybar = {
     enable = true;
   };
