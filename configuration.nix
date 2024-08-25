@@ -31,8 +31,11 @@ in{
     vesktop
     wireshark
     v4l-utils
+    cudaPackages.cudatoolkit
+    cudaPackages.cudnn
+    
   ];
-
+  nixpkgs.config.cudaSupport = true;
   system.stateVersion = "24.05"; 
   security.pam.services.swaylock = {};
   fonts.packages = with pkgs; [
@@ -46,6 +49,9 @@ in{
   environment.sessionVariables = {
     NIXOS_OZONE_WL = "1";
   };
+  # environment.variables = {
+  #   CUDA_PATH = "${pkgs.cudaPackages.cudatoolkit}";
+  # };
   virtualisation.docker = {
     enable = true; 
     rootless = {

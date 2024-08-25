@@ -33,6 +33,16 @@
         inherit inputs;
       };
       modules = [
+        {
+          nixpkgs.config.allowUnfree = true;
+          # nixpkgs.overlays = [
+          #   (final: prev: {
+          #     openai-whisper = prev.openai-whisper.override {
+          #       torch = final.python3.pkgs.torch-bin;
+          #     };
+          #   })
+          # ];
+        }
         ./configuration.nix
         ./hardware-configuration.nix
         ./system-settings.nix
@@ -46,7 +56,6 @@
             inherit inputs self;
           };
         }
-        
       ];
     };
 

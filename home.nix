@@ -1,11 +1,16 @@
 { lib, config, pkgs, inputs, ... }:
 let
-  unstable = inputs.UNSTABLE.legacyPackages.${pkgs.system};
+  unstable = import inputs.UNSTABLE {
+    system = pkgs.system;
+    config = {
+      allowUnfree = true;
+    };
+  };
   wallpaper-path = /home/shlok/nixos-config/dotfiles/wallpaper/wallpaper.png;
   # goo-engine = pkgs.callPackage ./goo/goo-engine.nix {
   #   pkgs = unstable;
   # };
-  fabric-ai = import ./pkgs/fabric/package.nix;
+  fabric-ai = unstable.callPackage ./pkgs/fabric/package.nix {};
 
 in{
   imports = [ 
@@ -14,7 +19,6 @@ in{
   ];
   home.username = "shlok";
   home.homeDirectory = "/home/shlok";
-
   home.sessionVariables = {
     EDITOR = "code";
     XCURSOR_SIZE = 24;
@@ -52,6 +56,17 @@ in{
     pkgs.wtype
     pkgs.nodejs_22
     fabric-ai
+    unstable.ollama
+    pkgs.ffmpeg
+    unstable.openai-whisper-cpp
+    unstable.nvtopPackages.panthor
+    pkgs.nvidia-vaapi-driver
+    unstable.egl-wayland
+    pkgs.pciutils
+    pkgs.udisks2
+    pkgs.udiskie
+    pkgs.polkit
+    pkgs.libnotify
     # hypkgs.hyprpanel
     # goo-engine
     # agsconf
@@ -75,7 +90,12 @@ in{
     # '';
 
   };
-
+  services.udiskie = {
+    enable = true;
+    automount = true;
+    notify = true;
+    tray = "auto";
+  };
   xdg.configFile = {
     # "ags".source = ./dotfiles/ags;
     "waybar".source = ./dotfiles/waybar;
@@ -91,6 +111,7 @@ in{
         "swww img ${wallpaper-path}"
         "swww-daemon --format xrgb"
         "wl-paste --type [text|image] --watch cliphist store"
+        "xrandr --output DP-1 --primary"
       ]; 
       monitor = [
         "DP-1, 1920x1080@144, 0x0, 1"
@@ -471,22 +492,34 @@ in{
   services.swaync = {
     enable = true;
     settings = {
-      positionX = "right";
-      positionY = "top";
-      layer = "overlay";
-      control-center-layer = "top";
-      layer-shell = true;
-      cssPriority = "application";
-      control-center-margin-top = 0;
-      control-center-margin-bottom = 0;
-      control-center-margin-right = 0;
-      control-center-margin-left = 0;
-      notification-2fa-action = true;
-      notification-inline-replies = false;
-      notification-icon-size = 64;
-      notification-body-image-height = 100;
-      notification-body-image-width = 200;
+      "positionX" = "right";
+      "positionY" = "top";
+      "control-center-margin-top" = 0;
+      "control-center-margin-bottom" = 0;
+      "control-center-margin-right" = 0;
+      "control-center-margin-left" = 0;
+      "notification-icon-size" = 64;
+      "notification-body-image-height" = 100;
+      "notification-body-image-width" = 200;
+      "timeout" = 10;
+      "timeout-low" = 5;
+      "timeout-critical" = 0;
+      "fit-to-screen" = true;
+      "control-center-width" = 500;
+      "control-center-height" = 600;
+      "notification-window-width" = 500;
+      "keyboard-shortcuts" = true;
+      "image-visibility" = "when-available";
+      "transition-time" = 200;
+      "hide-on-clear" = false;
+      "hide-on-action" = true;
+      "script-fail-notify" = true;
+      "scripts" = {};
+      "notification-visibility" = {};
+      "widgets" = [];
+      "widget-config" = {};
     };
+    style = builtins.readFile ./dotfiles/SwayNC/config.conf;
   };
 
   programs.wlogout = {

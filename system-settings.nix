@@ -48,13 +48,28 @@
     };
   };
 
-  hardware = {
-    opengl.enable = true;
-    nvidia.modesetting.enable = true;
+ # Enable OpenGL
+  hardware.opengl = {
+    enable = true;
+    driSupport = true;
+    driSupport32Bit = true;
   };
+
+  hardware.nvidia = {
+    modesetting.enable = true;
+    open = false;
+    nvidiaSettings = true;
+    package = config.boot.kernelPackages.nvidiaPackages.stable;
+  };
+
 
   boot.kernelParams = [
     "initcall_blacklist=simpledrm_platform_driver_init"
+    "nvidia-drm.modeset=1"
+    "nvidia"
+    "nvidia_modeset"
+    "nvidia_uvm"
+    "nvidia_drm"
   ];
   # https://nixos.wiki/wiki/OBS_Studio
   boot.extraModulePackages = with config.boot.kernelPackages; [
@@ -67,6 +82,7 @@
 
   # Enable CUPS to print documents.
   services.printing.enable = true;
+
 
   # Enable sound with pipewire.
   hardware.pulseaudio.enable = false;
@@ -96,7 +112,6 @@
 
   # Enable the OpenSSH daemon.
   # services.openssh.enable = true;
-
   # Open ports in the firewall.
   networking.firewall.allowedTCPPorts = [ 53317 ];
   # networking.firewall.allowedUDPPorts = [ ... ];
