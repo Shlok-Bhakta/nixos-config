@@ -67,6 +67,9 @@ in{
     pkgs.udiskie
     pkgs.polkit
     pkgs.libnotify
+    unstable.via
+    pkgs.yt-dlp
+    # unstable.blender
     # hypkgs.hyprpanel
     # goo-engine
     # agsconf
@@ -519,7 +522,7 @@ in{
       "widgets" = [];
       "widget-config" = {};
     };
-    style = builtins.readFile ./dotfiles/SwayNC/config.conf;
+    style = builtins.readFile ./dotfiles/SwayNC/mocha.css;
   };
 
   programs.wlogout = {
