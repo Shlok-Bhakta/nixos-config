@@ -6,7 +6,7 @@ let
       allowUnfree = true;
     };
   };
-  wallpaper-path = /home/shlok/nixos-config/dotfiles/wallpaper/wallpaper.png;
+  wallpaper-path = /home/shlok/nixos-config/dotfiles/wallpaper/wallpaper.gif;
   # goo-engine = pkgs.callPackage ./goo/goo-engine.nix {
   #   pkgs = unstable;
   # };
@@ -111,7 +111,7 @@ in{
       exec-once = [
         "waybar"
         "swaync"
-        "swww img ${wallpaper-path}"
+        "swww img ${wallpaper-path}
         "swww-daemon --format xrgb"
         "wl-paste --type [text|image] --watch cliphist store"
         "xrandr --output DP-1 --primary"
