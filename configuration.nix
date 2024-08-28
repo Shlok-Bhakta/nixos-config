@@ -1,7 +1,7 @@
 { lib, config, pkgs, inputs, ... }:
 let
   wallpaper-path = /home/shlok/nixos-config/dotfiles/wallpaper/wallpaper.png;
-  unstable = inputs.UNSTABLE.legacyPackages.${pkgs.system};
+  unstable = import ./unstable.nix { inherit inputs pkgs; };
 in{
   # imports = [
   #   inputs.home-manager.nixosModules.home-manager

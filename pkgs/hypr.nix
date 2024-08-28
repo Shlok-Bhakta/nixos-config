@@ -1,6 +1,11 @@
 { lib, config, pkgs, inputs, ... }:
-
-{
+let
+  wallpaper-path = /home/shlok/nixos-config/dotfiles/wallpaper/wallpaper.gif;
+  unstable = import ../unstable.nix { inherit inputs pkgs; };
+in{
+  home.packages = [
+    unstable.hypridle
+  ];
   # Enable Hyprland
   wayland.windowManager.hyprland = {
     enable = true;
@@ -156,5 +161,41 @@
     windowrulev2 = "suppressevent maximize, class:.*";
     };
   };
-  
+  # Enable Hyprlock
+  programs.hyprlock = {
+    enable = true;
+    package = unstable.hyprlock;
+    # settings = builtins.imprty
+    extraConfig = builtins.readFile ../dotfiles/hypr/hyprlock.conf;
+  };
+  # Hypridle
+  services.hypridle = {
+    enable = true;
+    package = unstable.hypridle;
+    # settings = builtins.imprty
+    settings = {
+      "$lock_cmd" = "pidof hyprlock || hyprlock";
+      "$suspend_cmd" = "pidof steam || systemctl suspend || loginctl suspend"; # f*** nvidia
+      general = {
+          lock_cmd = "$lock_cmd";
+          before_sleep_cmd = "loginctl lock-session";
+      };
+
+      listener = [
+        {
+          timeout = 1200; # 20mins
+          on-timeout = "loginctl lock-session";
+        }
+        {
+          timeout = 1500; # 25mins
+          on-timeout = "hyprctl dispatch dpms off";
+          on-resume = "hyprctl dispatch dpms on";
+        }
+        {
+          timeout = 1800; # 30mins
+          on-timeout = "$suspend_cmd";
+        }
+      ];
+    };
+  };
 }
