@@ -64,6 +64,8 @@ in{
     pkgs.libnotify
     unstable.via
     pkgs.yt-dlp
+    pkgs.libgcc
+    pkgs.gdb
     # unstable.blender
     # hypkgs.hyprpanel
     # goo-engine
@@ -176,7 +178,7 @@ in{
 
   programs.vscode = {
     enable = true;
-    package = unstable.vscodium;
+    package = unstable.vscode-fhs;
     extensions = with unstable.vscode-extensions; [
       catppuccin.catppuccin-vsc
       catppuccin.catppuccin-vsc-icons
@@ -208,6 +210,10 @@ in{
       update = "sudo nixos-rebuild switch";
       gnrs = "git add . && git commit -m \"update config\" && git push && sudo nixos-rebuild switch --flake \"/home/shlok/nixos-config\" | lolcat -f";
       nrs = "nh os switch | lolcat";
+      # code = "codium";
+      c = "code";
+      C = "code .";
+      cn = "code /home/shlok/nixos-config";
     };
     history = {
       size = 10000;

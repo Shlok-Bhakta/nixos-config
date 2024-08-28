@@ -109,7 +109,7 @@ in{
       "$mainMod, W, exec, fuzzel"
       "$mainMod, V, exec, cliphist list | fuzzel -d | cliphist decode | wl-copy"
       "$mainMod, B, exec, brave"
-      "$mainMod, Y, exec, codium"
+      "$mainMod, Y, exec, code"
       "$mainMod, L, exec, hyprlock"
       ''SUPER_SHIFT, S, exec, grim -g "$(slurp -d)" - | wl-copy''
       "$mainMod, T, exec, bemoji"
