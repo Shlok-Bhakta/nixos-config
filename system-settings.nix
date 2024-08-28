@@ -42,10 +42,20 @@
   services.xserver = {
     enable = true;
     videoDrivers = ["nvidia"];
-    displayManager.gdm = {
+    displayManager.sddm = {
         enable = true;
-        wayland = true;
+        theme = "catppuccin-mocha";
+        package = pkgs.kdePackages.sddm;
     };
+    xrandrHeads = [
+      {
+        output = "DP-1";
+        primary = true;
+      }
+      {
+        output = "HDMI-A-1";
+      }
+    ];
   };
 
  # Enable OpenGL

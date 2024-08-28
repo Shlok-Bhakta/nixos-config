@@ -33,6 +33,13 @@ in{
     v4l-utils
     cudaPackages.cudatoolkit
     cudaPackages.cudnn
+    (pkgs.catppuccin-sddm.override {
+      flavor = "mocha";
+      font  = "CaskaydiaCove Nerd Font";
+      fontSize = "9";
+      background = "${/home/shlok/nixos-config/dotfiles/hypr/background.png}";
+      loginBackground = true;
+    })
     
   ];
   nixpkgs.config.cudaSupport = true;
