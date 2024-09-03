@@ -28,7 +28,6 @@ in{
       withOpenASAR = true;
       withVencord = true;
     })
-    vesktop
     wireshark
     v4l-utils
     cudaPackages.cudatoolkit

@@ -19,6 +19,7 @@ in{
         "swaync"
         "wl-paste --type [text|image] --watch cliphist store"
         "xrandr --output DP-1 --primary"
+        "kando"
       ]; 
       monitor = [
         "DP-1, 1920x1080@144, 0x0, 1"
@@ -32,8 +33,8 @@ in{
         gaps_out = 20;
         border_size = 2;
         # https://wiki.hyprland.org/Configuring/Variables/#variable-types for info about colors
-        # "col.active_border" = "rgba(33ccffee) rgba(00ff99ee) 45deg";
-        # "col.inactive_border" = "rgba(595959aa)";
+        "col.active_border" = "rgba(8aadf4ee) rgba(91d7e3ee) 45deg";
+        "col.inactive_border" = "rgba(24273aaa)";
         # Set to true enable resizing windows by clicking and dragging on borders and gaps
         resize_on_border = false; 
         # Please see https://wiki.hyprland.org/Configuring/Tearing/ before you turn this on
@@ -95,6 +96,14 @@ in{
         name = "epic-mouse-v1";
         sensitivity = -0.5;
       };
+    windowrule = [
+      "noblur, kando" 
+      "size 100% 100%, kando"
+      "noborder, kando"
+      "noanim, kando"
+      "float, kando"
+      "pin, kando"
+    ];
     "$mainMod" = "SUPER";
     bind = [
       # Example binds, see https://wiki.hyprland.org/Configuring/Binds/ for more
@@ -113,6 +122,7 @@ in{
       "$mainMod, L, exec, hyprlock"
       ''SUPER_SHIFT, S, exec, grim -g "$(slurp -d)" - | wl-copy''
       "$mainMod, T, exec, bemoji"
+      "$mainMod CTRL, Space, global, kando:main-menu"
 
       # Move focus with mainMod + arrow keys
       "$mainMod, left, movefocus, l"
@@ -158,7 +168,16 @@ in{
       "$mainMod, mouse:272, movewindow"
       "$mainMod, mouse:273, resizewindow"
     ];
-    windowrulev2 = "suppressevent maximize, class:.*";
+    windowrulev2 = [
+      "suppressevent maximize, class:.*"
+      "bordercolor rgba(fab387ee) rgba(eba0acee) 45deg,class:(brave-browser)"
+      "bordercolor rgba(e78284ee) rgba(ea999cee) 45deg,title:(.*)(- YouTube)(.*)$"
+      "bordercolor rgba(cba6f7ee) rgba(f38ba8ee) rgba(fab387ee) rgba(a6e3a1ee) rgba(74c7ecee) 45deg, title:(.*)(Catppuccin)(.*)$"
+      "bordercolor rgba(cba6f7ee) rgba(f38ba8ee) rgba(fab387ee) rgba(a6e3a1ee) rgba(74c7ecee) 45deg, title:(.*)(catppuccin)(.*)$"
+      "bordercolor rgba(8bd5caee) rgba(91d7e3ee) 45deg,class:(code-url-handler)"
+      "bordercolor rgba(7287fdee) rgba(209fb5ee) 45deg,class:(vesktop)"
+      "bordercolor rgba(f5e0dcee) rgba(f2cdcdee) 45deg,floating:1"
+    ]; 
     };
   };
   # Enable Hyprlock

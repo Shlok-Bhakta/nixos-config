@@ -64,8 +64,11 @@ in{
     pkgs.libnotify
     unstable.via
     pkgs.yt-dlp
-    pkgs.libgcc
-    pkgs.gdb
+    unstable.docker-compose
+    unstable.vesktop
+    pkgs.modrinth-app
+    pkgs.kando
+    unstable.obsidian
     # unstable.blender
     # hypkgs.hyprpanel
     # goo-engine
@@ -132,6 +135,7 @@ in{
       vscode.enable = false;
       fuzzel.enable = false;
       kitty.enable = false;
+      hyprland.enable = false;
     };
     base16Scheme = { 
       base00 = "1e1e2e"; # base
@@ -178,7 +182,7 @@ in{
 
   programs.vscode = {
     enable = true;
-    package = unstable.vscode-fhs;
+    package = unstable.vscode.fhs;
     extensions = with unstable.vscode-extensions; [
       catppuccin.catppuccin-vsc
       catppuccin.catppuccin-vsc-icons

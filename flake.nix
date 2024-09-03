@@ -9,24 +9,20 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     stylix.url = "github:danth/stylix";
-    # hyprland.url = "github:hyprwm/Hyprland";
     ags.url = "github:Aylur/ags";
-    # hyprpanel.url = "github:Jas-SinghFSU/HyprPanel";
-    # impurity.url = "github:outfoxxed/impurity.nix";
-    # fufexan-dotfiles = {
-    #   url = "github:fufexan/dotfiles";
-    #   inputs.nixpkgs.follows = "nixpkgs";
-    # };
+    kando-nixpkgs = {
+      url = "https://github.com/TomaSajt/nixpkgs/archive/kando.tar.gz";
+      flake = false;
+    };
 };
 
-  outputs = { self, nixpkgs, home-manager, stylix, ... } @ inputs: let 
+  outputs = { self, nixpkgs, home-manager, stylix, kando-nixpkgs, ... } @ inputs: let 
       system = "x86_64-linux";
-      # hypkgs = import nixpkgs {
-      #   inherit system;
-      #   overlays = [
-      #       inputs.hyprpanel.overlay.${system}
-      #   ];
-      # };
+      overlay-kando = final: prev: {
+        kando = (import kando-nixpkgs {
+          system = final.system;
+        }).kando;
+      };
   in {
     nixosConfigurations.ShlokPCNIX = nixpkgs.lib.nixosSystem {
       specialArgs = {
@@ -35,13 +31,7 @@
       modules = [
         {
           nixpkgs.config.allowUnfree = true;
-          # nixpkgs.overlays = [
-          #   (final: prev: {
-          #     openai-whisper = prev.openai-whisper.override {
-          #       torch = final.python3.pkgs.torch-bin;
-          #     };
-          #   })
-          # ];
+          nixpkgs.overlays = [ overlay-kando ];
         }
         ./configuration.nix
         ./hardware-configuration.nix
