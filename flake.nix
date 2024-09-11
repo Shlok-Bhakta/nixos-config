@@ -14,6 +14,7 @@
       url = "https://github.com/TomaSajt/nixpkgs/archive/kando.tar.gz";
       flake = false;
     };
+    zen-browser.url = "github:MarceColl/zen-browser-flake";
 };
 
   outputs = { self, nixpkgs, home-manager, stylix, kando-nixpkgs, ... } @ inputs: let 

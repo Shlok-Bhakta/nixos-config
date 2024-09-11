@@ -39,7 +39,8 @@ in{
       background = "${/home/shlok/nixos-config/dotfiles/hypr/background.png}";
       loginBackground = true;
     })
-    
+    pkgs.man-pages
+    pkgs.man-pages-posix
   ];
   nixpkgs.config.cudaSupport = true;
   system.stateVersion = "24.05"; 
@@ -47,7 +48,8 @@ in{
   fonts.packages = with pkgs; [
     (nerdfonts.override { fonts = [ "CascadiaCode" ]; })
   ];
-
+  services.gvfs.enable = true;
+  services.udisks2.enable = true;
   services.tailscale = {
     enable = true;
     package = unstable.tailscale;
@@ -73,4 +75,5 @@ in{
   programs.wireshark = {
     enable = true;
   };
+  documentation.dev.enable = true;
 }

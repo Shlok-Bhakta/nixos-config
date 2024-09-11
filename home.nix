@@ -31,7 +31,6 @@ in{
     pkgs.fastfetch
     pkgs.cowsay
     pkgs.fzf
-    pkgs.bat
     unstable.p7zip
     unstable.localsend
     unstable.swww
@@ -51,7 +50,7 @@ in{
     pkgs.wtype
     pkgs.nodejs_22
     fabric-ai
-    unstable.ollama
+    # unstable.ollama
     pkgs.ffmpeg
     unstable.openai-whisper-cpp
     unstable.nvtopPackages.panthor
@@ -66,9 +65,12 @@ in{
     pkgs.yt-dlp
     unstable.docker-compose
     unstable.vesktop
-    pkgs.modrinth-app
+    # pkgs.modrinth-app
     pkgs.kando
     unstable.obsidian
+    pkgs.wget
+    # update with "nix flake lock --update-input zen-browser"
+    inputs.zen-browser.packages."${pkgs.system}".default
     # unstable.blender
     # hypkgs.hyprpanel
     # goo-engine
@@ -136,6 +138,7 @@ in{
       fuzzel.enable = false;
       kitty.enable = false;
       hyprland.enable = false;
+      bat.enable = false;
     };
     base16Scheme = { 
       base00 = "1e1e2e"; # base
@@ -176,6 +179,29 @@ in{
       emoji = {
         package = pkgs.noto-fonts-emoji;
         name = "Noto Color Emoji";
+      };
+    };
+  };
+  programs.bat = {
+    enable = true;
+    config = {
+      theme = "catppuccin";
+    };
+    extraPackages = with pkgs.bat-extras; [
+      batdiff
+      batman
+      batgrep
+      batwatch
+    ];
+    themes = {
+      catppuccin = {
+        src = pkgs.fetchFromGitHub {
+          owner = "catppuccin";
+          repo = "bat"; # Bat uses sublime syntax for its themes
+          rev = "d714cc1d358ea51bfc02550dabab693f70cccea0";
+          sha256 = "Q5B4NDrfCIK3UAMs94vdXnR42k4AXCqZz6sRn8bzmf4=";
+        };
+        file = "themes/Catppuccin Mocha.tmTheme";
       };
     };
   };

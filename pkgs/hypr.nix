@@ -20,6 +20,7 @@ in{
         "wl-paste --type [text|image] --watch cliphist store"
         "xrandr --output DP-1 --primary"
         "kando"
+        "vesktop"
       ]; 
       monitor = [
         "DP-1, 1920x1080@144, 0x0, 1"
@@ -117,7 +118,7 @@ in{
       "$mainMod, J, togglesplit, # dwindle"
       "$mainMod, W, exec, fuzzel"
       "$mainMod, V, exec, cliphist list | fuzzel -d | cliphist decode | wl-copy"
-      "$mainMod, B, exec, brave"
+      "$mainMod, B, exec, zen"
       "$mainMod, Y, exec, code"
       "$mainMod, L, exec, hyprlock"
       ''SUPER_SHIFT, S, exec, grim -g "$(slurp -d)" - | wl-copy''
@@ -171,7 +172,8 @@ in{
     windowrulev2 = [
       "suppressevent maximize, class:.*"
       "bordercolor rgba(fab387ee) rgba(eba0acee) 45deg,class:(brave-browser)"
-      "bordercolor rgba(e78284ee) rgba(ea999cee) 45deg,title:(.*)(- YouTube)(.*)$"
+      "bordercolor rgba(f9e2afee) rgba(f9e2afee) 45deg,class:(zen-alpha)"
+      "bordercolor rgba(e78284ee) rgba(ea999cee) 45deg,title:(.*)(YouTube)(.*)$"
       "bordercolor rgba(cba6f7ee) rgba(f38ba8ee) rgba(fab387ee) rgba(a6e3a1ee) rgba(74c7ecee) 45deg, title:(.*)(Catppuccin)(.*)$"
       "bordercolor rgba(cba6f7ee) rgba(f38ba8ee) rgba(fab387ee) rgba(a6e3a1ee) rgba(74c7ecee) 45deg, title:(.*)(catppuccin)(.*)$"
       "bordercolor rgba(8bd5caee) rgba(91d7e3ee) 45deg,class:(code-url-handler)"
