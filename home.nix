@@ -35,7 +35,6 @@ in{
     unstable.localsend
     unstable.swww
     pkgs.cliphist
-    unstable.nautilus
     pkgs.playerctl
     pkgs.dbus
     pkgs.wl-clipboard
@@ -60,8 +59,8 @@ in{
     pkgs.udisks2
     pkgs.udiskie
     pkgs.polkit
+    pkgs.polkit_gnome
     pkgs.libnotify
-    unstable.via
     pkgs.yt-dlp
     unstable.docker-compose
     unstable.vesktop
@@ -71,30 +70,25 @@ in{
     pkgs.wget
     # update with "nix flake lock --update-input zen-browser"
     inputs.zen-browser.packages."${pkgs.system}".default
+    pkgs.speechd
+    pkgs.gnome.nautilus
+    pkgs.boatswain
+    pkgs.gnome.gnome-calculator
+    pkgs.gnome.gnome-characters
+    pkgs.apostrophe
+    pkgs.impression
+    pkgs.textpieces
+    # pkgs.gnome.adwaita-icon-theme
+    pkgs.candy-icons
+    pkgs.gnome.gnome-themes-extra
     # unstable.blender
     # hypkgs.hyprpanel
     # goo-engine
     # agsconf
   ];
 
-
-  # Home Manager is pretty good at managing dotfiles. The primary way to manage
-  # plain files is through 'home.file'.
   programs.home-manager.enable = true;
-  home.file = {
-    # "ags".source = "./dotfiles/ags";
-    # # Building this configuration will create a copy of 'dotfiles/screenrc' in
-    # # the Nix store. Activating the configuration will then make '~/.screenrc' a
-    # # symlink to the Nix store copy.
-    # ".screenrc".source = dotfiles/screenrc;
 
-    # # You can also set the file content immediately.
-    # ".gradle/gradle.properties".text = ''
-    #   org.gradle.console=verbose
-    #   org.gradle.daemon.idletimeout=3600000
-    # '';
-
-  };
   services.udiskie = {
     enable = true;
     automount = true;
@@ -102,34 +96,35 @@ in{
     tray = "auto";
   };
   xdg.configFile = {
-    # "ags".source = ./dotfiles/ags;
     "waybar".source = ./dotfiles/waybar;
   };
   
-
-  programs.ags = {
-      enable = true;
-
-      # null or path, leave as null if you don't want hm to manage the config
-      # configDir = ./dotfiles/ags1;
-      configDir = null;
-
-      extraPackages = with pkgs; [
-        gtksourceview
-        gtksourceview4
-        ollama
-        python311Packages.material-color-utilities
-        python311Packages.pywayland
-        pywal
-        sassc
-        webkitgtk
-        webp-pixbuf-loader
-        ydotool
-        sass
-      ];
+  gtk = {
+    enable = true;
+    iconTheme = {
+      name = "candy-icons";
     };
+    gtk3.bookmarks = [
+      "file:///home/shlok/Documents/"
+      "file:///home/shlok/Downloads/"
+      "file:///home/shlok/Documents/Programming/"
+    ];
 
+  };
 
+  dconf.settings = {
+    "org/gnome/desktop/interface" = {
+      icon-theme = "candy-icons";
+    };
+    "org/gnome/nautilus/preferences" = {
+      show-hidden-files = true;
+    };
+    "org/gnome/calculator" = {
+      show-thousands = true;
+      base = 10;
+      word-size = lib.hm.gvariant.mkUint32 64;
+    };
+  };
 
   stylix =  {
     enable = true;
@@ -258,8 +253,6 @@ in{
 
   programs.starship = {
     enable = true;
-    # package.disabled = true;
-    # Configuration written to ~/.config/starship.toml
     settings = pkgs.lib.importTOML ./dotfiles/starship.toml;
   };
 
