@@ -216,12 +216,10 @@ in{
     ];
   };
   
-  programs.wezterm = {
+  programs.kitty = {
     enable = true;
-    enableZshIntegration = true;
     font.name = "CaskaydiaCove Nerd Font";
     theme = "Catppuccin-Mocha";
-    extraConfig = builtins.readFile ./dotfiles/wezterm/config.lua;
   };
   programs.obs-studio = {
     enable = true;
