@@ -81,6 +81,9 @@ in{
     # pkgs.gnome.adwaita-icon-theme
     pkgs.candy-icons
     pkgs.gnome.gnome-themes-extra
+    pkgs.dust
+    pkgs.ripgrep
+    pkgs.speedtest-rs
     # unstable.blender
     # hypkgs.hyprpanel
     # goo-engine
@@ -213,11 +216,12 @@ in{
     ];
   };
   
-  programs.kitty = {
+  programs.wezterm = {
     enable = true;
+    enableZshIntegration = true;
     font.name = "CaskaydiaCove Nerd Font";
     theme = "Catppuccin-Mocha";
-
+    extraConfig = builtins.readFile ./dotfiles/wezterm/config.lua;
   };
   programs.obs-studio = {
     enable = true;
@@ -239,6 +243,9 @@ in{
       c = "code";
       C = "code .";
       cn = "code /home/shlok/nixos-config";
+      cat = "bat";
+      man = "batman";
+      cd = "z";
     };
     history = {
       size = 10000;
@@ -249,6 +256,27 @@ in{
       enable = true;
       plugins = [ "git"];
     };
+  };
+
+  programs.eza = {
+    enable = true;
+    enableZshIntegration = true;
+    git = true;
+  };
+  
+  programs.zoxide = {
+    enable = true;
+    enableZshIntegration = true;
+  };
+
+  programs.ripgrep = {
+    enable = true;
+  };
+  programs.tmux = {
+    enable = true;
+    plugins = [
+      pkgs.tmuxPlugins.catppuccin
+    ];
   };
 
   programs.starship = {
@@ -262,9 +290,9 @@ in{
       vimAlias = true;
       vimdiffAlias = true;
       plugins = [
-          pkgs.vimPlugins.lazy-nvim
-          pkgs.vimPlugins.lazygit-nvim
-          pkgs.vimPlugins.catppuccin-nvim
+          unstable.vimPlugins.lazy-nvim
+          unstable.vimPlugins.lazygit-nvim
+          unstable.vimPlugins.catppuccin-nvim
       ];
   };
 
