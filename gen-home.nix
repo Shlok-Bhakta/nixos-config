@@ -86,6 +86,7 @@ in{
     unstable.hyprshot
     unstable.annotator
     unstable.anki
+    pkgs.gnome.gnome-calendar
     # pkgs.pureref
     # unstable.blender
     # hypkgs.hyprpanel
