@@ -3,16 +3,13 @@ let
   wallpaper-path = /home/shlok/nixos-config/dotfiles/wallpaper/wallpaper.png;
   unstable = import ./unstable.nix { inherit inputs pkgs; };
 in{
-  # imports = [
-  #   inputs.home-manager.nixosModules.home-manager
-  # ];
   # hyprland
   programs.hyprland = {
     enable = true;
     xwayland.enable = true;
     # package = inputs.UNSTABLE.packages."${pkgs.system}".hyprland;
   };
-  fonts.fontconfig.enable = true;
+
   programs.zsh.enable = true;
   users.defaultUserShell = pkgs.zsh;
 
@@ -57,9 +54,6 @@ in{
   environment.sessionVariables = {
     NIXOS_OZONE_WL = "1";
   };
-  environment.variables = {
-    CUDA_PATH = "${pkgs.cudaPackages.cudatoolkit}";
-  };
   virtualisation.docker = {
     enable = true; 
     rootless = {
@@ -77,7 +71,6 @@ in{
   };
 
   services.avahi.enable = true;
-  services.avahi.nssmdns4 = true;
   services.upower.enable = true;
 
   systemd.user.services.kdeconnect-indicator = {

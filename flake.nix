@@ -34,7 +34,7 @@
           nixpkgs.config.allowUnfree = true;
           nixpkgs.overlays = [ overlay-kando ];
         }
-        ./configuration.nix
+        ./desktop/desk-configuration.nix
         ./hardware-configuration.nix
         ./system-settings.nix
         home-manager.nixosModules.home-manager
@@ -58,7 +58,7 @@
           nixpkgs.config.allowUnfree = true;
           # nixpkgs.overlays = [ overlay-kando ];
         }
-        ./laptop-configuration.nix
+        ./laptop/laptop-configuration.nix
         ./laptop-hardware-configuration.nix
         ./laptop-system-settings.nix
         home-manager.nixosModules.home-manager
