@@ -28,4 +28,11 @@ in {
       ]; 
     };
   };
+    # Enable Hyprlock
+  programs.hyprlock = {
+    enable = true;
+    package = unstable.hyprlock;
+    # settings = builtins.imprty
+    extraConfig = builtins.readFile ../dotfiles/hypr/hyprlock.conf;
+  };
 }

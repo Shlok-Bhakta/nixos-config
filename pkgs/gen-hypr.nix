@@ -61,7 +61,7 @@ in{
       };
       misc = { 
         # https://wiki.hyprland.org/Configuring/Variables/#misc
-        force_default_wallpaper = -1; # Set to 0 or 1 to disable the anime mascot wallpapers
+        force_default_wallpaper = 0; # Set to 0 or 1 to disable the anime mascot wallpapers
         disable_hyprland_logo = false; # If true disables the random hyprland logo / anime girl background. :(
       };
       input = {
@@ -73,7 +73,7 @@ in{
         };
       };
       gestures = {
-        workspace_swipe = false;
+        workspace_swipe = true;
       };
       device = {
         name = "epic-mouse-v1";
@@ -163,13 +163,6 @@ in{
       "bordercolor rgba(f5e0dcee) rgba(f2cdcdee) 45deg,floating:1"
     ];
     };
-  };
-  # Enable Hyprlock
-  programs.hyprlock = {
-    enable = true;
-    package = unstable.hyprlock;
-    # settings = builtins.imprty
-    extraConfig = builtins.readFile ../dotfiles/hypr/hyprlock.conf;
   };
   # Hypridle
   services.hypridle = {

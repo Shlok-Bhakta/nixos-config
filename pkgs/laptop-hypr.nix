@@ -20,8 +20,16 @@ in{
         "vesktop"
       ]; 
       monitor = [
-        ", preferred, auto, 1"
+        "eDP-1, preferred, auto, 1"
+        ", preferred, auto, 1, mirror, eDP-1"
       ];
     };
+  };
+  # Enable Hyprlock
+  programs.hyprlock = {
+    enable = true;
+    package = pkgs.hyprlock;
+    # settings = builtins.imprty
+    extraConfig = builtins.readFile ../dotfiles/hypr/laptop-hyprlock.conf;
   };
 }
