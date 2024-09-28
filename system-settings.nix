@@ -127,13 +127,25 @@
   # Enable the OpenSSH daemon.
   # services.openssh.enable = true;
   # Open ports in the firewall.
-  networking.firewall.allowedTCPPorts = [ 
-    53317
-    5173
-    8080
-    80
-    443
-   ];
-  # networking.firewall.allowedUDPPorts = [ ... ];
+  networking.firewall = { 
+    enable = true;
+    allowedTCPPorts = [ 
+      53317
+      5173
+      8080
+      80
+      443
+    ];
+    allowedTCPPortRanges = [ 
+      { from = 1714; to = 1764; } # KDE Connect
+    ];  
+    allowedUDPPortRanges = [ 
+      { from = 1714; to = 1764; } # KDE Connect
+    ];  
+  };
+  # networking.firewall.allowedUDPPorts = [ 
+  #   1714
+  #   1764
+  #  ];
 
 }

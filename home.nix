@@ -38,8 +38,6 @@ in{
     pkgs.playerctl
     pkgs.dbus
     pkgs.wl-clipboard
-    pkgs.grim
-    pkgs.slurp
     unstable.onlyoffice-bin
     pkgs.openssl
     pkgs.bemoji
@@ -84,6 +82,13 @@ in{
     pkgs.dust
     pkgs.ripgrep
     pkgs.speedtest-rs
+    pkgs.gcc
+    pkgs.gnumake
+    pkgs.libgccjit
+    unstable.hyprshot
+    unstable.annotator
+    unstable.anki
+    # pkgs.pureref
     # unstable.blender
     # hypkgs.hyprpanel
     # goo-engine
@@ -91,7 +96,6 @@ in{
   ];
 
   programs.home-manager.enable = true;
-
   services.udiskie = {
     enable = true;
     automount = true;
@@ -292,6 +296,10 @@ in{
           unstable.vimPlugins.lazygit-nvim
           unstable.vimPlugins.catppuccin-nvim
       ];
+  };
+  xdg.configFile."nvim" = {
+    source = ./dotfiles/lazyvim;
+    recursive = true;
   };
 
   programs.chromium = {

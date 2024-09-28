@@ -121,7 +121,7 @@ in{
       "$mainMod, B, exec, zen"
       "$mainMod, Y, exec, code"
       "$mainMod, L, exec, hyprlock"
-      ''SUPER_SHIFT, S, exec, grim -g "$(slurp -d)" - | wl-copy''
+      ''SUPER_SHIFT, S, exec, hyprshot -m region --freeze --clipboard-only''
       "$mainMod, T, exec, bemoji"
       "$mainMod CTRL, Space, global, kando:main-menu"
 
