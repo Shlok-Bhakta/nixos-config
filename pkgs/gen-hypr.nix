@@ -3,29 +3,11 @@ let
   wallpaper-path = /home/shlok/nixos-config/dotfiles/wallpaper/wallpaper.gif;
   unstable = import ../unstable.nix { inherit inputs pkgs; };
 in{
-  home.packages = [
-    unstable.hypridle
-  ];
-  # Enable Hyprland
+    # Enable Hyprland
   wayland.windowManager.hyprland = {
     enable = true;
-    package = unstable.hyprland;
     # extraConfig = builtins.readFile ./dotfiles/hyprland.conf;  
     settings = {
-      exec-once = [
-        "swww img ${wallpaper-path}"
-        "swww-daemon --format xrgb"
-        "waybar"
-        "swaync"
-        "wl-paste --type [text|image] --watch cliphist store"
-        "xrandr --output DP-1 --primary"
-        "kando"
-        "vesktop"
-      ]; 
-      monitor = [
-        "DP-1, 1920x1080@144, 0x0, 1"
-        "HDMI-A-1, 1920x1080@144, -1080x-650, 1, transform, 1"
-      ];
       "$terminal" = "kitty";
       "$fileManager" = "yazi";
       "$menu" = "fuzzel";
@@ -179,7 +161,7 @@ in{
       "bordercolor rgba(8bd5caee) rgba(91d7e3ee) 45deg,class:(code-url-handler)"
       "bordercolor rgba(7287fdee) rgba(209fb5ee) 45deg,class:(vesktop)"
       "bordercolor rgba(f5e0dcee) rgba(f2cdcdee) 45deg,floating:1"
-    ]; 
+    ];
     };
   };
   # Enable Hyprlock

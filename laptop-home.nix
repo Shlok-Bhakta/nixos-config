@@ -12,6 +12,7 @@ in{
     inputs.ags.homeManagerModules.default 
     inputs.stylix.homeManagerModules.stylix
     ./pkgs/laptop-hypr.nix
+
   ];
   home.username = "shlok";
   home.homeDirectory = "/home/shlok";

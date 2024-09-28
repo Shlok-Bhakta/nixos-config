@@ -11,7 +11,7 @@ in{
   imports = [ 
     inputs.ags.homeManagerModules.default 
     inputs.stylix.homeManagerModules.stylix
-    ./pkgs/hypr.nix
+    ./pkgs/desk-hypr.nix
   ];
   home.username = "shlok";
   home.homeDirectory = "/home/shlok";
