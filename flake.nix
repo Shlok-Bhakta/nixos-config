@@ -49,6 +49,30 @@
         }
       ];
     };
+    nixosConfigurations.ShlokLAPNIX = nixpkgs.lib.nixosSystem {
+      specialArgs = {
+        inherit inputs;
+      };
+      modules = [
+        {
+          nixpkgs.config.allowUnfree = true;
+          # nixpkgs.overlays = [ overlay-kando ];
+        }
+        ./laptop-configuration.nix
+        ./laptop-hardware-configuration.nix
+        ./laptop-system-settings.nix
+        home-manager.nixosModules.home-manager
+        {
+          home-manager.useGlobalPkgs = true;
+          home-manager.useUserPackages = true;
+          home-manager.users.shlok = import ./laptop-home.nix;
+          home-manager.backupFileExtension = "old";
+          home-manager.extraSpecialArgs = {
+            inherit inputs self;
+          };
+        }
+      ];
+    };
 
   };
 }
