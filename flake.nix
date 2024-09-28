@@ -36,7 +36,7 @@
         }
         ./desktop/desk-configuration.nix
         ./desktop/desk-hardware-configuration.nix
-        ./system-settings.nix
+        ./desktop/desk-system-settings.nix
         home-manager.nixosModules.home-manager
         {
           home-manager.useGlobalPkgs = true;
@@ -60,7 +60,7 @@
         }
         ./laptop/laptop-configuration.nix
         ./laptop/laptop-hardware-configuration.nix
-        ./laptop-system-settings.nix
+        ./laptop/laptop-system-settings.nix
         home-manager.nixosModules.home-manager
         {
           home-manager.useGlobalPkgs = true;
