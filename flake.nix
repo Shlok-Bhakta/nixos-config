@@ -35,7 +35,7 @@
           nixpkgs.overlays = [ overlay-kando ];
         }
         ./desktop/desk-configuration.nix
-        ./hardware-configuration.nix
+        ./desktop/desk-hardware-configuration.nix
         ./system-settings.nix
         home-manager.nixosModules.home-manager
         {
@@ -59,7 +59,7 @@
           # nixpkgs.overlays = [ overlay-kando ];
         }
         ./laptop/laptop-configuration.nix
-        ./laptop-hardware-configuration.nix
+        ./laptop/laptop-hardware-configuration.nix
         ./laptop-system-settings.nix
         home-manager.nixosModules.home-manager
         {
