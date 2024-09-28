@@ -41,7 +41,7 @@
         {
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
-          home-manager.users.shlok = import ./home.nix;
+          home-manager.users.shlok = import ./desktop/desk-home.nix;
           home-manager.backupFileExtension = "old";
           home-manager.extraSpecialArgs = {
             inherit inputs self;
@@ -65,7 +65,7 @@
         {
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
-          home-manager.users.shlok = import ./laptop-home.nix;
+          home-manager.users.shlok = import ./laptop/laptop-home.nix;
           home-manager.backupFileExtension = "old";
           home-manager.extraSpecialArgs = {
             inherit inputs self;

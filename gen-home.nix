@@ -11,8 +11,6 @@ in{
   imports = [ 
     inputs.ags.homeManagerModules.default 
     inputs.stylix.homeManagerModules.stylix
-    ./pkgs/laptop-hypr.nix
-
   ];
   home.username = "shlok";
   home.homeDirectory = "/home/shlok";
@@ -64,7 +62,6 @@ in{
     unstable.docker-compose
     unstable.vesktop
     # pkgs.modrinth-app
-    # pkgs.kando
     unstable.obsidian
     pkgs.wget
     # update with "nix flake lock --update-input zen-browser"
@@ -102,9 +99,6 @@ in{
     automount = true;
     notify = true;
     tray = "auto";
-  };
-  xdg.configFile = {
-    "waybar".source = ./dotfiles/laptop-waybar;
   };
   
   gtk = {
