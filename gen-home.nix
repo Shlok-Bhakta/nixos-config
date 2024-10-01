@@ -316,6 +316,7 @@ in{
     enable = true;
     userName  = "Shlok Bhakta";
     userEmail = "shlokbhakta1@gmail.com";
+    lfs.enable = true;
   };
 
   programs.fuzzel = {
