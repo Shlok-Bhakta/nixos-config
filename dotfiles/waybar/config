@@ -22,6 +22,14 @@
         "tray",
         "custom/rightpad"
     ],
+    "hyprland/workspaces": {
+        "format": "{name}",
+        "on-click": "activate",
+        "sort-by-number": true,
+        "on-scroll-up": "hyprctl dispatch workspace e+1",
+        "on-scroll-down": "hyprctl dispatch workspace e-1",
+        "all-outputs": false
+    },
     "hyprland/mode": {
         "format": "<span style=\"italic\">{}</span>"
     },
@@ -29,12 +37,12 @@
         "format": "{icon} {count}",
         "show-empty": false,
         "format-icons": [
-            "",
-            ""
+          "",
+          ""
         ],
         "tooltip": true,
         "tooltip-format": "{app}: {title}"
-    },
+      },
     "hyprland/window": {
         "on-click": "ags -t datemenu",
         "tooltip": false
@@ -174,6 +182,14 @@
     "modules-right": [
         "hyprland/window"
     ],
+    "hyprland/workspaces": {
+        "format": "{name}",
+        "on-click": "activate",
+        "sort-by-number": true,
+        "on-scroll-up": "hyprctl dispatch workspace e+1",
+        "on-scroll-down": "hyprctl dispatch workspace e-1",
+        "all-outputs": false
+    },
     "hyprland/mode": {
         "format": "<span style=\"italic\">{}</span>"
     },

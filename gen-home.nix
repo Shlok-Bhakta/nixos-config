@@ -2,8 +2,7 @@
 let
   unstable = import ./unstable.nix { inherit inputs pkgs; };  
   wallpaper-path = /home/shlok/nixos-config/dotfiles/wallpaper/wallpaper.gif;
-  # goo-engine = pkgs.callPackage ./goo/goo-engine.nix {
-  #   pkgs = unstable;
+  # goo-engine = pkgs.callPackage ./pkgs/goo-engine/default.nix {
   # };
   fabric-ai = unstable.callPackage ./pkgs/fabric/package.nix {};
 
@@ -87,6 +86,7 @@ in{
     unstable.annotator
     unstable.anki
     pkgs.gnome.gnome-calendar
+    pkgs.gnome.gnome-clocks
     # pkgs.pureref
     # unstable.blender
     # hypkgs.hyprpanel

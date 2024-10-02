@@ -63,19 +63,6 @@ button:hover {
     border-top: 2px solid @hover;
 }
 
-#workspaces button {
-    padding: 0 4px;
-}
-
-#workspaces button.focused {
-    background-color: rgba(0, 0, 0, 0.3);
-    color: @blue;
-    border-top: 2px solid @blue;
-}
-
-#workspaces button.urgent {
-    background-color: #eb4d4b;
-}
 
 #pulseaudio,
 #clock,
@@ -158,4 +145,30 @@ button:hover {
     border-radius: 15px;
     padding-left: 6px;
     padding-right: 6px;
+}
+
+#workspaces button {
+    padding: 0 5px;
+    background-color: transparent;
+    color: @teal;
+    font-weight: bold;
+}
+
+#workspaces button.active {
+    background-color: @surface0;
+    border-bottom: 3px solid @teal;
+}
+
+#workspaces button:hover {
+    background: @mantle;
+    box-shadow: inherit;
+    border-bottom: 3px solid @yellow;
+}
+
+#workspaces button {
+    padding: 0 4px;
+}
+
+#workspaces button.urgent {
+    background-color: @red;
 }
