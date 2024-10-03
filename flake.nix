@@ -56,7 +56,7 @@
       modules = [
         {
           nixpkgs.config.allowUnfree = true;
-          # nixpkgs.overlays = [ overlay-kando ];
+          nixpkgs.overlays = [ overlay-kando ];
         }
         ./laptop/laptop-configuration.nix
         ./laptop/laptop-hardware-configuration.nix

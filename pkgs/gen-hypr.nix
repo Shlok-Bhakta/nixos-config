@@ -51,7 +51,7 @@ in{
           "border, 0.5, 10, default"
           "borderangle, 0.5, 8, default"
           "fade, 0.5, 7, default"
-          "workspaces, 0.5, 6, default"       
+          "workspaces, 0.75, 6, default"       
         ];
       };
       dwindle = {
@@ -144,6 +144,12 @@ in{
       # Scroll through existing workspaces with mainMod + scroll
       "$mainMod, mouse_down, workspace, e+1"
       "$mainMod, mouse_up, workspace, e-1"
+
+      # resize window keybinds
+      "SUPER ALT, right, resizeactive, 15 0"
+      "SUPER ALT, left, resizeactive, -15 0"
+      "SUPER ALT, up, resizeactive, 0 -15"
+      "SUPER ALT, down, resizeactive, 0 15"
 
     ];
     bindm = [

@@ -17,6 +17,7 @@ in{
         "waybar"
         "swaync"
         "wl-paste --type [text|image] --watch cliphist store"
+        "kando"
         "vesktop"
       ]; 
       monitor = [

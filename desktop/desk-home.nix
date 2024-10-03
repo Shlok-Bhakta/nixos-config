@@ -4,8 +4,6 @@
     ../gen-home.nix
   ];
   home.packages = [
-    pkgs.nvidia-vaapi-driver
-    pkgs.kando
   ];
   xdg.configFile = {
     "waybar".source = ../dotfiles/waybar;

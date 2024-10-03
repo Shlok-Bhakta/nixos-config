@@ -45,6 +45,7 @@ in{
     pkgs.wtype
     pkgs.nodejs_22
     fabric-ai
+    pkgs.nvidia-vaapi-driver
     # unstable.ollama
     pkgs.ffmpeg
     unstable.openai-whisper-cpp
@@ -87,6 +88,8 @@ in{
     unstable.anki
     pkgs.gnome.gnome-calendar
     pkgs.gnome.gnome-clocks
+    # nix flake lock --update-input kando-nixpkgs
+    pkgs.kando
     # pkgs.pureref
     # unstable.blender
     # hypkgs.hyprpanel
