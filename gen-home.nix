@@ -10,6 +10,7 @@ in{
   imports = [ 
     inputs.ags.homeManagerModules.default 
     inputs.stylix.homeManagerModules.stylix
+    ./pkgs/goo-engine/goo.nix
   ];
   home.username = "shlok";
   home.homeDirectory = "/home/shlok";
@@ -93,7 +94,6 @@ in{
     # pkgs.pureref
     # unstable.blender
     # hypkgs.hyprpanel
-    # goo-engine
     # agsconf
   ];
 
@@ -247,6 +247,7 @@ in{
       cat = "bat";
       man = "batman";
       cd = "z";
+      goo = "goo-engine-fhs";
     };
     history = {
       size = 10000;
