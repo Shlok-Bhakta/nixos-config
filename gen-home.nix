@@ -91,6 +91,8 @@ in{
     pkgs.gnome.gnome-clocks
     # nix flake lock --update-input kando-nixpkgs
     pkgs.kando
+    pkgs.fragments
+    pkgs.gnome.gnome-disk-utility
     # pkgs.pureref
     # unstable.blender
     # hypkgs.hyprpanel
