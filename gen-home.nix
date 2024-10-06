@@ -5,7 +5,7 @@ let
   # goo-engine = pkgs.callPackage ./pkgs/goo-engine/default.nix {
   # };
   fabric-ai = unstable.callPackage ./pkgs/fabric/package.nix {};
-
+  pureref = pkgs.callPackage (import ./pkgs/pureref/pureref.nix) {};
 in{
   imports = [ 
     inputs.ags.homeManagerModules.default 
@@ -93,7 +93,8 @@ in{
     pkgs.kando
     pkgs.fragments
     pkgs.gnome.gnome-disk-utility
-    # pkgs.pureref
+    pureref
+    pkgs.nixfmt-rfc-style
     # unstable.blender
     # hypkgs.hyprpanel
     # agsconf
