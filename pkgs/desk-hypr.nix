@@ -21,6 +21,7 @@ in {
         "xrandr --output DP-1 --primary"
         "kando"
         "vesktop"
+        "syncthing"
       ]; 
       monitor = [
         "DP-1, 1920x1080@144, 0x0, 1"

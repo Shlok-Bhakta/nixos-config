@@ -99,6 +99,8 @@ in{
     # agsconf
   ];
 
+
+
   programs.home-manager.enable = true;
   services.udiskie = {
     enable = true;
@@ -116,10 +118,21 @@ in{
       "file:///home/shlok/Documents/"
       "file:///home/shlok/Downloads/"
       "file:///home/shlok/Documents/Programming/"
+      "file:///home/shlok/Sync"
     ];
 
   };
 
+  services.syncthing = {
+    enable = true;
+  };
+  services.nextcloud-client = {
+    enable = true;
+  };
+
+  services.gnome-keyring = {
+    enable = true;
+  };
   dconf.settings = {
     "org/gnome/desktop/interface" = {
       icon-theme = "candy-icons";
