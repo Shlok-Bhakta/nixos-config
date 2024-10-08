@@ -19,6 +19,7 @@ in{
         "wl-paste --type [text|image] --watch cliphist store"
         "kando"
         "vesktop"
+        "syncthing"
       ]; 
       monitor = [
         "eDP-1, preferred, auto, 1"
