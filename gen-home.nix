@@ -95,6 +95,8 @@ in{
     pkgs.gnome.gnome-disk-utility
     pureref
     pkgs.nixfmt-rfc-style
+    pkgs.vlc
+    unstable.gnome.pomodoro
     # unstable.blender
     # hypkgs.hyprpanel
     # agsconf

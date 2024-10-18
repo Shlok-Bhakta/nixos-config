@@ -14,7 +14,7 @@
       url = "https://github.com/TomaSajt/nixpkgs/archive/kando.tar.gz";
       flake = false;
     };
-    zen-browser.url = "github:MarceColl/zen-browser-flake";
+    zen-browser.url = "github:ch4og/zen-browser-flake";
     
 };
 
