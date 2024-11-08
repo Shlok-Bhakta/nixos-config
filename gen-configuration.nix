@@ -39,6 +39,19 @@ in{
     pkgs.man-pages
     pkgs.man-pages-posix
   ];
+
+  # kanata
+  services.kanata = {
+    enable = true;
+    package = pkgs.kanata;
+    keyboards.keychron = {
+      devices = [
+        "/dev/input/by-id/usb-Keychron_Keychron_K8_Pro-event-kbd"
+      ];
+      configFile = /home/shlok/nixos-config/dotfiles/kanata/kanata.kbd;
+    };
+  };
+
   nixpkgs.config.cudaSupport = true;
   system.stateVersion = "24.05"; 
   security.pam.services.swaylock = {};

@@ -67,9 +67,11 @@ in{
     pkgs.wget
     # update with "nix flake lock --update-input zen-browser"
     inputs.zen-browser.packages."${pkgs.system}".default
+    # inputs.yapper.packages.${pkgs.system}.default
     pkgs.speechd
     pkgs.gnome.nautilus
-    pkgs.boatswain
+    # pkgs.boatswain
+    unstable.deckmaster
     pkgs.gnome.gnome-calculator
     pkgs.gnome.gnome-characters
     pkgs.apostrophe

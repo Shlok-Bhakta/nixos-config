@@ -15,10 +15,13 @@
       flake = false;
     };
     zen-browser.url = "github:ch4og/zen-browser-flake";
-    
+    yapper = {
+      url = "github:Shlok-Bhakta/yapper";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 };
 
-  outputs = { self, nixpkgs, home-manager, stylix, kando-nixpkgs, ... } @ inputs: let 
+  outputs = { self, nixpkgs, home-manager, stylix, kando-nixpkgs, yapper, ... } @ inputs: let 
       system = "x86_64-linux";
       overlay-kando = final: prev: {
         kando = (import kando-nixpkgs {
@@ -32,7 +35,10 @@
       };
       modules = [
         {
-          nixpkgs.config.allowUnfree = true;
+          nixpkgs.config = {
+            allowUnfree = true;
+            cudaSupport = true;
+          };
           nixpkgs.overlays = [ overlay-kando ];
         }
         ./desktop/desk-configuration.nix

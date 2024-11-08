@@ -6,6 +6,7 @@
 
   boot.loader.grub.enable = true;
   boot.loader.grub.device = "/dev/nvme0n1";
+  boot.supportedFilesystems = [ "ntfs" ];
 
   networking.hostName = "ShlokPCNIX"; # Define your hostname.
 
