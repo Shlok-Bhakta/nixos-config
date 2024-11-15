@@ -1,6 +1,12 @@
 { lib, config, pkgs, inputs, ... }:
 let
   unstable = import ./unstable.nix { inherit inputs pkgs; };  
+  affinity = import inputs.affinity { 
+    system = pkgs.system;
+    config = {
+      allowUnfree = true;
+    };
+  };
   wallpaper-path = /home/shlok/nixos-config/dotfiles/wallpaper/wallpaper.gif;
   # goo-engine = pkgs.callPackage ./pkgs/goo-engine/default.nix {
   # };
@@ -19,7 +25,7 @@ in{
     XCURSOR_SIZE = 24;
     HYPRCURSOR_SIZE = 24;
   };
-
+  # inputs.yapper.config.allowUnfree = true;
   home.stateVersion = "24.05"; 
   home.packages = [
     pkgs.lolcat
@@ -67,10 +73,12 @@ in{
     pkgs.wget
     # update with "nix flake lock --update-input zen-browser"
     inputs.zen-browser.packages."${pkgs.system}".default
-    # inputs.yapper.packages.${pkgs.system}.default
+    inputs.yapper.packages."${pkgs.system}".default
+    # inputs.affinity.packages.${pkgs.system}.photo
+    # affinity.Photo
     pkgs.speechd
     pkgs.gnome.nautilus
-    # pkgs.boatswain
+    pkgs.boatswain
     unstable.deckmaster
     pkgs.gnome.gnome-calculator
     pkgs.gnome.gnome-characters

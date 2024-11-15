@@ -19,9 +19,10 @@
       url = "github:Shlok-Bhakta/yapper";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
 };
 
-  outputs = { self, nixpkgs, home-manager, stylix, kando-nixpkgs, yapper, ... } @ inputs: let 
+  outputs = { self, nixpkgs, home-manager, stylix, kando-nixpkgs, ... } @ inputs: let 
       system = "x86_64-linux";
       overlay-kando = final: prev: {
         kando = (import kando-nixpkgs {
