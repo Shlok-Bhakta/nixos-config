@@ -2,7 +2,7 @@
 goo-engine = pkgs.stdenv.mkDerivation {
     name = "goo-engine";
     src = pkgs.fetchurl {
-      url = "https://github.com/Shlok-Bhakta/nixos-config/releases/download/Goo41/goo-engine.tar.xz";
+      url = "https://fh.shloklab.us/api/files/bgmnvuddbyf3jcb/zuu5bqkjm1yxcbh/goo_engine_vGIB9TLSUd.tar.xz?token=";
       sha256 = "sha256-7my9WK/GqXSO58IahDxUEDSxg6jQTH3h5IyQyPiTwmA="; # Replace with actual hash
     };
     unpackPhase = ''
