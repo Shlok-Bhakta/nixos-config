@@ -107,6 +107,8 @@ in{
     pkgs.nixfmt-rfc-style
     pkgs.vlc
     unstable.gnome.pomodoro
+    pkgs.yt-dlg
+    pkgs.github-desktop
     # unstable.blender
     # hypkgs.hyprpanel
     # agsconf
@@ -350,6 +352,11 @@ in{
     userName  = "Shlok Bhakta";
     userEmail = "shlokbhakta1@gmail.com";
     lfs.enable = true;
+
+  };
+
+  programs.git-credential-oauth = {
+    enable = true;
   };
 
   programs.fuzzel = {

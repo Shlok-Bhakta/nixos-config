@@ -9,7 +9,7 @@ in{
     # extraConfig = builtins.readFile ./dotfiles/hyprland.conf;  
     settings = {
       "$terminal" = "kitty";
-      "$fileManager" = "yazi";
+      "$fileManager" = "nautilus";
       "$menu" = "fuzzel";
       general = { 
         gaps_in = 5;
@@ -46,12 +46,11 @@ in{
         # Default animations, see https://wiki.hyprland.org/Configuring/Animations/ for more
         bezier = "myBezier, 0.05, 0.9, 0.1, 1.05";
         animation = [
-          "windows, 0.5, 7, myBezier"
-          "windowsOut, 0.5, 7, default, popin 80%"
-          "border, 0.5, 10, default"
-          "borderangle, 0.5, 8, default"
-          "fade, 0.5, 7, default"
-          "workspaces, 0.75, 6, default"       
+          "windows, 1, 1, myBezier"
+          "windowsOut, 1, 0.25, default"
+          "border, 1, 10, default"
+          "borderangle, 1, 1.5, default"
+          "workspaces, 1, 0.5, default"    
         ];
       };
       dwindle = {
@@ -104,6 +103,7 @@ in{
       "$mainMod, Y, exec, code"
       "$mainMod, L, exec, hyprlock"
       ''SUPER_SHIFT, S, exec, hyprshot -m region --freeze --clipboard-only''
+      ''SUPER_SHIFT, C, exec, hyprpicker | wl-copy''
       "$mainMod, T, exec, bemoji"
       "$mainMod CTRL, Space, global, kando:main-menu"
 
