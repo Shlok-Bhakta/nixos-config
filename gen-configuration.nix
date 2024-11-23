@@ -38,6 +38,7 @@ in{
     })
     pkgs.man-pages
     pkgs.man-pages-posix
+    pkgs.cachix
   ];
 
   # kanata
@@ -60,6 +61,9 @@ in{
   ];
   services.gvfs.enable = true;
   services.udisks2.enable = true;
+  hardware.bluetooth.enable = true;
+  hardware.bluetooth.powerOnBoot = true;
+  # services.blueman.enable = true;
   services.tailscale = {
     enable = true;
     package = unstable.tailscale;
@@ -79,6 +83,7 @@ in{
   };
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nix.settings.trusted-users = [ "root" "shlok" ];
   programs.wireshark = {
     enable = true;
   };
@@ -95,6 +100,5 @@ in{
       Restart = "on-failure";
     };
   };
-
   documentation.dev.enable = true;
 }
