@@ -12,8 +12,8 @@
   # Enable network manager applet
   programs.nm-applet.enable = true;
 
-  # services.xserver.videoDrivers = ["nvidia"];
-  services.xserver.videoDrivers = ["neuveau"];
+  services.xserver.videoDrivers = ["nvidia"];
+  # services.xserver.videoDrivers = ["neuveau"];
   services.displayManager = {
         sddm = {
         enable = true;
