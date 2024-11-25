@@ -23,6 +23,7 @@ goo-engine = pkgs.stdenv.mkDerivation {
     targetPkgs = pkgs: (with pkgs; [
       goo-engine
       # X11 libraries
+      libdecor
       xorg.libX11
       xorg.libXi
       xorg.libXext
@@ -68,6 +69,7 @@ goo-engine = pkgs.stdenv.mkDerivation {
       ffmpeg
       xorg.libSM
       xorg.libICE
+      python312Packages.pillow
       # Add any other runtime dependencies here
     ]);
     runScript = "blender";

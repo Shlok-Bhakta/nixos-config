@@ -102,6 +102,7 @@ in{
       "$mainMod, B, exec, zen"
       "$mainMod, Y, exec, code"
       "$mainMod, L, exec, hyprlock"
+      "SUPER_SHIFT, F, fullscreen"
       ''SUPER_SHIFT, S, exec, hyprshot -m region --freeze --clipboard-only''
       ''SUPER_SHIFT, C, exec, hyprpicker | wl-copy''
       "$mainMod, T, exec, bemoji"

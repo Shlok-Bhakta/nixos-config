@@ -109,6 +109,9 @@ in{
     unstable.gnome.pomodoro
     pkgs.yt-dlg
     pkgs.github-desktop
+    pkgs.git-credential-manager
+    pkgs.rclone
+    pkgs.rclone-browser
     # unstable.blender
     # hypkgs.hyprpanel
     # agsconf
@@ -142,12 +145,17 @@ in{
   services.syncthing = {
     enable = true;
   };
-  # services.nextcloud-client = {
-  #   enable = true;
-  # };
+  
+  services.nextcloud-client = {
+    enable = true;
+    startInBackground = true;
+  };
 
   services.gnome-keyring = {
     enable = true;
+    components = [
+      "secrets"
+    ];
   };
   dconf.settings = {
     "org/gnome/desktop/interface" = {
