@@ -179,6 +179,9 @@ in{
       kitty.enable = false;
       hyprland.enable = false;
       bat.enable = false;
+      hyprlock.enable = false;
+      swaync.enable = false;
+      tmux.enable = false;
     };
     base16Scheme = { 
       base00 = "1e1e2e"; # base
@@ -262,6 +265,9 @@ in{
     enable = true;
     font.name = "CaskaydiaCove Nerd Font";
     theme = "Catppuccin-Mocha";
+    settings = {
+      shell = "tmux new-session -A -s main zsh";
+    };
   };
   programs.obs-studio = {
     enable = true;
@@ -287,6 +293,41 @@ in{
       man = "batman";
       cd = "z";
       goo = "goo-engine-fhs";
+      tmuxhelp = ''echo "$(tput setaf 4)TMUX CHEATSHEET$(tput sgr0)
+        $(tput setaf 4)---------------$(tput sgr0)
+        $(tput bold)Prefix is Ctrl-e$(tput sgr0)
+
+        $(tput setaf 2)PANES$(tput sgr0)
+        prefix + s          Split horizontally
+        prefix + v          Split vertically 
+        prefix + h/j/k/l    Navigate panes
+        prefix + x          Kill current pane
+        prefix + q          Show pane numbers
+        prefix + z          Toggle pane zoom
+        Ctrl + h/j/k/l      Smart pane switching (works with vim)
+
+        $(tput setaf 2)WINDOWS$(tput sgr0)
+        prefix + c          Create new window
+        prefix + n          Next window
+        prefix + p          Previous window
+        prefix + &          Kill window
+        prefix + ,          Rename window
+        prefix + number     Go to window by number
+        prefix + l          Toggle last active window
+        prefix + w          List windows
+
+        $(tput setaf 2)SESSIONS$(tput sgr0)
+        prefix + d          Detach from session
+        prefix + $          Rename session
+        prefix + s          List/switch sessions
+        tmux ls            List sessions
+        tmux attach -t 0   Attach to session 0
+        tmux kill-session  Kill current session
+
+        $(tput setaf 2)MISC$(tput sgr0)
+        prefix + r          Reload tmux config
+        prefix + [          Enter copy mode (use vim keys)
+        prefix + ?          Show all keybindings"'';
     };
     history = {
       size = 10000;
@@ -318,7 +359,66 @@ in{
     plugins = [
       pkgs.tmuxPlugins.catppuccin
     ];
+    # Prefix Update
+    # - Set new prefix to Ctrl-e for better ergonomics with home row mods
+    # - Added double-tap Ctrl-e to send prefix to nested sessions
+
+    # Window Navigation
+    # - h: Select left pane
+    # - j: Select pane below
+    # - k: Select pane above
+    # - l: Select right pane
+
+    # Window Management
+    # - s: Split window horizontally (creates pane below)
+    # - v: Split window vertically (creates pane to the right)
+    # - Windows now start from index 1
+    # - Auto-renumber windows when closing them
+
+    # Vim Integration
+    # - Enabled vim keybindings in copy mode
+    # - Smart pane switching between vim splits and tmux panes using Ctrl + hjkl
+    # - Seamless navigation between vim and tmux
+
+    # Quality of Life
+    # - Mouse support enabled for selections and resizing
+    # - Increased scrollback buffer to 102400 lines
+    # - Added quick config reload with prefix + r
+
+    extraConfig = ''
+      set -g default-terminal "tmux-256color"
+      set-option -sa terminal-overrides ",xterm-kitty:RGB"
+    
+      unbind C-b
+      set -g prefix C-e
+      bind C-e send-prefix
+    
+      bind h select-pane -L
+      bind j select-pane -D
+      bind k select-pane -U
+      bind l select-pane -R
+
+      bind v split-window -h
+      bind s split-window -v
+
+      setw -g mode-keys vi
+
+      bind -n C-h run "(tmux display-message -p '#{pane_current_command}' | grep -iqE '(^|\/)vim$' && tmux send-keys C-h) || tmux select-pane -L"
+      bind -n C-j run "(tmux display-message -p '#{pane_current_command}' | grep -iqE '(^|\/)vim$' && tmux send-keys C-j) || tmux select-pane -D"
+      bind -n C-k run "(tmux display-message -p '#{pane_current_command}' | grep -iqE '(^|\/)vim$' && tmux send-keys C-k) || tmux select-pane -U"
+      bind -n C-l run "(tmux display-message -p '#{pane_current_command}' | grep -iqE '(^|\/)vim$' && tmux send-keys C-l) || tmux select-pane -R"
+
+      set -g base-index 1
+      setw -g pane-base-index 1
+
+      set -g renumber-windows on
+
+      set -g mouse on
+
+      set -g history-limit 102400
+    '';
   };
+
 
   programs.starship = {
     enable = true;
