@@ -395,6 +395,15 @@ in{
       set-option -g default-terminal "xterm-kitty"
       set-option -sa terminal-overrides ",xterm-kitty:RGB"
 
+      # Wayland clipboard integration
+      set -s copy-command 'wl-copy'
+      set -s set-clipboard on
+      
+      # Vim-style copy mode
+      bind-key -T copy-mode-vi y send-keys -X copy-pipe-and-cancel "wl-copy && wl-paste -n | wl-copy -p"
+      bind-key p run "wl-paste -n | tmux load-buffer - ; tmux paste-buffer"
+  
+
       unbind C-b
       set -g prefix C-e
       bind C-e send-prefix
