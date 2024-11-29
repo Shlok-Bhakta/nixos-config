@@ -106,7 +106,7 @@ in{
     pureref
     pkgs.nixfmt-rfc-style
     pkgs.vlc
-    unstable.gnome.pomodoro
+    unstable.gnome-pomodoro
     pkgs.yt-dlg
     pkgs.github-desktop
     pkgs.git-credential-manager
@@ -385,10 +385,16 @@ in{
     # - Increased scrollback buffer to 102400 lines
     # - Added quick config reload with prefix + r
 
+      # set -g default-terminal "tmux-256color"
+      # set-option -sa terminal-overrides ",xterm-kitty:RGB"
     extraConfig = ''
-      set -g default-terminal "tmux-256color"
-      set-option -sa terminal-overrides ",xterm-kitty:RGB"
+      set-option -ga terminal-features "*:strikethrough:cstyle:osc7:focus"
+      set-option -ga terminal-overrides "*:Tc"
     
+      # Fix terminal state and input handling
+      set-option -g default-terminal "xterm-kitty"
+      set-option -sa terminal-overrides ",xterm-kitty:RGB"
+
       unbind C-b
       set -g prefix C-e
       bind C-e send-prefix
