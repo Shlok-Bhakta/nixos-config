@@ -35,12 +35,12 @@
     LC_TIME = "en_US.UTF-8";
   };
   
-  boot.kernelPackages = pkgs.linuxKernel.packages.linux_6_9;
+  boot.kernelPackages = pkgs.linuxPackages_latest;
 
  # Enable OpenGL
   hardware.opengl = {
     enable = true;
-    driSupport = true;
+    # driSupport = true; apparently not allowed anymore
     driSupport32Bit = true;
   };
 
