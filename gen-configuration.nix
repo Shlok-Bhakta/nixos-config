@@ -1,6 +1,6 @@
 { lib, config, pkgs, inputs, ... }:
 let
-  wallpaper-path = /home/shlok/nixos-config/dotfiles/wallpaper/wallpaper.png;
+  wallpaper-path = ./dotfiles/wallpaper/wallpaper.png;
   unstable = import ./unstable.nix { inherit inputs pkgs; };
 in{
   # hyprland
@@ -33,7 +33,7 @@ in{
       flavor = "mocha";
       font  = "CaskaydiaCove Nerd Font";
       fontSize = "9";
-      background = "${/home/shlok/nixos-config/dotfiles/hypr/background.png}";
+      background = "${./dotfiles/hypr/background.png}";
       loginBackground = true;
     })
     pkgs.man-pages
@@ -49,12 +49,12 @@ in{
       devices = [
         "/dev/input/by-id/usb-Keychron_Keychron_K8_Pro-event-kbd"
       ];
-      configFile = /home/shlok/nixos-config/dotfiles/kanata/kanata.kbd;
+      configFile = ./dotfiles/kanata/kanata.kbd;
     };
   };
 
   nixpkgs.config.cudaSupport = true;
-  system.stateVersion = "24.05"; 
+  system.stateVersion = "24.11"; 
   security.pam.services.swaylock = {};
   fonts.packages = with pkgs; [
     (nerdfonts.override { fonts = [ "CascadiaCode" ]; })

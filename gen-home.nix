@@ -7,7 +7,7 @@ let
       allowUnfree = true;
     };
   };
-  wallpaper-path = /home/shlok/nixos-config/dotfiles/wallpaper/wallpaper.gif;
+  wallpaper-path = ./dotfiles/wallpaper/wallpaper.gif;
   # goo-engine = pkgs.callPackage ./pkgs/goo-engine/default.nix {
   # };
   fabric-ai = unstable.callPackage ./pkgs/fabric/package.nix {};
@@ -26,7 +26,7 @@ in{
     HYPRCURSOR_SIZE = 24;
   };
   # inputs.yapper.config.allowUnfree = true;
-  home.stateVersion = "24.05"; 
+  home.stateVersion = "24.11"; 
   home.packages = [
     pkgs.lolcat
     pkgs.direnv

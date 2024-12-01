@@ -1,5 +1,5 @@
 { lib, config, pkgs, inputs, ... }: let
-  wallpaper-path = /home/shlok/nixos-config/dotfiles/wallpaper/wallpaper.gif;
+  wallpaper-path = ../dotfiles/wallpaper/wallpaper.gif;
 in{
   imports = [
     ./gen-hypr.nix
