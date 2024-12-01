@@ -38,10 +38,10 @@
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
  # Enable OpenGL
-  hardware.opengl = {
+  hardware.graphics = {
     enable = true;
     # driSupport = true; apparently not allowed anymore
-    driSupport32Bit = true;
+    enable32Bit = true;
   };
 
   security.polkit.enable = true;

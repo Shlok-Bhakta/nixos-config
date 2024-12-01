@@ -77,17 +77,17 @@ in{
     # inputs.affinity.packages.${pkgs.system}.photo
     # affinity.Photo
     pkgs.speechd
-    pkgs.gnome.nautilus
+    pkgs.nautilus
     pkgs.boatswain
     unstable.deckmaster
-    pkgs.gnome.gnome-calculator
-    pkgs.gnome.gnome-characters
+    pkgs.gnome-calculator
+    pkgs.gnome-characters
     pkgs.apostrophe
     pkgs.impression
     pkgs.textpieces
     # pkgs.gnome.adwaita-icon-theme
     pkgs.candy-icons
-    pkgs.gnome.gnome-themes-extra
+    pkgs.gnome-themes-extra
     pkgs.dust
     pkgs.ripgrep
     pkgs.speedtest-rs
@@ -97,12 +97,12 @@ in{
     unstable.hyprshot
     unstable.annotator
     unstable.anki
-    pkgs.gnome.gnome-calendar
-    pkgs.gnome.gnome-clocks
+    pkgs.gnome-calendar
+    pkgs.gnome-clocks
     # nix flake lock --update-input kando-nixpkgs
     pkgs.kando
     pkgs.fragments
-    pkgs.gnome.gnome-disk-utility
+    pkgs.gnome-disk-utility
     pureref
     pkgs.nixfmt-rfc-style
     pkgs.vlc
@@ -264,7 +264,7 @@ in{
   programs.kitty = {
     enable = true;
     font.name = "CaskaydiaCove Nerd Font";
-    theme = "Catppuccin-Mocha";
+    themeFile = "Catppuccin-Mocha";
     settings = {
       shell = "tmux new-session -A -s main zsh";
     };
