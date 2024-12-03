@@ -394,6 +394,8 @@ in{
       # Fix terminal state and input handling
       set-option -g default-terminal "xterm-kitty"
       set-option -sa terminal-overrides ",xterm-kitty:RGB"
+      set -as terminal-features ',xterm-kitty:hyperlinks'
+  
 
       # Wayland clipboard integration
       set -s copy-command 'wl-copy'
