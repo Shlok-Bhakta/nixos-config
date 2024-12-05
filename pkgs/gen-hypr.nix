@@ -29,9 +29,9 @@ in{
         # Change transparency of focused and unfocused windows
         active_opacity = 1.0;
         inactive_opacity = 1.0;
-        drop_shadow = true;
-        shadow_range = 4;
-        shadow_render_power = 3;
+        # drop_shadow = true;
+        # shadow_range = 4;
+        # shadow_render_power = 3;
         # "col.shadow" = "rgba(1a1a1aee)";
         # https://wiki.hyprland.org/Configuring/Variables/#blur
         blur = {
