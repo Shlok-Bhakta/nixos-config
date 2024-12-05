@@ -266,7 +266,7 @@ in{
     font.name = "CaskaydiaCove Nerd Font";
     theme = "Catppuccin-Mocha";
     settings = {
-      shell = "tmux new-session -A -s main zsh";
+      shell = "tmux";
     };
   };
   programs.obs-studio = {
