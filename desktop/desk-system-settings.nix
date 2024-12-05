@@ -34,13 +34,14 @@
     modesetting.enable = true;
     open = false;
     nvidiaSettings = true;
-    package = config.boot.kernelPackages.nvidiaPackages.production;
+    package = config.boot.kernelPackages.nvidiaPackages.stable;
   };
 
 
   boot.kernelParams = [
     "initcall_blacklist=simpledrm_platform_driver_init"
     "nvidia-drm.modeset=1"
+    "nvidia_drm.fbdev=1"
     "nvidia"
     "nvidia_modeset"
     "nvidia_uvm"

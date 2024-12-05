@@ -42,6 +42,11 @@
     enable = true;
     # driSupport = true; apparently not allowed anymore
     enable32Bit = true;
+    extraPackages = with pkgs; [
+      vaapiVdpau
+      libvdpau-va-gl
+      nvidia-vaapi-driver
+    ];
   };
 
   security.polkit.enable = true;
