@@ -10,10 +10,6 @@
     };
     stylix.url = "github:danth/stylix";
     ags.url = "github:Aylur/ags";
-    kando-nixpkgs = {
-      url = "https://github.com/TomaSajt/nixpkgs/archive/kando.tar.gz";
-      flake = false;
-    };
     zen-browser.url = "github:ch4og/zen-browser-flake";
     yapper = {
       url = "github:Shlok-Bhakta/yapper";
@@ -22,13 +18,8 @@
 
 };
 
-  outputs = { self, nixpkgs, home-manager, stylix, kando-nixpkgs, ... } @ inputs: let 
+  outputs = { self, nixpkgs, home-manager, stylix, ... } @ inputs: let 
       system = "x86_64-linux";
-      overlay-kando = final: prev: {
-        kando = (import kando-nixpkgs {
-          system = final.system;
-        }).kando;
-      };
   in {
     nixosConfigurations.ShlokPCNIX = nixpkgs.lib.nixosSystem {
       specialArgs = {
@@ -40,7 +31,7 @@
             allowUnfree = true;
             cudaSupport = true;
           };
-          nixpkgs.overlays = [ overlay-kando ];
+          # nixpkgs.overlays = [ ];
         }
         ./desktop/desk-configuration.nix
         ./desktop/desk-hardware-configuration.nix
@@ -64,7 +55,7 @@
       modules = [
         {
           nixpkgs.config.allowUnfree = true;
-          nixpkgs.overlays = [ overlay-kando ];
+          # nixpkgs.overlays = [ overlay-kando ];
         }
         ./laptop/laptop-configuration.nix
         ./laptop/laptop-hardware-configuration.nix

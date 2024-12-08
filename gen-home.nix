@@ -100,7 +100,7 @@ in{
     pkgs.gnome.gnome-calendar
     pkgs.gnome.gnome-clocks
     # nix flake lock --update-input kando-nixpkgs
-    pkgs.kando
+    # pkgs.kando
     pkgs.fragments
     pkgs.gnome.gnome-disk-utility
     pureref
@@ -112,6 +112,8 @@ in{
     pkgs.git-credential-manager
     pkgs.rclone
     pkgs.rclone-browser
+    unstable.immich-go
+    unstable.kando
     # unstable.blender
     # hypkgs.hyprpanel
     # agsconf

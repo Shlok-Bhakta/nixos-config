@@ -252,19 +252,6 @@
         "type": "github"
       }
     },
-    "kando-nixpkgs": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1732102400,
-        "narHash": "sha256-XGAkvCFegkgub6L9cr6+VR05auKGZk1fSQQlhMwMXuU=",
-        "type": "tarball",
-        "url": "https://github.com/TomaSajt/nixpkgs/archive/kando.tar.gz"
-      },
-      "original": {
-        "type": "tarball",
-        "url": "https://github.com/TomaSajt/nixpkgs/archive/kando.tar.gz"
-      }
-    },
     "nixpkgs": {
       "locked": {
         "lastModified": 1731676054,
@@ -346,7 +333,6 @@
         "UNSTABLE": "UNSTABLE",
         "ags": "ags",
         "home-manager": "home-manager",
-        "kando-nixpkgs": "kando-nixpkgs",
         "nixpkgs": "nixpkgs_2",
         "stylix": "stylix",
         "yapper": "yapper",
