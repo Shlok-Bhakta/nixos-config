@@ -114,6 +114,7 @@ in{
     pkgs.rclone-browser
     unstable.immich-go
     unstable.kando
+    unstable.nodePackages_latest.pnpm
     # unstable.blender
     # hypkgs.hyprpanel
     # agsconf
