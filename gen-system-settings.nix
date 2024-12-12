@@ -35,7 +35,7 @@
     LC_TIME = "en_US.UTF-8";
   };
   
-  boot.kernelPackages = pkgs.linuxPackages_latest;
+  boot.kernelPackages = pkgs.linuxPackages_6_11;
 
  # Enable OpenGL
   hardware.graphics = {
