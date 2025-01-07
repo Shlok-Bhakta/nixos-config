@@ -10,7 +10,7 @@
     };
     stylix.url = "github:danth/stylix";
     ags.url = "github:Aylur/ags";
-    zen-browser.url = "github:ch4og/zen-browser-flake";
+    zen-browser.url = "github:0xc000022070/zen-browser-flake";
     yapper = {
       url = "github:Shlok-Bhakta/yapper";
       inputs.nixpkgs.follows = "nixpkgs";

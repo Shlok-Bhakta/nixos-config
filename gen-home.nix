@@ -115,6 +115,8 @@ in{
     unstable.immich-go
     unstable.kando
     unstable.nodePackages_latest.pnpm
+    pkgs.parabolic
+    pkgs.prismlauncher    
     # unstable.blender
     # hypkgs.hyprpanel
     # agsconf
