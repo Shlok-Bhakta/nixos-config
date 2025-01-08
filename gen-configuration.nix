@@ -69,7 +69,9 @@ in{
     package = unstable.tailscale;
   };
   environment.sessionVariables = {
-    NIXOS_OZONE_WL = "1";
+    # NIXOS_OZONE_WL = "1";
+    # ELECTRON_OZONE_PLATFORM_HINT = "x11";
+    # NVD_BACKEND = "direct";
   };
   virtualisation.docker = {
     enable = true; 

@@ -30,7 +30,7 @@
     powerManagement.finegrained = false;
     open = false;
     nvidiaSettings = true;
-    package = config.boot.kernelPackages.nvidiaPackages.beta;
+    package = config.boot.kernelPackages.nvidiaPackages.latest;
     prime = {
       offload = {
         enable = true;
@@ -43,17 +43,17 @@
 
 
     environment.sessionVariables = {
-    "LIBVA_DRIVER_NAME" = "neuveau";
+    # "LIBVA_DRIVER_NAME" = "neuveau";
     "XDG_SESSION_TYPE" = "wayland";
     "GBM_BACKEND" = "nvidia-drm";
-    "__GLX_VENDOR_LIBRARY_NAME" = "neuveau";
+    # "__GLX_VENDOR_LIBRARY_NAME" = "neuveau";
     "no_hardware_cursors" = "1";
     "WLR_NO_HARDWARE_CURSORS" = "1";
-    "NIXOS_OZONE_WL" = "1";
+    # "NIXOS_OZONE_WL" = "1";
   };
   boot.kernelParams = [
     "nvidia_drm.fbdev=1"
-    "nvidia-drm.modeset=1"
+    # "nvidia-drm.modeset=1"
   ];
   # https://nixos.wiki/wiki/OBS_Studio
   boot.extraModulePackages = with config.boot.kernelPackages; [

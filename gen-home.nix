@@ -100,7 +100,6 @@ in{
     pkgs.gnome-calendar
     pkgs.gnome-clocks
     # nix flake lock --update-input kando-nixpkgs
-    pkgs.kando
     pkgs.fragments
     pkgs.gnome-disk-utility
     pureref
@@ -112,12 +111,15 @@ in{
     pkgs.git-credential-manager
     pkgs.rclone
     pkgs.rclone-browser
+    unstable.immich-go
+    unstable.kando
+    unstable.nodePackages_latest.pnpm
+    pkgs.parabolic
+    pkgs.prismlauncher
     # unstable.blender
     # hypkgs.hyprpanel
     # agsconf
   ];
-
-
 
   programs.home-manager.enable = true;
   services.udiskie = {
@@ -266,7 +268,7 @@ in{
     font.name = "CaskaydiaCove Nerd Font";
     themeFile = "Catppuccin-Mocha";
     settings = {
-      shell = "tmux new-session -A -s main zsh";
+      shell = "tmux";
     };
   };
   programs.obs-studio = {
@@ -387,7 +389,7 @@ in{
 
       # set -g default-terminal "tmux-256color"
       # set-option -sa terminal-overrides ",xterm-kitty:RGB"
-    extraConfig = ''
+   extraConfig = ''
       set-option -ga terminal-features "*:strikethrough:cstyle:osc7:focus"
       set-option -ga terminal-overrides "*:Tc"
     
