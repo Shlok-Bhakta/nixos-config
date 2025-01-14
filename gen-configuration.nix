@@ -103,4 +103,15 @@ in{
   #   };
   # };
   documentation.dev.enable = true;
+
+
+  # Virt Manager Setup
+  programs.virt-manager.enable = true;
+  users.groups.libvirtd.members = ["shlok"];
+  virtualisation.libvirtd.enable = true;
+  virtualisation.spiceUSBRedirection.enable = true;
+
+  # VirtualBox Setup because virt manager bork stuff
+  virtualisation.virtualbox.host.enable = true;
+  users.extraGroups.vboxusers.members = [ "shlok" ];
 }

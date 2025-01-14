@@ -170,7 +170,6 @@ in{
   };
   # Hypridle
   services.hypridle = {
-    enable = true;
     package = unstable.hypridle;
     # settings = builtins.imprty
     settings = {

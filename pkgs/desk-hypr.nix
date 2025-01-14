@@ -6,11 +6,13 @@ in {
     ./gen-hypr.nix
   ];
   home.packages = [
-    unstable.hypridle
+    # pkgs.hypridle
   ];
+  services.hypridle.enable = false;
+
   # Enable Hyprland
   wayland.windowManager.hyprland = {
-    package = unstable.hyprland;
+    package = pkgs.hyprland;
     settings = {
       exec-once = [
         "swww img ${wallpaper-path}"
@@ -32,7 +34,7 @@ in {
     # Enable Hyprlock
   programs.hyprlock = {
     enable = true;
-    package = unstable.hyprlock;
+    package = pkgs.hyprlock;
     # settings = builtins.imprty
     extraConfig = builtins.readFile ../dotfiles/hypr/hyprlock.conf;
   };

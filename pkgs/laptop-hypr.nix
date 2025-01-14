@@ -5,8 +5,9 @@ in{
     ./gen-hypr.nix
   ];
   home.packages = [
-    pkgs.hypridle
+    # pkgs.hypridle
   ];
+  services.hypridle.enable = true;
   # Enable Hyprland
   wayland.windowManager.hyprland = {
     package = pkgs.hyprland;
