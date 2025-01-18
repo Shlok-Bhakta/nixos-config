@@ -15,6 +15,7 @@
       url = "github:Shlok-Bhakta/yapper";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    swww.url = "github:LGFae/swww";
 
 };
 

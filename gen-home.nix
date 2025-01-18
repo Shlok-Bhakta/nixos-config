@@ -38,7 +38,7 @@ in{
     pkgs.fzf
     unstable.p7zip
     unstable.localsend
-    unstable.swww
+    inputs.swww.packages.${pkgs.system}.swww
     pkgs.cliphist
     pkgs.playerctl
     pkgs.dbus
@@ -116,7 +116,11 @@ in{
     unstable.nodePackages_latest.pnpm
     pkgs.parabolic
     pkgs.prismlauncher
-    # unstable.blender
+    unstable.blender
+    # pkgs.bottles
+    # pkgs.lazydocker
+    # pkgs.wine
+    # pkgs.ollama-cuda
     # hypkgs.hyprpanel
     # agsconf
   ];
