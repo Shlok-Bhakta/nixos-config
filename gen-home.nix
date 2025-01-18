@@ -117,7 +117,7 @@ in{
     pkgs.parabolic
     pkgs.prismlauncher
     unstable.blender
-    pkgs.walker
+    unstable.walker
     pkgs.libqalculate
     # pkgs.bottles
     # pkgs.lazydocker
