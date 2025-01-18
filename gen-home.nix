@@ -117,6 +117,8 @@ in{
     pkgs.parabolic
     pkgs.prismlauncher
     unstable.blender
+    pkgs.walker
+    pkgs.libqalculate
     # pkgs.bottles
     # pkgs.lazydocker
     # pkgs.wine
@@ -463,6 +465,11 @@ in{
     source = ./dotfiles/lazyvim;
     recursive = true;
   };
+
+  # xdg.configFile."walker" = {
+  #   source = ./dotfiles/walker;
+  #   recursive = true;
+  # };
 
   programs.chromium = {
     enable = true;
