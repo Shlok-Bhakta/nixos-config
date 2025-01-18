@@ -13,9 +13,10 @@ let
   fabric-ai = unstable.callPackage ./pkgs/fabric/package.nix {};
   pureref = pkgs.callPackage (import ./pkgs/pureref/pureref.nix) {};
 in{
-  imports = [ 
-    inputs.ags.homeManagerModules.default 
+  imports = [
+    inputs.ags.homeManagerModules.default
     inputs.stylix.homeManagerModules.stylix
+    inputs.anyrun.homeManagerModules.default
     ./pkgs/goo-engine/goo.nix
   ];
   home.username = "shlok";
@@ -163,6 +164,49 @@ in{
       "secrets"
     ];
   };
+
+  programs.anyrun = {
+    enable = true;
+    config = {
+      x = { fraction = 0.5; };
+      y = { fraction = 0.3; };
+      width = { fraction = 0.45; };
+      hideIcons = false;
+      ignoreExclusiveZones = false;
+      layer = "overlay";
+      hidePluginInfo = true;
+      closeOnClick = false;
+      showResultsImmediately = true;
+      maxEntries = 20;
+
+      plugins = [
+        # An array of all the plugins you want, which either can be paths to the .so files, or their packages
+        inputs.anyrun.packages.${pkgs.system}.applications
+        # inputs.anyrun.packages.${pkgs.system}.symbols
+        inputs.anyrun.packages.${pkgs.system}.rink
+        inputs.anyrun.packages.${pkgs.system}.stdin
+
+      ];
+    };
+
+    # Inline comments are supported for language injection into
+    # multi-line strings with Treesitter! (Depends on your editor)
+    extraCss = /*css */ ''
+      # .some_class {
+      #   background: red;
+      # }
+    '';
+
+    extraConfigFiles."some-plugin.ron".text = ''
+      Config(
+        // for any other plugin
+        // this file will be put in ~/.config/anyrun/some-plugin.ron
+        // refer to docs of xdg.configFile for available options
+
+      )
+    '';
+  };
+
   dconf.settings = {
     "org/gnome/desktop/interface" = {
       icon-theme = "candy-icons";
@@ -498,19 +542,26 @@ in{
         layer = "overlay";
         anchor = "center";
         lines = 15;
-        width = 45;
-        font = "CaskaydiaCove Nerd Font:size=20";
+        width = 50;
+        font = "CaskaydiaCove Nerd Font:size=25";
+        border-width = 2;
+        border-radius = 16;
+        padding-top = 14;
+        padding-bottom = 12;
+        padding-left = 12;
+        padding-right = 12;
       };
       colors = {
-        background = "#11111bff";
-        text = "#cdd6f4ff";
-        match = "#181825ff";
-        selection = "#1e1e2eff";
-        selection-text = "#b4befeff";
-        border = "#89b4faff";
+        background = "1e1e2ef0";  # Semi-transparent background
+        text = "cdd6f4ff";        # Catppuccin Mocha text
+        match = "a6e3a1ff";       # Catppuccin Mocha green
+        selection = "313244f0";   # Semi-transparent surface0
+        selection-text = "cdd6f4ff";
+        border = "89b4fa80";      # Semi-transparent blue border
       };
       border = {
         width = 2;
+        radius = 12;
       };
     };
   };
