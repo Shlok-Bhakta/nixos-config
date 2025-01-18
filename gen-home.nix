@@ -16,7 +16,6 @@ in{
   imports = [
     inputs.ags.homeManagerModules.default
     inputs.stylix.homeManagerModules.stylix
-    inputs.anyrun.homeManagerModules.default
     ./pkgs/goo-engine/goo.nix
   ];
   home.username = "shlok";
@@ -118,7 +117,7 @@ in{
     pkgs.parabolic
     pkgs.prismlauncher
     unstable.blender
-    
+    pkgs.walker
     # pkgs.bottles
     # pkgs.lazydocker
     # pkgs.wine

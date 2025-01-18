@@ -18,7 +18,7 @@
     swww.url = "github:LGFae/swww";
 };
 
-  outputs = { self, nixpkgs, home-manager, stylix, anyrun, ... } @ inputs: let 
+  outputs = { self, nixpkgs, home-manager, stylix, ... } @ inputs: let 
       system = "x86_64-linux";
 
   in {
