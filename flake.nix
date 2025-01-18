@@ -16,11 +16,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     swww.url = "github:LGFae/swww";
-    anyrun = {
-      url = "github:anyrun-org/anyrun";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
 };
 
   outputs = { self, nixpkgs, home-manager, stylix, anyrun, ... } @ inputs: let 
