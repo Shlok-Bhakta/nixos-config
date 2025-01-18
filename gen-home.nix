@@ -22,8 +22,6 @@ in{
   home.homeDirectory = "/home/shlok";
   home.sessionVariables = {
     EDITOR = "code";
-    XCURSOR_SIZE = 24;
-    HYPRCURSOR_SIZE = 24;
   };
   # inputs.yapper.config.allowUnfree = true;
   home.stateVersion = "24.11"; 

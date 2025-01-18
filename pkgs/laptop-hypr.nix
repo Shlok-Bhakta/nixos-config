@@ -10,7 +10,7 @@ in{
   services.hypridle.enable = true;
   # Enable Hyprland
   wayland.windowManager.hyprland = {
-    package = pkgs.hyprland;
+    # package = pkgs.hyprland;
     settings = {
       # exec-once = [
       # ]; 
@@ -23,7 +23,7 @@ in{
   # Enable Hyprlock
   programs.hyprlock = {
     enable = true;
-    package = pkgs.hyprlock;
+    package = pkgs.inputs.hyprland.packages.${pkgs.system}.hyprlock;
     # settings = builtins.imprty
     extraConfig = builtins.readFile ../dotfiles/hypr/laptop-hyprlock.conf;
   };

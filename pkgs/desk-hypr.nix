@@ -12,7 +12,7 @@ in {
 
   # Enable Hyprland
   wayland.windowManager.hyprland = {
-    package = pkgs.hyprland;
+    # package = pkgs.hyprland;
     settings = {
       exec-once = [
         "xrandr --output DP-1 --primary"
@@ -26,7 +26,6 @@ in {
     # Enable Hyprlock
   programs.hyprlock = {
     enable = true;
-    package = pkgs.hyprlock;
     # settings = builtins.imprty
     extraConfig = builtins.readFile ../dotfiles/hypr/hyprlock.conf;
   };

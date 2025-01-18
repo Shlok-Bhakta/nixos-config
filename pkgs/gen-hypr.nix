@@ -4,11 +4,17 @@ let
   unstable = import ../unstable.nix { inherit inputs pkgs; };
   wallpaper-path = ../dotfiles/wallpaper/wallpaper.gif;
 
-in{
-    # Enable Hyprland
+in {
+  # Enable Hyprland
   wayland.windowManager.hyprland = {
     enable = true;
-    # extraConfig = builtins.readFile ./dotfiles/hyprland.conf;  
+    package = inputs.hyprland.packages.${pkgs.system}.hyprland;
+    plugins = [
+      # inputs.hyprland-plugins.packages.${pkgs.system}.hyprbars
+      # Add more plugins here as needed
+      inputs.split-monitor-workspaces.packages.${pkgs.system}.split-monitor-workspaces
+    ];
+    # extraConfig = builtins.readFile ./dotfiles/hyprland.conf;
     settings = {
       exec-once = [
         "swww img ${wallpaper-path}"
@@ -51,16 +57,18 @@ in{
             vibrancy = 0.1696;
         };
       };
+      layerrule = [
+        "blur, overlay"
+      ];
       animations = {
         enabled = true;
         # Default animations, see https://wiki.hyprland.org/Configuring/Animations/ for more
         bezier = "myBezier, 0.05, 0.9, 0.1, 1.05";
         animation = [
           "windows, 1, 1, myBezier"
-          "windowsOut, 1, 0.25, default"
           "border, 1, 10, default"
           "borderangle, 1, 1.5, default"
-          "workspaces, 1, 0.5, default"    
+          "workspaces, 1, 1, default"    
         ];
       };
       dwindle = {
@@ -107,7 +115,9 @@ in{
       "$mainMod, P, pseudo, # dwindle"
       "$mainMod, J, togglesplit, # dwindle"
       "$mainMod, W, exec, walker"
-      "$mainMod, V, exec, cliphist list | walker -d -k | cliphist decode | wl-copy"
+      "$mainMod CTRL, W, exec, fuzzel"
+      "$mainMod, V, exec, cliphist list | walker -d -k -n | cliphist decode | wl-copy"
+      "$mainMod CTRL, V, exec, cliphist list | fuzzel -d | cliphist decode | wl-copy"
       "$mainMod, B, exec, zen"
       "$mainMod, Y, exec, code"
       "$mainMod, L, exec, hyprlock"
@@ -124,32 +134,32 @@ in{
       "$mainMod, down, movefocus, d"
 
       # Switch workspaces with mainMod + [0-9]
-      "$mainMod, 1, workspace, 1"
-      "$mainMod, 2, workspace, 2"
-      "$mainMod, 3, workspace, 3"
-      "$mainMod, 4, workspace, 4"
-      "$mainMod, 5, workspace, 5"
-      "$mainMod, 6, workspace, 6"
-      "$mainMod, 7, workspace, 7"
-      "$mainMod, 8, workspace, 8"
-      "$mainMod, 9, workspace, 9"
-      "$mainMod, 0, workspace, 10"
+      "$mainMod, 1, split-workspace, 1"
+      "$mainMod, 2, split-workspace, 2"
+      "$mainMod, 3, split-workspace, 3"
+      "$mainMod, 4, split-workspace, 4"
+      "$mainMod, 5, split-workspace, 5"
+      "$mainMod, 6, split-workspace, 6"
+      "$mainMod, 7, split-workspace, 7"
+      "$mainMod, 8, split-workspace, 8"
+      "$mainMod, 9, split-workspace, 9"
+      "$mainMod, 0, split-workspace, 10"
 
       # Move active window to a workspace with mainMod + SHIFT + [0-9]
-      "$mainMod SHIFT, 1, movetoworkspace, 1"
-      "$mainMod SHIFT, 2, movetoworkspace, 2"
-      "$mainMod SHIFT, 3, movetoworkspace, 3"
-      "$mainMod SHIFT, 4, movetoworkspace, 4"
-      "$mainMod SHIFT, 5, movetoworkspace, 5"
-      "$mainMod SHIFT, 6, movetoworkspace, 6"
-      "$mainMod SHIFT, 7, movetoworkspace, 7"
-      "$mainMod SHIFT, 8, movetoworkspace, 8"
-      "$mainMod SHIFT, 9, movetoworkspace, 9"
-      "$mainMod SHIFT, 0, movetoworkspace, 10"
+      "$mainMod SHIFT, 1, split-movetoworkspace, 1"
+      "$mainMod SHIFT, 2, split-movetoworkspace, 2"
+      "$mainMod SHIFT, 3, split-movetoworkspace, 3"
+      "$mainMod SHIFT, 4, split-movetoworkspace, 4"
+      "$mainMod SHIFT, 5, split-movetoworkspace, 5"
+      "$mainMod SHIFT, 6, split-movetoworkspace, 6"
+      "$mainMod SHIFT, 7, split-movetoworkspace, 7"
+      "$mainMod SHIFT, 8, split-movetoworkspace, 8"
+      "$mainMod SHIFT, 9, split-movetoworkspace, 9"
+      "$mainMod SHIFT, 0, split-movetoworkspace, 10"
 
       # Example special workspace (scratchpad)
       "$mainMod, D, togglespecialworkspace, magic"
-      "$mainMod SHIFT, D, movetoworkspace, special:magic"
+      "$mainMod SHIFT, D, split-movetoworkspace, special:magic"
 
       # Scroll through existing workspaces with mainMod + scroll
       "$mainMod, mouse_down, workspace, e+1"
@@ -178,11 +188,12 @@ in{
       "bordercolor rgba(7287fdee) rgba(209fb5ee) 45deg,class:(vesktop)"
       "bordercolor rgba(f5e0dcee) rgba(f2cdcdee) 45deg,floating:1"
     ];
+
     };
   };
   # Hypridle
   services.hypridle = {
-    package = unstable.hypridle;
+    package = inputs.hyprland.packages.${pkgs.system}.hypridle;
     # settings = builtins.imprty
     settings = {
       "$lock_cmd" = "pidof hyprlock || hyprlock";
