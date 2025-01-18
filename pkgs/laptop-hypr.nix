@@ -12,16 +12,8 @@ in{
   wayland.windowManager.hyprland = {
     package = pkgs.hyprland;
     settings = {
-      exec-once = [
-        "swww img ${wallpaper-path}"
-        "swww-daemon --format xrgb"
-        "waybar"
-        "swaync"
-        "wl-paste --type [text|image] --watch cliphist store"
-        "kando"
-        "vesktop"
-        "syncthing"
-      ]; 
+      # exec-once = [
+      # ]; 
       monitor = [
         "eDP-1, preferred, auto, 1"
         ", preferred, auto, 1, mirror, eDP-1"

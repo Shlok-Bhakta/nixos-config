@@ -2,15 +2,28 @@
 let
   # wallpaper-path = /home/shlok/nixos-config/dotfiles/wallpaper/wallpaper.gif;
   unstable = import ../unstable.nix { inherit inputs pkgs; };
+  wallpaper-path = ../dotfiles/wallpaper/wallpaper.gif;
+
 in{
     # Enable Hyprland
   wayland.windowManager.hyprland = {
     enable = true;
     # extraConfig = builtins.readFile ./dotfiles/hyprland.conf;  
     settings = {
+      exec-once = [
+        "swww img ${wallpaper-path}"
+        "swww-daemon --format xrgb"
+        "waybar"
+        "swaync"
+        "wl-paste --type [text|image] --watch cliphist store"
+        "kando"
+        "vesktop"
+        "syncthing"
+        "walker --gapplication-service"
+      ];
       "$terminal" = "kitty";
       "$fileManager" = "nautilus";
-      "$menu" = "fuzzel";
+      "$menu" = "walker";
       general = { 
         gaps_in = 5;
         gaps_out = 20;
@@ -91,11 +104,10 @@ in{
       "$mainMod, M, exit,"
       "$mainMod, E, exec, $fileManager"
       "$mainMod, F, togglefloating,"
-      "$mainMod, R, exec, $menu"
       "$mainMod, P, pseudo, # dwindle"
       "$mainMod, J, togglesplit, # dwindle"
-      "$mainMod, W, exec, fuzzel"
-      "$mainMod, V, exec, cliphist list | fuzzel -d | cliphist decode | wl-copy"
+      "$mainMod, W, exec, walker"
+      "$mainMod, V, exec, cliphist list | walker -d -k | cliphist decode | wl-copy"
       "$mainMod, B, exec, zen"
       "$mainMod, Y, exec, code"
       "$mainMod, L, exec, hyprlock"

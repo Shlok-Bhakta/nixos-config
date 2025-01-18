@@ -15,15 +15,7 @@ in {
     package = pkgs.hyprland;
     settings = {
       exec-once = [
-        "swww img ${wallpaper-path}"
-        "swww-daemon --format xrgb"
-        "waybar"
-        "swaync"
-        "wl-paste --type [text|image] --watch cliphist store"
         "xrandr --output DP-1 --primary"
-        "kando"
-        "vesktop"
-        "syncthing"
       ]; 
       monitor = [
         "DP-1, 1920x1080@144, 0x0, 1"
