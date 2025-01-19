@@ -23,8 +23,6 @@ in {
             enable_persistent_workspaces = 0
         }
       }
-    
-    
     '';
     settings = {
       exec-once = [
@@ -135,9 +133,9 @@ in {
       "SUPER_SHIFT, F, fullscreen"
       ''SUPER_SHIFT, S, exec, hyprshot -m region --freeze --clipboard-only''
       ''SUPER_SHIFT, C, exec, hyprpicker | wl-copy''
-      "$mainMod, T, exec, bemoji"
+      "$mainMod, T, exec, walker -m emojis"
       "$mainMod CTRL, Space, global, kando:main-menu"
-      "CONTROLALT, Delete, exec, wlogout"
+      "CONTROLALT, Delete, exec, walker -m power"
 
       # Move focus with mainMod + arrow keys
       "$mainMod, left, movefocus, l"

@@ -109,6 +109,47 @@
       "weight": 5
     }
   },
+  "plugins": [
+    {
+      "name": "power",
+      "placeholder": "Power",
+      "switcher_only": true,
+      "recalculate_score": true,
+      "show_icon_when_single": true,
+      "entries": [
+        {
+          "label": "Shutdown",
+          "icon": "media-record",
+          "exec": "systemctl poweroff"
+        },
+        {
+          "label": "Reboot",
+          "icon": "view-refresh-symbolic",
+          "exec": "systemctl reboot"
+        },
+        {
+          "label": "Lock Screen",
+          "icon": "document-revert",
+          "exec": "playerctl --all-players pause & hyprlock"
+        },
+        {
+          "label": "Hibernate",
+          "icon": "help-about",
+          "exec": "systemctl hibernate"
+        },
+        {
+          "label": "Logout",
+          "icon": "edit-undo-symbolic",
+          "exec": "hyprctl dispatch exit 0"
+        },
+        {
+          "label": "Suspend",
+          "icon": "edit-delete-symbolic",
+          "exec": "systemctl suspend"
+        }
+      ]
+    }
+  ],
   "disable_click_to_close": false,
   "force_keyboard_focus": true,
   "list": {
