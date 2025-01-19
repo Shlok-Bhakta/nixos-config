@@ -47,7 +47,7 @@
     "dmenu": {
       "name": "dmenu",
       "placeholder": "Dmenu",
-      "switcher_only": true,
+      "switcher_only": false,
       "weight": 5
     },
     "emojis": {

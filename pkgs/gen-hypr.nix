@@ -14,7 +14,18 @@ in {
       # Add more plugins here as needed
       inputs.split-monitor-workspaces.packages.${pkgs.system}.split-monitor-workspaces
     ];
-    # extraConfig = builtins.readFile ./dotfiles/hyprland.conf;
+    extraConfig = ''
+      plugin {
+        split-monitor-workspaces {
+            count = 10
+            keep_focused = 0
+            enable_notifications = 1
+            enable_persistent_workspaces = 0
+        }
+      }
+    
+    
+    '';
     settings = {
       exec-once = [
         "swww img ${wallpaper-path}"
@@ -126,6 +137,7 @@ in {
       ''SUPER_SHIFT, C, exec, hyprpicker | wl-copy''
       "$mainMod, T, exec, bemoji"
       "$mainMod CTRL, Space, global, kando:main-menu"
+      "CONTROLALT, Delete, exec, wlogout"
 
       # Move focus with mainMod + arrow keys
       "$mainMod, left, movefocus, l"
