@@ -7,7 +7,7 @@ in{
   programs.hyprland = {
     enable = true;
     xwayland.enable = true;
-    # package = inputs.UNSTABLE.packages."${pkgs.system}".hyprland;
+    package = inputs.hyprland.packages."${pkgs.system}".hyprland;
   };
 
   programs.zsh.enable = true;

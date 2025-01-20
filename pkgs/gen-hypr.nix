@@ -5,6 +5,18 @@ let
   wallpaper-path = ../dotfiles/wallpaper/wallpaper.gif;
 
 in {
+
+  home.sessionVariables = {
+    # "enable_hyprcursor" = "0";
+    "HYPRCURSOR_THEME" = "bibata-ice-hypr";
+    "HYPRCURSOR_SIZE" = 24;
+  };
+
+  home.file.".local/share/icons/bibata-ice-hypr" = {
+    source = ../dotfiles/bibata-ice-hypr;
+  };
+
+
   # Enable Hyprland
   wayland.windowManager.hyprland = {
     enable = true;
@@ -23,6 +35,11 @@ in {
             enable_persistent_workspaces = 0
         }
       }
+
+      cursor {
+        no_hardware_cursors = true
+      }
+
     '';
     settings = {
       exec-once = [

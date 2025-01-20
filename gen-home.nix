@@ -114,10 +114,11 @@ in{
     unstable.nodePackages_latest.pnpm
     pkgs.parabolic
     pkgs.prismlauncher
-    unstable.blender
+    # unstable.blender
     unstable.walker
     pkgs.libqalculate
     unstable.via
+    inputs.blender-bin.packages.x86_64-linux.blender_4_3
     # pkgs.bottles
     # pkgs.lazydocker
     # pkgs.wine
@@ -232,6 +233,11 @@ in{
         package = pkgs.noto-fonts-emoji;
         name = "Noto Color Emoji";
       };
+    };
+    cursor = {
+      package = pkgs.bibata-cursors;
+      name = "Bibata-Modern-Ice";
+      size = 24;
     };
   };
   programs.bat = {
@@ -588,6 +594,7 @@ in{
       uris = ["qemu:///system"];
     };
   };
+
 
 }
 

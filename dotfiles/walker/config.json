@@ -119,32 +119,32 @@
       "entries": [
         {
           "label": "Shutdown",
-          "icon": "media-record",
+          "icon": "/home/shlok/nixos-config/dotfiles/icons/poweroff.svg",
           "exec": "systemctl poweroff"
         },
         {
           "label": "Reboot",
-          "icon": "view-refresh-symbolic",
+          "icon": "/home/shlok/nixos-config/dotfiles/icons/restart.svg",
           "exec": "systemctl reboot"
         },
         {
           "label": "Lock Screen",
-          "icon": "document-revert",
+          "icon": "/home/shlok/nixos-config/dotfiles/icons/lock.svg",
           "exec": "playerctl --all-players pause & hyprlock"
         },
         {
           "label": "Hibernate",
-          "icon": "help-about",
+          "icon": "/home/shlok/nixos-config/dotfiles/icons/hibernate.svg",
           "exec": "systemctl hibernate"
         },
         {
           "label": "Logout",
-          "icon": "edit-undo-symbolic",
+          "icon": "/home/shlok/nixos-config/dotfiles/icons/logout.svg",
           "exec": "hyprctl dispatch exit 0"
         },
         {
           "label": "Suspend",
-          "icon": "edit-delete-symbolic",
+          "icon": "/home/shlok/nixos-config/dotfiles/icons/suspend.svg",
           "exec": "systemctl suspend"
         }
       ]
