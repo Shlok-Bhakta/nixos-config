@@ -16,6 +16,12 @@
       "show_sub_when_single": true,
       "weight": 5
     },
+    "ai": {
+      "name": "ai",
+      "placeholder": "AI",
+      "switcher_only": true,
+      "weight": 5
+    },
     "calc": {
       "icon": "accessories-calculator",
       "min_chars": 4,
@@ -47,7 +53,7 @@
     "dmenu": {
       "name": "dmenu",
       "placeholder": "Dmenu",
-      "switcher_only": true,
+      "switcher_only": false,
       "weight": 5
     },
     "emojis": {
@@ -109,6 +115,47 @@
       "weight": 5
     }
   },
+  "plugins": [
+    {
+      "name": "power",
+      "placeholder": "Power",
+      "switcher_only": true,
+      "recalculate_score": true,
+      "show_icon_when_single": true,
+      "entries": [
+        {
+          "label": "Shutdown",
+          "icon": "/home/shlok/nixos-config/dotfiles/icons/poweroff.svg",
+          "exec": "systemctl poweroff"
+        },
+        {
+          "label": "Reboot",
+          "icon": "/home/shlok/nixos-config/dotfiles/icons/restart.svg",
+          "exec": "systemctl reboot"
+        },
+        {
+          "label": "Lock Screen",
+          "icon": "/home/shlok/nixos-config/dotfiles/icons/lock.svg",
+          "exec": "playerctl --all-players pause & hyprlock"
+        },
+        {
+          "label": "Hibernate",
+          "icon": "/home/shlok/nixos-config/dotfiles/icons/hibernate.svg",
+          "exec": "systemctl hibernate"
+        },
+        {
+          "label": "Logout",
+          "icon": "/home/shlok/nixos-config/dotfiles/icons/logout.svg",
+          "exec": "hyprctl dispatch exit 0"
+        },
+        {
+          "label": "Suspend",
+          "icon": "/home/shlok/nixos-config/dotfiles/icons/suspend.svg",
+          "exec": "systemctl suspend"
+        }
+      ]
+    }
+  ],
   "disable_click_to_close": false,
   "force_keyboard_focus": true,
   "list": {
