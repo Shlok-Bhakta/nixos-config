@@ -120,7 +120,6 @@ in{
       "$mainMod, T, exec, walker -m emojis"
       "CONTROLALT, Delete, exec, walker -m power"
       "$mainMod CTRL, Space, global, kando:main-menu"
-      "CONTROLALT, Delete, exec, wlogout"
 
       # Move focus with mainMod + arrow keys
       "$mainMod, left, movefocus, l"
