@@ -125,12 +125,12 @@
       "entries": [
         {
           "label": "Shutdown",
-          "icon": "/home/shlok/nixos-config/dotfiles/icons/poweroff.svg",
+          "icon": "/home/shlok/nixos-config/dotfiles/icons/shutdown.svg",
           "exec": "systemctl poweroff"
         },
         {
           "label": "Reboot",
-          "icon": "/home/shlok/nixos-config/dotfiles/icons/restart.svg",
+          "icon": "/home/shlok/nixos-config/dotfiles/icons/reboot.svg",
           "exec": "systemctl reboot"
         },
         {
