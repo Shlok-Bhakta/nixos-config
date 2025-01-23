@@ -466,10 +466,10 @@ in{
     recursive = true;
   };
 
-  # xdg.configFile."walker" = {
-  #   source = ./dotfiles/walker;
-  #   recursive = true;
-  # };
+  xdg.configFile."walker" = {
+    source = ./dotfiles/walker;
+    recursive = true;
+  };
 
   programs.chromium = {
     enable = true;
