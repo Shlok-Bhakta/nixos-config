@@ -118,7 +118,7 @@ in{
     unstable.walker
     pkgs.libqalculate
     unstable.via
-    inputs.blender-bin.packages.x86_64-linux.blender_4_3
+    # inputs.blender-bin.packages.x86_64-linux.blender_4_3
     # pkgs.bottles
     # pkgs.lazydocker
     # pkgs.wine

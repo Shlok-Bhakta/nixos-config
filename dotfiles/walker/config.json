@@ -16,6 +16,12 @@
       "show_sub_when_single": true,
       "weight": 5
     },
+    "ai": {
+      "name": "ai",
+      "placeholder": "AI",
+      "switcher_only": true,
+      "weight": 5
+    },
     "calc": {
       "icon": "accessories-calculator",
       "min_chars": 4,
