@@ -116,7 +116,9 @@ in{
       "SUPER_SHIFT, F, fullscreen"
       ''SUPER_SHIFT, S, exec, hyprshot -m region --freeze --clipboard-only''
       ''SUPER_SHIFT, C, exec, hyprpicker | wl-copy''
-      "$mainMod, T, exec, bemoji"
+      # "$mainMod, T, exec, bemoji"
+      "$mainMod, T, exec, walker -m emojis"
+      "CONTROLALT, Delete, exec, walker -m power"
       "$mainMod CTRL, Space, global, kando:main-menu"
 
       # Move focus with mainMod + arrow keys
