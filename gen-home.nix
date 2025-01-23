@@ -116,7 +116,7 @@ in{
     unstable.nodePackages_latest.pnpm
     pkgs.parabolic
     pkgs.prismlauncher
-    unstable.blender
+    # unstable.blender
     unstable.walker
     pkgs.libqalculate
     # pkgs.bottles
