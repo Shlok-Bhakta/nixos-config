@@ -11,11 +11,11 @@ in{
     enable = true;
     # extraConfig = builtins.readFile ./dotfiles/hyprland.conf;  
     package = inputs.hyprland.packages.${pkgs.system}.hyprland;
-    # plugins = [
-    #   # inputs.hyprland-plugins.packages.${pkgs.system}.hyprbars
-    #   # Add more plugins here as needed
-    #   inputs.split-monitor-workspaces.packages.${pkgs.system}.split-monitor-workspaces
-    # ];
+    plugins = [
+      # inputs.hyprland-plugins.packages.${pkgs.system}.hyprbars
+      # Add more plugins here as needed
+      inputs.split-monitor-workspaces.packages.${pkgs.system}.split-monitor-workspaces
+    ];
     extraConfig = ''
       plugin {
         split-monitor-workspaces {
