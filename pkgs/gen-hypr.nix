@@ -5,7 +5,16 @@ let
   wallpaper-path = ../dotfiles/wallpaper/wallpaper.gif;
 
 in{
+  home.sessionVariables = {
+      # "enable_hyprcursor" = "0";
+      "HYPRCURSOR_THEME" = "bibata-ice-hypr";
+      "HYPRCURSOR_SIZE" = 24;
+  };
 
+  home.file.".local/share/icons/bibata-ice-hypr" = {
+    source = ../dotfiles/bibata-ice-hypr;
+    recursive = true;
+  };
     # Enable Hyprland
   wayland.windowManager.hyprland = {
     enable = true;
