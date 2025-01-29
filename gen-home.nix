@@ -233,6 +233,11 @@ in{
         name = "Noto Color Emoji";
       };
     };
+    cursor = {
+      package = pkgs.bibata-cursors;
+      name = "Bibata-Modern-Ice";
+      size = 24;
+    };
   };
   programs.bat = {
     enable = true;
