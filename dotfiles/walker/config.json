@@ -5,7 +5,9 @@
   "as_window": false,
   "builtins": {
     "applications": {
-      "actions": true,
+      "actions": {
+        "enabled": true
+      },
       "context_aware": true,
       "name": "applications",
       "placeholder": "Applications",
