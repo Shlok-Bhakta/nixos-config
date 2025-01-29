@@ -5,10 +5,31 @@ let
   wallpaper-path = ../dotfiles/wallpaper/wallpaper.gif;
 
 in{
+
     # Enable Hyprland
   wayland.windowManager.hyprland = {
     enable = true;
     # extraConfig = builtins.readFile ./dotfiles/hyprland.conf;  
+    package = inputs.hyprland.packages.${pkgs.system}.hyprland;
+    # plugins = [
+    #   # inputs.hyprland-plugins.packages.${pkgs.system}.hyprbars
+    #   # Add more plugins here as needed
+    #   inputs.split-monitor-workspaces.packages.${pkgs.system}.split-monitor-workspaces
+    # ];
+    extraConfig = ''
+      plugin {
+        split-monitor-workspaces {
+            count = 10
+            keep_focused = 0
+            enable_notifications = 1
+            enable_persistent_workspaces = 0
+        }
+      }
+
+      cursor {
+        no_hardware_cursors = true
+      }
+    '';
     settings = {
       exec-once = [
         "swww img ${wallpaper-path}"
