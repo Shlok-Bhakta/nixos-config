@@ -12,7 +12,7 @@ in {
 
   # Enable Hyprland
   wayland.windowManager.hyprland = {
-    package = pkgs.hyprland;
+    # package = pkgs.hyprland;
     settings = {
       exec-once = [
         "xrandr --output DP-1 --primary"
