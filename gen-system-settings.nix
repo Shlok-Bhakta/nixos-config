@@ -35,7 +35,7 @@
     LC_TIME = "en_US.UTF-8";
   };
   
-  boot.kernelPackages = pkgs.linuxPackages_6_11;
+  boot.kernelPackages = pkgs.linuxPackages_6_12;
 
  # Enable OpenGL
   hardware.graphics = {
@@ -50,6 +50,13 @@
   };
 
   security.polkit.enable = true;
+
+  # Fix sudo permissions
+  security.sudo = {
+    enable = true;
+    # execWheelOnly = true;
+    # wheelNeedsPassword = false;
+  };
 
   # Enable CUPS to print documents.
   services.printing.enable = true;
