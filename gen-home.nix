@@ -122,6 +122,7 @@ in{
     unstable.walker
     pkgs.libqalculate
     pkgs.wlogout
+    unstable.rofi-power-menu
     # pkgs.bottles
     # pkgs.lazydocker
     # pkgs.wine
@@ -683,7 +684,14 @@ in{
   # enable rofi
   programs.rofi = {
     enable = true;
-    package = unstable.rofi;
+    
+    package = pkgs.rofi-wayland.override { 
+      plugins = [ 
+        unstable.rofi-calc 
+        unstable.rofi-emoji
+        
+        unstable.rofi-rbw
+    ]; };
     # font = "CaskaydiaCove Nerd Font:size=20";
     # terminal = "kitty";
   };
