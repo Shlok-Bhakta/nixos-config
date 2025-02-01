@@ -1,111 +1,169 @@
+/* ________Variables________ */
 * {
-    bg-col:  #1e1e2e;
-    bg-col-light: #1e1e2e;
-    border-col: #1e1e2e;
-    selected-col: #1e1e2e;
-    blue: #89b4fa;
+    /* ________Window________ */    
+    window-width: 800px;
+    window-height: 550px;
+    window-border: 1.75px;
+    window-border-color: #585b70;
+    window-border-radius: 12px;
+    window-bg-color: rgba(30, 30, 46, 0.95);
+
+    /* Catppuccin Mocha Colors */
+    bg-col: #1e1e2e;
     fg-col: #cdd6f4;
-    fg-col2: #f38ba8;
-    grey: #6c7086;
-
-    width: 600;
-    font: "JetBrainsMono Nerd Font 14";
-}
-
-element-text, element-icon , mode-switcher {
-    background-color: inherit;
-    text-color:       inherit;
+    selected-col: #313244;
+    blue: #89b4fa;
+    lavender: #b4befe;
+    sapphire: #74c7ec;
+    sky: #89dceb;
+    red: #f38ba8;
+    pink: #f5c2e7;
+    mauve: #cba6f7;
+    peach: #fab387;
+    green: #a6e3a1;
+    yellow: #f9e2af;
+    overlay0: #6c7086;
+    surface0: #313244;
+    surface1: #45475a;
+    surface2: #585b70;
 }
 
 window {
-    height: 360px;
-    border: 3px;
-    border-color: @border-col;
-    background-color: @bg-col;
+    width: @window-width;
+    border: @window-border;
+    border-color: @window-border-color;
+    background-color: @window-bg-color;
+    border-radius: @window-border-radius;
 }
 
 mainbox {
-    background-color: @bg-col;
+    background-color: transparent;
+    children: [inputbar, listview, footer];
 }
 
 inputbar {
-    children: [prompt,entry];
-    background-color: @bg-col;
-    border-radius: 5px;
-    padding: 2px;
-}
-
-prompt {
-    background-color: @blue;
-    padding: 6px;
-    text-color: @bg-col;
-    border-radius: 3px;
-    margin: 20px 0px 0px 20px;
-}
-
-textbox-prompt-colon {
-    expand: false;
-    str: ":";
+    children: [entry];
+    background-color: transparent;
 }
 
 entry {
-    padding: 6px;
-    margin: 20px 0px 0px 10px;
+    placeholder-color: @overlay0;
+    padding: 18px 14px;
     text-color: @fg-col;
-    background-color: @bg-col;
+    border-color: @surface2;
+    border: 0 0 2px 0;
+    background-color: transparent;
 }
 
 listview {
-    border: 0px 0px 0px;
-    padding: 6px 0px 0px;
-    margin: 10px 0px 0px 20px;
-    columns: 2;
-    lines: 5;
-    background-color: @bg-col;
+    padding: 6px;
+    lines: 7;
+    spacing: 5px;
+    background-color: transparent;
 }
 
 element {
-    padding: 5px;
-    background-color: @bg-col;
-    text-color: @fg-col  ;
+    padding: 12px;
+    border-radius: 8px;
+    spacing: 10px;
+    children: [element-icon, element-text];
+    background-color: transparent;
 }
 
 element-icon {
-    size: 25px;
+    size: 30px;
+    background-color: transparent;
+}
+
+element-text {
+    font: "CaskaydiaCove Nerd Font Medium 16px";
+    vertical-align: 0.5;
+    text-color: @fg-col;
+    background-color: transparent;
 }
 
 element selected {
-    background-color:  @selected-col ;
-    text-color: @fg-col2  ;
+    background-color: @surface1;
 }
 
-mode-switcher {
-    spacing: 0;
-  }
-
-button {
-    padding: 10px;
-    background-color: @bg-col-light;
-    text-color: @grey;
-    vertical-align: 0.5; 
-    horizontal-align: 0.5;
+element hover {
+    background-color: @surface0;
 }
 
-button selected {
-  background-color: @bg-col;
-  text-color: @blue;
+footer {
+    children: [textbox-nixicon, spacer, textbox-btw];
+    expand: false;
+    orientation: horizontal;
+    padding: 5px 10px;
+    background-color: @surface0;
+    border-color: @surface2;
+    border: 2px 0 0 0;
 }
 
-message {
-    background-color: @bg-col-light;
-    margin: 2px;
-    padding: 2px;
-    border-radius: 5px;
+textbox-nixicon {
+    expand: false;
+    str: "󱄅 ";
+    background-color: transparent;
+    text-color: @blue;
+    font: "CaskaydiaCove Nerd Font 36px";
+    vertical-align: 0.5;
+}
+
+textbox-btw {
+    expand: false;
+    str: "I Use NixOS Btw";
+    background-color: transparent;
+    text-color: @blue;
+    font: "Lofty Goals Regular 30px";
+    vertical-align: 0.5;
+}
+
+spacer {
+    str: "";
+    expand: true;
+    background-color: transparent;
 }
 
 textbox {
-    padding: 6px;
-    margin: 20px 0px 0px 20px;
-    text-color: @blue;
-    background-color: @bg-col-light;
+    expand: false;
+    str: "Application";
+    background-color: transparent;
+    text-color: @overlay0;
+    font: "CaskaydiaCove Nerd Font 14px";
+    vertical-align: 0.5;
+}
+
+/* Navigation elements */
+textbox-separator {
+    str: "|";
+    expand: true;
+    background-color: transparent;
+    margin: 0 6px;
+    font: "CaskaydiaCove Nerd Font 14px";
+    vertical-align: 0.5;
+    text-color: @surface2;
+}
+
+textbox-return-text, textbox-command-text,
+textbox-down-text, textbox-up-text,
+textbox-left-text, textbox-right-text {
+    expand: false;
+    text-color: @fg-col;
+    font: "CaskaydiaCove Nerd Font 14px";
+    vertical-align: 0.5;
+    border-radius: 4px;
+    background-color: transparent;
+}
+
+textbox-return-icon, textbox-command-icon,
+textbox-down-icon, textbox-up-icon,
+textbox-left-icon, textbox-right-icon {
+    expand: false;
+    text-color: @fg-col;
+    font: "CaskaydiaCove Nerd Font 16px";
+    vertical-align: 0.5;
+    margin: 8px 0;
+    padding: 0 4px;
+    border-radius: 4px;
+    background-color: @surface1;
 }

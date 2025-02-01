@@ -12,6 +12,7 @@ let
   # };
   fabric-ai = unstable.callPackage ./pkgs/fabric/package.nix {};
   pureref = pkgs.callPackage (import ./pkgs/pureref/pureref.nix) {};
+
 in{
   imports = [ 
     inputs.ags.homeManagerModules.default 
@@ -26,6 +27,7 @@ in{
     HYPRCURSOR_SIZE = 24;
   };
   # inputs.yapper.config.allowUnfree = true;
+
   home.stateVersion = "24.11"; 
   home.packages = [
     pkgs.lolcat
@@ -191,6 +193,7 @@ in{
       hyprlock.enable = false;
       swaync.enable = false;
       tmux.enable = false;
+      rofi.enable = false;
     };
     base16Scheme = { 
       base00 = "1e1e2e"; # base
@@ -676,6 +679,20 @@ in{
       uris = ["qemu:///system"];
     };
   };
+
+  # enable rofi
+  programs.rofi = {
+    enable = true;
+    package = unstable.rofi;
+    # font = "CaskaydiaCove Nerd Font:size=20";
+    # terminal = "kitty";
+  };
+  xdg.configFile."rofi" = {
+    source = ./dotfiles/rofi;
+    recursive = true;
+  };
+
+  # fonts.fontconfig.enable = true;
 
 }
 
