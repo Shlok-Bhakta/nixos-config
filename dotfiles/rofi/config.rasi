@@ -63,9 +63,9 @@ configuration {
 	window-thumbnail: false;
 
 	/*---------- Combi settings ----------*/
-/*	combi-modi: "window,run";*/
-/*	combi-hide-mode-prefix: false;*/
-/*	combi-display-format: "{mode} {text}";*/
+	combi-modi: "window,drun";
+	combi-hide-mode-prefix: false;
+	combi-display-format: "{mode} {text}";
 
 	/*---------- History and Sorting ----------*/
 	disable-history: false;
@@ -83,8 +83,8 @@ configuration {
 	display-filebrowser: "Files";
 
 	/*---------- Misc setting ----------*/
-	terminal: "rofi-sensible-terminal";
-	font: "Mono 12";
+	terminal: "kitty";
+	font: "CaskaydiaCove Nerd Font 12";
 	sort: false;
 	threads: 0;
 	click-to-exit: true;
@@ -104,7 +104,30 @@ configuration {
       delay:  0;
     }
 
+	/*---------- Calculator ----------*/
+    // calc {
+
+	// }
+	    display-drun: "  App ";
+    display-run: "  Shell ";
+    display-window: " 﩯 Open ";
+    display-calc: " Calc ";
+    display-clipboard: " Clip";
+
 	/*---------- Keybindings ----------*/
+
+    kb-select-1: "Control+1";
+    kb-select-2: "Control+2";
+    kb-select-3: "Control+3";
+    kb-select-4: "Control+4";
+    kb-select-5: "Control+5";
+    kb-select-6: "Control+6";
+    kb-select-7: "Control+7";
+    kb-select-8: "Control+8";
+    kb-select-9: "Control+9";
+    kb-select-10: "Control+0";
+
+
 /*
 	kb-primary-paste: "Control+V,Shift+Insert";
 	kb-secondary-paste: "Control+v,Insert";
