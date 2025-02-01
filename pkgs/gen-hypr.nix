@@ -136,10 +136,11 @@ in{
       "$mainMod, F, togglefloating,"
       "$mainMod, P, pseudo, # dwindle"
       "$mainMod, J, togglesplit, # dwindle"
-      "$mainMod, W, exec, walker"
+      "$mainMod, W, exec, rofi -show drun"
+      "$mainMod CTRL, R, exec, rofi -show calc"
       "$mainMod CTRL, W, exec, fuzzel" 
-      "$mainMod, V, exec, cliphist list | walker -d -k | cliphist decode | wl-copy"
-      "$mainMod CTRL, V, exec, cliphist list | fuzzel -dmenu | cliphist decode | wl-copy"
+      "$mainMod, V, exec, cliphist list | rofi -dmenu | cliphist decode | wl-copy"
+      # "$mainMod CTRL, V, exec, cliphist list | fuzzel -dmenu | cliphist decode | wl-copy"
       "$mainMod, B, exec, zen"
       "$mainMod, Y, exec, code"
       "$mainMod, L, exec, hyprlock"
@@ -147,8 +148,8 @@ in{
       ''SUPER_SHIFT, S, exec, hyprshot -m region --freeze --clipboard-only''
       ''SUPER_SHIFT, C, exec, hyprpicker | wl-copy''
       # "$mainMod, T, exec, bemoji"
-      "$mainMod, T, exec, walker -m emojis"
-      "CONTROLALT, Delete, exec, walker -m power"
+      "$mainMod, T, exec, rofi -show emoji"
+      "CONTROLALT, Delete, exec, bash /home/shlok/.config/rofi/plugins/powermenu.sh"
       "$mainMod CTRL, Space, global, kando:main-menu"
 
       # Move focus with mainMod + arrow keys
