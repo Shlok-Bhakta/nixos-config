@@ -2,6 +2,7 @@
 let
   wallpaper-path = ./dotfiles/wallpaper/wallpaper.png;
   unstable = import ./unstable.nix { inherit inputs pkgs; };
+
 in{
   # hyprland
   programs.hyprland = {
@@ -58,6 +59,22 @@ in{
   security.pam.services.swaylock = {};
   fonts.packages = with pkgs; [
     (nerdfonts.override { fonts = [ "CascadiaCode" ]; })
+    (stdenv.mkDerivation {
+      name = "allura-font";
+      src = ./dotfiles/customfont/allura;
+      installPhase = ''
+        mkdir -p $out/share/fonts/truetype
+        cp $src/Allura-Regular.ttf $out/share/fonts/truetype/
+      '';
+    })
+    (stdenv.mkDerivation {
+      name = "lofty-font";
+      src = ./dotfiles/customfont/lofty;
+      installPhase = ''
+        mkdir -p $out/share/fonts/truetype
+        cp $src/LoftyGoals.otf $out/share/fonts/truetype/
+      '';
+    })
   ];
   services.gvfs.enable = true;
   services.udisks2.enable = true;
@@ -114,4 +131,5 @@ in{
   # VirtualBox Setup because virt manager bork stuff
   virtualisation.virtualbox.host.enable = true;
   users.extraGroups.vboxusers.members = [ "shlok" ];
+
 }
