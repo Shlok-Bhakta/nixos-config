@@ -78,6 +78,7 @@ listview {
     lines: 7;
     spacing: 5px;
     background-color: transparent;
+    columns: 2;
 }
 
 element {

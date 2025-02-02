@@ -22,19 +22,18 @@ in{
 
     settings = {
       exec-once = [
-        "swww img ${wallpaper-path}"
         "swww-daemon --format xrgb"
-        "waybar"
+        "sleep 1; swww img ${wallpaper-path}"
+        "sleep 1; waybar"
         "swaync"
         "wl-paste --type [text|image] --watch cliphist store"
         "kando"
         "vesktop"
         "syncthing"
-        "walker --gapplication-service"
       ];
       "$terminal" = "kitty";
       "$fileManager" = "nautilus";
-      "$menu" = "walker";
+      "$menu" = "rofi";
       general = { 
         gaps_in = 5;
         gaps_out = 20;
