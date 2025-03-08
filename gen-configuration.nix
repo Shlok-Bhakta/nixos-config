@@ -75,6 +75,8 @@ in{
         cp $src/LoftyGoals.otf $out/share/fonts/truetype/
       '';
     })
+    times-newer-roman
+    corefonts
   ];
   services.gvfs.enable = true;
   services.udisks2.enable = true;
@@ -131,5 +133,7 @@ in{
   # VirtualBox Setup because virt manager bork stuff
   virtualisation.virtualbox.host.enable = true;
   users.extraGroups.vboxusers.members = [ "shlok" ];
+
+
 
 }
