@@ -1095,11 +1095,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1738293751,
-        "narHash": "sha256-L7lnvTMIeutL+CVYzeRRyWC5R6//ToT6x1NcdflhJYU=",
+        "lastModified": 1740469262,
+        "narHash": "sha256-Vd6yhH2yeDbY/pCkaCqE/HuiebNtuIAHSe9VEcKkRas=",
         "owner": "Shlok-Bhakta",
         "repo": "yapper",
-        "rev": "3e4cf07dff446628f02d10bcfe21586efc369c1b",
+        "rev": "68b4c02ea816518ca8d7eaf07f75b28467c9f4c9",
         "type": "github"
       },
       "original": {
