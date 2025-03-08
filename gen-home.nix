@@ -123,6 +123,7 @@ in{
     pkgs.libqalculate
     pkgs.wlogout
     unstable.rofi-power-menu
+    pkgs.tesseract
     # pkgs.bottles
     # pkgs.lazydocker
     # pkgs.wine
@@ -304,13 +305,14 @@ in{
       gnrs = "git add . && git commit -m \"update config\" && git push && sudo nixos-rebuild switch --flake \"/home/shlok/nixos-config\" | lolcat -f";
       nrs = "nh os switch | lolcat";
       # code = "codium";
-      c = "code";
-      C = "code .";
+      C = "code";
+      c = "code .";
       cn = "code /home/shlok/nixos-config";
       cat = "bat";
       man = "batman";
       cd = "z";
-      goo = "goo-engine-fhs";
+      plz = "sudo";
+      s = "sudo";
       tmuxhelp = ''echo "$(tput setaf 4)TMUX CHEATSHEET$(tput sgr0)
         $(tput setaf 4)---------------$(tput sgr0)
         $(tput bold)Prefix is Ctrl-e$(tput sgr0)
