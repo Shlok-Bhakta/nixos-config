@@ -379,34 +379,6 @@ in{
     plugins = [
       pkgs.tmuxPlugins.catppuccin
     ];
-    # Prefix Update
-    # - Set new prefix to Ctrl-e for better ergonomics with home row mods
-    # - Added double-tap Ctrl-e to send prefix to nested sessions
-
-    # Window Navigation
-    # - h: Select left pane
-    # - j: Select pane below
-    # - k: Select pane above
-    # - l: Select right pane
-
-    # Window Management
-    # - s: Split window horizontally (creates pane below)
-    # - v: Split window vertically (creates pane to the right)
-    # - Windows now start from index 1
-    # - Auto-renumber windows when closing them
-
-    # Vim Integration
-    # - Enabled vim keybindings in copy mode
-    # - Smart pane switching between vim splits and tmux panes using Ctrl + hjkl
-    # - Seamless navigation between vim and tmux
-
-    # Quality of Life
-    # - Mouse support enabled for selections and resizing
-    # - Increased scrollback buffer to 102400 lines
-    # - Added quick config reload with prefix + r
-
-      # set -g default-terminal "tmux-256color"
-      # set-option -sa terminal-overrides ",xterm-kitty:RGB"
    extraConfig = ''
       set-option -ga terminal-features "*:strikethrough:cstyle:osc7:focus"
       set-option -ga terminal-overrides "*:Tc"
