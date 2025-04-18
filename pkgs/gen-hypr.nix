@@ -36,7 +36,7 @@ in{
       "$menu" = "rofi";
       general = { 
         gaps_in = 5;
-        gaps_out = 20;
+        gaps_out = 5;
         border_size = 2;
         # https://wiki.hyprland.org/Configuring/Variables/#variable-types for info about colors
         "col.active_border" = "rgba(8aadf4ee) rgba(91d7e3ee) 45deg";
@@ -98,14 +98,6 @@ in{
         name = "epic-mouse-v1";
         sensitivity = -0.5;
       };
-    windowrule = [
-      "noblur, kando" 
-      "size 100% 100%, kando"
-      "noborder, kando"
-      "noanim, kando"
-      "float, kando"
-      "pin, kando"
-    ];
     "$mainMod" = "SUPER";
     bind = [
       # Example binds, see https://wiki.hyprland.org/Configuring/Binds/ for more
@@ -157,7 +149,7 @@ in{
       "$mainMod, mouse:272, movewindow"
       "$mainMod, mouse:273, resizewindow"
     ];
-    windowrulev2 = [
+    windowrule = [
       "suppressevent maximize, class:.*"
       "bordercolor rgba(fab387ee) rgba(eba0acee) 45deg,class:(brave-browser)"
       "bordercolor rgba(f9e2afee) rgba(f9e2afee) 45deg,class:(zen-alpha)"
@@ -166,7 +158,7 @@ in{
       "bordercolor rgba(cba6f7ee) rgba(f38ba8ee) rgba(fab387ee) rgba(a6e3a1ee) rgba(74c7ecee) 45deg, title:(.*)(catppuccin)(.*)$"
       "bordercolor rgba(8bd5caee) rgba(91d7e3ee) 45deg,class:(code-url-handler)"
       "bordercolor rgba(7287fdee) rgba(209fb5ee) 45deg,class:(vesktop)"
-      "bordercolor rgba(f5e0dcee) rgba(f2cdcdee) 45deg,floating:1"
+      "bordercolor rgba(f5e0dcee) rgba(f2cdcdee) 45deg,floating:1"      
     ];
     };
   };
