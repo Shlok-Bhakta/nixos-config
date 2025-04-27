@@ -1,4 +1,4 @@
-{ lib, config, pkgs, inputs, ... }:
+{ lib, config, pkgs, inputs, mynvf, ... }:
 let
   unstable = import ./unstable.nix { inherit inputs pkgs; };  
   affinity = import inputs.affinity { 
@@ -18,6 +18,7 @@ in{
     inputs.ags.homeManagerModules.default 
     inputs.stylix.homeManagerModules.stylix
     ./pkgs/goo-engine/goo.nix
+
   ];
   home.username = "shlok";
   home.homeDirectory = "/home/shlok";
@@ -124,6 +125,7 @@ in{
     pkgs.wlogout
     unstable.rofi-power-menu
     pkgs.tesseract
+    mynvf.neovim
     # unstable.alvr
     # pkgs.bottles
     # pkgs.lazydocker
@@ -433,22 +435,6 @@ in{
   programs.starship = {
     enable = true;
     settings = pkgs.lib.importTOML ./dotfiles/starship.toml;
-  };
-
-  programs.neovim = {
-      enable = true;
-      viAlias = true;
-      vimAlias = true;
-      vimdiffAlias = true;
-      plugins = [
-          unstable.vimPlugins.lazy-nvim
-          unstable.vimPlugins.lazygit-nvim
-          unstable.vimPlugins.catppuccin-nvim
-      ];
-  };
-  xdg.configFile."nvim" = {
-    source = ./dotfiles/lazyvim;
-    recursive = true;
   };
 
   xdg.configFile."walker" = {

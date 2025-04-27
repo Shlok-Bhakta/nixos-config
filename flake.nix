@@ -25,13 +25,20 @@
       url = "github:Duckonaut/split-monitor-workspaces";
       inputs.hyprland.follows = "hyprland"; # <- make sure this line is present for the plugin to work as intended
     };
-
+    nvf.url = "github:notashelf/nvf";
 };
 
-  outputs = { self, nixpkgs, home-manager, stylix, ... } @ inputs: let 
+  outputs = { self, nixpkgs, home-manager, stylix, nvf, ... } @ inputs: let 
       system = "x86_64-linux";
-
+      mynvf = nvf.lib.neovimConfiguration {
+        pkgs = nixpkgs.legacyPackages.${system};
+        modules = [ ./pkgs/nvf/nvf.nix];
+      };
   in {
+
+    # setup the nvf stuff
+    packages.${system}.mynvf = mynvf.neovim;
+
     nixosConfigurations.ShlokPCNIX = nixpkgs.lib.nixosSystem {
       specialArgs = {
         inherit inputs;
@@ -55,7 +62,7 @@
           home-manager.users.shlok = import ./desktop/desk-home.nix;
           home-manager.backupFileExtension = "old";
           home-manager.extraSpecialArgs = {
-            inherit inputs self;
+            inherit inputs self mynvf;
           };
         }
       ];
@@ -72,6 +79,7 @@
         ./laptop/laptop-configuration.nix
         ./laptop/laptop-hardware-configuration.nix
         ./laptop/laptop-system-settings.nix
+        
         home-manager.nixosModules.home-manager
         {
           home-manager.useGlobalPkgs = true;
@@ -79,7 +87,7 @@
           home-manager.users.shlok = import ./laptop/laptop-home.nix;
           home-manager.backupFileExtension = "old";
           home-manager.extraSpecialArgs = {
-            inherit inputs self;
+            inherit inputs self mynvf;
           };
         }
       ];

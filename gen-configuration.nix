@@ -4,6 +4,7 @@ let
   unstable = import ./unstable.nix { inherit inputs pkgs; };
 
 in{
+
   # hyprland
   programs.hyprland = {
     enable = true;
@@ -123,7 +124,6 @@ in{
   # VirtualBox Setup because virt manager bork stuff
   virtualisation.virtualbox.host.enable = true;
   users.extraGroups.vboxusers.members = [ "shlok" ];
-
 
 
 }
