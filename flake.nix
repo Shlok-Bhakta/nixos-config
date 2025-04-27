@@ -47,6 +47,7 @@
         ./desktop/desk-configuration.nix
         ./desktop/desk-hardware-configuration.nix
         ./desktop/desk-system-settings.nix
+        ./gen-steamconfig.nix
         home-manager.nixosModules.home-manager
         {
           home-manager.useGlobalPkgs = true;

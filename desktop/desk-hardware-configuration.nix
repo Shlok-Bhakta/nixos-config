@@ -18,6 +18,12 @@
       fsType = "ext4";
     };
 
+  fileSystems."/mnt/pickles" = {
+    device = "/dev/disk/by-uuid/0a9e76fd-7f77-4878-b6b5-a7ce75e048a8";
+    # options = [ "uid=1000" "gid=100" "dmask=007" "fmask=117" ];
+    fsType = "ext4";
+  };
+
   swapDevices =
     [ { device = "/dev/disk/by-uuid/1da6a73d-cec9-4c75-86b1-788f4c4ed7d9"; }
     ];

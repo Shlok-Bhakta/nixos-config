@@ -10,7 +10,7 @@ let
   wallpaper-path = ./dotfiles/wallpaper/wallpaper.gif;
   # goo-engine = pkgs.callPackage ./pkgs/goo-engine/default.nix {
   # };
-  fabric-ai = unstable.callPackage ./pkgs/fabric/package.nix {};
+  # fabric-ai = unstable.callPackage ./pkgs/fabric/package.nix {};
   pureref = pkgs.callPackage (import ./pkgs/pureref/pureref.nix) {};
 
 in{
@@ -53,7 +53,7 @@ in{
     pkgs.nix-output-monitor
     pkgs.wtype
     pkgs.nodejs_22
-    fabric-ai
+    # fabric-ai
     pkgs.nvidia-vaapi-driver
     # unstable.ollama
     pkgs.ffmpeg
@@ -124,6 +124,7 @@ in{
     pkgs.wlogout
     unstable.rofi-power-menu
     pkgs.tesseract
+    # unstable.alvr
     # pkgs.bottles
     # pkgs.lazydocker
     # pkgs.wine
