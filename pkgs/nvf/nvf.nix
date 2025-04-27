@@ -9,6 +9,10 @@
   # Languages 💬
   vim.languages.nix.enable = true;
 
+  # General language options
+  vim.languages.enableLSP = true;
+  vim.languages.enableTreesitter = true;
+
   # setup colorscheme 🎨
   vim.extraPlugins = with pkgs.vimPlugins; {
     catppuccin = {
@@ -23,7 +27,7 @@
   };
   vim.visuals.nvim-web-devicons.enable = true;
 
-  vim.luaConfigRC.applyTheme = lib.nvim.dag.entryAnywhere ''
+  vim.luaConfigRC.applyTheme = lib.nvim.dag.entryAnywhere /* lua */ ''
     vim.cmd('colorscheme catppuccin')
   '';
 
