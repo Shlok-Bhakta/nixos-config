@@ -1,9 +1,41 @@
-{pkgs, lib, ...}:
+{ pkgs, lib, ... }:
 
 {
-  vim.theme.enable = true;
-  # vim.theme.name = "catppuccin-mocha";
-  vim.theme.style = "dark";
+  # explicit configuration 🔧
+  vim.globals.mapleader = " ";
+  vim.globals.maplocalleader = ",";
 
+
+  # Languages 💬
   vim.languages.nix.enable = true;
+
+  # setup colorscheme 🎨
+  vim.extraPlugins = with pkgs.vimPlugins; {
+    catppuccin = {
+      package = catppuccin-nvim;
+      setup = /* lua */ ''
+        require("catppuccin").setup({
+          flavour = "mocha",
+          -- Add other Catppuccin options here if desired
+        })
+      '';
+    };
+  };
+  vim.visuals.nvim-web-devicons.enable = true;
+
+  vim.luaConfigRC.applyTheme = lib.nvim.dag.entryAnywhere ''
+    vim.cmd('colorscheme catppuccin')
+  '';
+
+
+  # Setup Telescope 🔭
+  vim.telescope = {
+    enable = true;
+  };
+
+  # Setup WhichKey 🔑
+  vim.binds.whichKey = {
+    enable = true;
+  };
 }
+
