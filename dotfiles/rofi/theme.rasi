@@ -4,59 +4,58 @@
     window-width: 900px;
     window-height: 550px;
     window-border: 1.75px;
-    window-border-color: #585b70;
+    window-border-color: @surface2;
     window-border-radius: 12px;
     window-bg-color: rgba(30, 30, 46, 0.95);
 
     /* Catppuccin Mocha Colors */
-    bg-col: #1e1e2e;
-    fg-col: #cdd6f4;
-    selected-col: #313244;
-    blue: #89b4fa;
-    lavender: #b4befe;
-    sapphire: #74c7ec;
-    sky: #89dceb;
-    red: #f38ba8;
+    rosewater: #f5e0dc;
+    flamingo: #f2cdcd;
     pink: #f5c2e7;
     mauve: #cba6f7;
+    red: #f38ba8;
+    maroon: #eba0ac;
     peach: #fab387;
-    green: #a6e3a1;
     yellow: #f9e2af;
+    green: #a6e3a1;
+    teal: #94e2d5;
+    sky: #89dceb;
+    sapphire: #74c7ec;
+    blue: #89b4fa;
+    lavender: #b4befe;
+    text: #cdd6f4;
+    subtext1: #bac2de;
+    subtext0: #a6adc8;
+    overlay2: #9399b2;
+    overlay1: #7f849c;
     overlay0: #6c7086;
-    surface0: #313244;
-    surface1: #45475a;
     surface2: #585b70;
-    bg-crust: #11111b;
+    surface1: #45475a;
+    surface0: #313244;
+    base: #1e1e2e;
+    mantle: #181825;
+    crust: #11111b;
 }
 
 window {
-    width: @window-width;
-    border: @window-border;
-    border-color: @window-border-color;
-    background-color: #11111bf0;
-    border-radius: @window-border-radius;
+    width: 900px;
+    background-color: @crust;
+    border-radius: 0px;
 }
-
-
 
 mainbox {
-    background-color: transparent;
-    children: [inputbar, message,listview, accentbar,footer];
+    children: [innerbox];
+    // background-image: linear-gradient(180deg, #f38ba8, #fab387, #f9e2af, #a6e3a1, #94e2d5, #74c7ec, #b4befe);
+    background-color: @surface0;
+    padding: 1px;
 }
 
-accentbar {
-    background-image: linear-gradient(180deg, #f38ba8, #fab387, #f9e2af, #a6e3a1, #94e2d5, #74c7ec, #b4befe);
-    padding: 1.75px 0px 0px 0px;
-    // margin: 0px 0px 3px 0px;
-    // spacing: 1px;
-    expand: false;
-}
 
-message {
-    background-color: transparent;
-    font: "CaskaydiaCove Nerd Font 16px";
-    padding: 14px 14px;
-    text-color: @fg-col;
+
+innerbox {
+    background-color: @crust;
+    children: [inputbar, message,listview,footer];
+    spacing: -10px;
 }
 
 inputbar {
@@ -67,56 +66,86 @@ inputbar {
 entry {
     placeholder-color: @overlay0;
     padding: 18px 14px;
-    text-color: @fg-col;
-    border-color: @surface2;
-    border: 0 0 1px 0;
-    background-color: transparent;
+    margin: 8px;
+    text-color: @flamingo;
+    background-color: @base;
+}
+message {
+    // used for calculator
+    background-color: @base;
+    font: "CaskaydiaCove Nerd Font";
+    padding: 4px 14px;
+    margin: 8px;
+    text-color: @text;
 }
 
+
 listview {
-    padding: 6px;
+    padding: 2px;
+    margin: 8px;
     lines: 7;
     spacing: 5px;
-    background-color: transparent;
+    background-color: @base;
     columns: 2;
 }
 
 element {
     padding: 12px;
-    border-radius: 8px;
     spacing: 10px;
     children: [element-icon, element-text];
-    background-color: transparent;
+    background-color: @base;
+}
+
+element selected {
+    background-color: @surface1;
+}
+
+element hover {
+    background-color: @mantle;
+    text-color: @rosewater;
 }
 
 element-icon {
     size: 30px;
     background-color: transparent;
+    text-color: inherit;
 }
 
 element-text {
     font: "CaskaydiaCove Nerd Font 16px";
     vertical-align: 0.5;
-    text-color: @fg-col;
+    text-color: @subtext0;
     background-color: transparent;
 }
 
-
-element selected {
-    background-color: @selected-col;
+element-text selected {
+    text-color: @flamingo;
 }
 
-element hover {
-    background-color: @surface0;
+element-text hover {
+    text-color: @rosewater;
 }
+
+accentbar {
+    // background-image: linear-gradient(180deg, @red, @peach, @yellow, @green, @teal, @sapphire, @lavender);
+    background-image: linear-gradient(180deg, #f38ba8, #fab387, #f9e2af, #a6e3a1, #94e2d5, #74c7ec, #b4befe);
+    padding: 1.75px 0px 0px 0px;
+    // margin: 0px 0px 3px 0px;
+    // spacing: 1px;
+    expand: false;
+}
+
+
+
 
 footer {
     children: [textbox-nixicon, spacer, textbox-btw];
     expand: false;
     orientation: horizontal;
     padding: 5px 10px;
-    background-color: #11111bc0;
-    // border-color: linear-gradient(180deg, #89b4fa, #74c7ec);
+    margin: 8px;
+    background-color: @base;
+    // border-color: linear-gradient(180deg, @blue, @sapphire);
     // border: 2px 0 0 0;
 }
 
@@ -133,7 +162,7 @@ textbox-btw {
     expand: false;
     str: "I Use NixOS Btw";
     background-color: transparent;
-    // background-image: linear-gradient(90deg, #89b4fa, #74c7ec);
+    // background-image: linear-gradient(90deg, @blue, @sapphire);
     text-color: @blue;
     font: "Lofty Goals Regular 20px";
     vertical-align: 0.5;
@@ -169,7 +198,7 @@ textbox-return-text, textbox-command-text,
 textbox-down-text, textbox-up-text,
 textbox-left-text, textbox-right-text {
     expand: false;
-    text-color: @fg-col;
+    text-color: @text;
     font: "CaskaydiaCove Nerd Font 14px";
     vertical-align: 0.5;
     border-radius: 4px;
@@ -180,7 +209,7 @@ textbox-return-icon, textbox-command-icon,
 textbox-down-icon, textbox-up-icon,
 textbox-left-icon, textbox-right-icon {
     expand: false;
-    text-color: @fg-col;
+    text-color: @text;
     font: "CaskaydiaCove Nerd Font 16px";
     vertical-align: 0.5;
     margin: 8px 0;
