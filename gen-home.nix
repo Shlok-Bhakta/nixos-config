@@ -125,6 +125,7 @@ in{
     pkgs.wlogout
     unstable.rofi-power-menu
     pkgs.tesseract
+    pkgs.pavucontrol           
     mynvf.neovim
     # unstable.alvr
     # pkgs.bottles
