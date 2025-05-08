@@ -1,63 +1,99 @@
 {
-    "height": 32,
-    "spacing": 10,
+    "height": 33,
+    "spacing": 11,
     "modules-left": [
         "hyprland/workspaces",
-        "custom/media"
-    ],
-    "modules-center": [
+        "custom/media",
         "hyprland/window"
     ],
+    "modules-center": [
+        "clock"
+    ],
     "modules-right": [
-        "idle_inhibitor",
         "custom/weather",
-        "custom/vpn",
         "network",
         "pulseaudio",
-        "clock",
-        "clock#date",
+        "backlight",
         "battery",
         "custom/notification",
-        "tray",
-        "custom/rightpad"
+        "tray"
     ],
-    "hyprland/mode": {
-        "format": "<span style=\"italic\">{}</span>"
-    },
-    "hyprland/scratchpad": {
-        "format": "{icon} {count}",
-        "show-empty": false,
-        "format-icons": [
-            "",
-            ""
-        ],
-        "tooltip": true,
-        "tooltip-format": "{app}: {title}"
+    "hyprland/workspaces": {
+        "format": "{name}",
+        "on-click": "activate",
+        "sort-by-number": true,
+        "on-scroll-up": "hyprctl dispatch workspace e+2",
+        "on-scroll-down": "hyprctl dispatch workspace e0",
+        "all-outputs": false
+    },    
+    "custom/media": {
+        "format": "  {}",
+        "escape": true,
+        "max-length": 20,
+        "on-click": "playerctl play-pause",
+        "on-click-right": "playerctl stop",
+        "on-scroll-up": "playerctl next",
+        "on-scroll-down": "playerctl previous",
+        "interval": 11,
+        "exec": "playerctl status | grep -q 'Stopped' && echo '' || playerctl metadata -f '{{xesam:title}}'"
     },
     "hyprland/window": {
-        "on-click": "ags -t datemenu",
+        "max-length": 20,
         "tooltip": false
     },
-    "idle_inhibitor": {
-        "format": "{icon}",
+    "clock": {
+        "interval": 2,
+        "format": "{:%I:%M %p  %A %b %d}",
+        "format-alt": "{:%I:%M %p  %Y-%m-%d}",
+        "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>"
+    },
+    "custom/weather": {
+        "format": "{}",
+        "interval": 3601,
+        "exec": "curl -s 'https://wttr.in/?format=1' | sed 's/   / /g' | sed 's/+//g'",
+        "exec-if": "ping wttr.in -c2",
+        "tooltip-format": "{}"
+        
+    },
+    "network": {
+        "format-wifi": " {essid} ({signalStrength}%)",
+        "format-ethernet": "⬇{bandwidthDownBytes} ⬆{bandwidthUpBytes}",
+        "interval": 4,
+        "format-linked": "{ifname} (No IP) ",
+        "format": "",
+        "format-disconnected": "",
+        "format-alt": "{ifname}: {ipaddr}/{cidr}",
+        "on-click": "wl-copy $(ip address show up scope global | grep inet | head -n2 | cut -d/ -f 1 | tr -d [:space:] | cut -c5-)",
+        "tooltip-format": " {bandwidthUpBits}  {bandwidthDownBits}\n{ifname}\n{ipaddr}/{cidr}\n",
+        "tooltip-format-wifi": " {essid} {frequency}MHz\nStrength: {signaldBm}dBm ({signalStrength}%)\nIP: {ipaddr}/{cidr}\n {bandwidthUpBits}  {bandwidthDownBits}",
+        "min-length": 18,
+        "max-length": 18
+    },
+    "pulseaudio": {
+        "format": "{icon} {volume}% {format_source}",
+        "format-bluetooth": " {icon} {volume}% {format_source}",
+        "format-bluetooth-muted": "  {icon} {format_source}",
+        "format-muted": "  {format_source}",
+        "format-source": " {volume}%",
+        "format-source-muted": "",
         "format-icons": {
-            "activated": "",
-            "deactivated": ""
-        }
+            "default": [
+                "",
+                "",
+                " "
+            ]
+        },
+        "scroll-step": 2,
+        "on-click": "pavucontrol"
     },
     "tray": {
-        "spacing": 10
-    },
-    "clock": {
-        "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
-        "format-alt": "{:%Y-%m-%d}"
-    },
-    "clock#date": {
-        "format": "{:%d.%m.%Y}",
-        "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>"
+        "spacing": 9
     },
     "backlight": {
         "format": "{icon} {percent}%",
+        "scroll-step": 1,
+        "on-scroll-up":   "brightnessctl set +5%",
+        "on-scroll-down": "brightnessctl set 5%- -n 5%",
         "format-icons": [
             "",
             "",
@@ -72,11 +108,11 @@
     },
     "battery": {
         "states": {
-            "warning": 30,
-            "critical": 15
+            "warning": 31,
+            "critical": 16
         },
         "format": "{icon} {capacity}%",
-        "format-charging": " {capacity}%",
+        "format-charging": "󰢜 {capacity}%",
         "format-plugged": " {capacity}%",
         "format-icons": [
             "",
@@ -87,45 +123,7 @@
         ],
         "on-click": "ags -t quicksettings"
     },
-    "pulseaudio": {
-        "format": "{icon} {volume}% {format_source}",
-        "format-bluetooth": " {icon} {volume}% {format_source}",
-        "format-bluetooth-muted": "  {icon} {format_source}",
-        "format-muted": "  {format_source}",
-        "format-source": " {volume}%",
-        "format-source-muted": "",
-        "format-icons": {
-            "default": [
-                "",
-                "",
-                ""
-            ]
-        },
-        "on-click": "pavucontrol"
-    },
-    "custom/weather": {
-        "format": "{}",
-        "interval": 3600,
-        "exec": "curl -s 'https://wttr.in/~41.03508,28.98331?format=1'",
-        "exec-if": "ping wttr.in -c1"
-    },
-    "custom/vpn": {
-        "tooltip": false,
-        "format": "VPN {} ",
-        "exec": "tailscale status | grep -q 'stopped.' && echo '' || echo ''",
-        "interval": 30
-    },
-    "custom/media": {
-        "format": "{icon} {}",
-        "escape": true,
-        "max-length": 40,
-        "on-click": "playerctl play-pause",
-        "on-click-right": "playerctl stop",
-        "on-scroll-up": "playerctl next",
-        "on-scroll-down": "playerctl previous",
-        "interval": 10,
-        "exec": "playerctl status | grep -q 'Stopped' && echo '' || playerctl metadata -f '{{xesam:artist}}:{{xesam:title}}'"
-    },
+
     "custom/notification": {
         "tooltip": false,
         "format": "{icon}",
@@ -144,19 +142,5 @@
     },
     "custom/rightpad": {
         "format": " "
-    },
-    "network": {
-        "format-wifi": " {essid} ({signalStrength}%)",
-        "format-ethernet": "⬇{bandwidthDownBytes} ⬆{bandwidthUpBytes}",
-        "interval": 3,
-        "format-linked": "{ifname} (No IP) ",
-        "format": "",
-        "format-disconnected": "",
-        "format-alt": "{ifname}: {ipaddr}/{cidr}",
-        "on-click": "wl-copy $(ip address show up scope global | grep inet | head -n1 | cut -d/ -f 1 | tr -d [:space:] | cut -c5-)",
-        "tooltip-format": " {bandwidthUpBits}  {bandwidthDownBits}\n{ifname}\n{ipaddr}/{cidr}\n",
-        "tooltip-format-wifi": " {essid} {frequency}MHz\nStrength: {signaldBm}dBm ({signalStrength}%)\nIP: {ipaddr}/{cidr}\n {bandwidthUpBits}  {bandwidthDownBits}",
-        "min-length": 17,
-        "max-length": 17
     }
 }

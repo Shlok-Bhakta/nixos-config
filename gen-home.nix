@@ -127,6 +127,7 @@ in{
     pkgs.tesseract
     pkgs.pavucontrol           
     mynvf.neovim
+    pkgs.brightnessctl
     # unstable.alvr
     # pkgs.bottles
     # pkgs.lazydocker
