@@ -41,9 +41,6 @@
     };
     vim-visual-multi = {
       package = vim-visual-multi;
-      setup = /* lua */ ''
-        require("visual-multi").setup({})
-      '';
     };
   };
   vim.visuals.nvim-web-devicons.enable = true;
