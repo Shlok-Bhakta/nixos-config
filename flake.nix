@@ -79,7 +79,7 @@
         ./laptop/laptop-configuration.nix
         ./laptop/laptop-hardware-configuration.nix
         ./laptop/laptop-system-settings.nix
-        
+        ./gen-steamconfig.nix 
         home-manager.nixosModules.home-manager
         {
           home-manager.useGlobalPkgs = true;

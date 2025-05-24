@@ -128,6 +128,7 @@ in{
     pkgs.pavucontrol           
     mynvf.neovim
     pkgs.brightnessctl
+    pkgs.uv
     # unstable.alvr
     # pkgs.bottles
     # pkgs.lazydocker
