@@ -56,10 +56,10 @@ in{
   };
 
   nixpkgs.config.cudaSupport = true;
-  system.stateVersion = "24.11"; 
+  system.stateVersion = "25.05"; 
   security.pam.services.swaylock = {};
   fonts.packages = with pkgs; [
-    (nerdfonts.override { fonts = [ "CascadiaCode" ]; })
+    nerd-fonts.caskaydia-cove
     (stdenv.mkDerivation {
       name = "allura-font";
       src = ./dotfiles/customfont/allura;

@@ -29,7 +29,7 @@ in{
   };
   # inputs.yapper.config.allowUnfree = true;
 
-  home.stateVersion = "24.11"; 
+  home.stateVersion = "25.05"; 
   home.packages = [
     pkgs.lolcat
     pkgs.direnv
@@ -202,6 +202,7 @@ in{
       swaync.enable = false;
       tmux.enable = false;
       rofi.enable = false;
+      starship.enable = false;
     };
     base16Scheme = { 
       base00 = "1e1e2e"; # base
