@@ -18,7 +18,7 @@ goo-engine = pkgs.stdenv.mkDerivation {
       '';
   };
 
-  goo-engine-fhs = pkgs.buildFHSUserEnv {
+  goo-engine-fhs = pkgs.buildFHSEnv {
     name = "goo-engine-fhs";
     targetPkgs = pkgs: (with pkgs; [
       goo-engine

@@ -12,7 +12,7 @@
   # networking.proxy.default = "http://user:password@proxy:port/";
   # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
   environment.sessionVariables = {
-    FLAKE = "/home/shlok/nixos-config";
+    NH_FLAKE = "/home/shlok/nixos-config";
   };
   # Enable networking
   networking.networkmanager.enable = true;
@@ -67,7 +67,7 @@
 
 
   # Enable sound with pipewire.
-  hardware.pulseaudio.enable = false;
+  services.pulseaudio.enable = false;
   security.rtkit.enable = true;
   services.pipewire = {
     enable = true;

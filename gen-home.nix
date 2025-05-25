@@ -16,7 +16,7 @@ let
 in{
   imports = [ 
     inputs.ags.homeManagerModules.default 
-    inputs.stylix.homeManagerModules.stylix
+    inputs.stylix.homeModules.stylix
     ./pkgs/goo-engine/goo.nix
 
   ];
@@ -278,7 +278,7 @@ in{
   programs.vscode = {
     enable = true;
     package = unstable.vscode.fhs;
-    extensions = with unstable.vscode-extensions; [
+    profiles.default.extensions = with unstable.vscode-extensions; [
       catppuccin.catppuccin-vsc
       catppuccin.catppuccin-vsc-icons
       vscodevim.vim
