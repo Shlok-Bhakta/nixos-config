@@ -129,6 +129,7 @@ in{
     mynvf.neovim
     pkgs.brightnessctl
     pkgs.uv
+    # fabric-ai = unstable.callPackage ./pkgs/fabric/package.nix {};.git
     # unstable.alvr
     # pkgs.bottles
     # pkgs.lazydocker
@@ -386,53 +387,7 @@ in{
     plugins = [
       pkgs.tmuxPlugins.catppuccin
     ];
-   extraConfig = ''
-      set-option -ga terminal-features "*:strikethrough:cstyle:osc7:focus"
-      set-option -ga terminal-overrides "*:Tc"
-    
-      # Fix terminal state and input handling
-      set-option -g default-terminal "xterm-kitty"
-      set-option -sa terminal-overrides ",xterm-kitty:RGB"
-      set -as terminal-features ',xterm-kitty:hyperlinks'
-  
-
-      # Wayland clipboard integration
-      set -s copy-command 'wl-copy'
-      set -s set-clipboard on
-      
-      # Vim-style copy mode
-      bind-key -T copy-mode-vi y send-keys -X copy-pipe-and-cancel "wl-copy && wl-paste -n | wl-copy -p"
-      bind-key p run "wl-paste -n | tmux load-buffer - ; tmux paste-buffer"
-  
-
-      unbind C-b
-      set -g prefix C-e
-      bind C-e send-prefix
-    
-      bind h select-pane -L
-      bind j select-pane -D
-      bind k select-pane -U
-      bind l select-pane -R
-
-      bind v split-window -h
-      bind s split-window -v
-
-      setw -g mode-keys vi
-
-      bind -n C-h run "(tmux display-message -p '#{pane_current_command}' | grep -iqE '(^|\/)vim$' && tmux send-keys C-h) || tmux select-pane -L"
-      bind -n C-j run "(tmux display-message -p '#{pane_current_command}' | grep -iqE '(^|\/)vim$' && tmux send-keys C-j) || tmux select-pane -D"
-      bind -n C-k run "(tmux display-message -p '#{pane_current_command}' | grep -iqE '(^|\/)vim$' && tmux send-keys C-k) || tmux select-pane -U"
-      bind -n C-l run "(tmux display-message -p '#{pane_current_command}' | grep -iqE '(^|\/)vim$' && tmux send-keys C-l) || tmux select-pane -R"
-
-      set -g base-index 1
-      setw -g pane-base-index 1
-
-      set -g renumber-windows on
-
-      set -g mouse on
-
-      set -g history-limit 102400
-    '';
+   extraConfig = builtins.readFile ./dotfiles/tmux/tmux.conf;
   };
 
 
@@ -666,6 +621,11 @@ in{
   };
 
   # fonts.fontconfig.enable = true;
+
+  programs.gitui = {
+    enable = true;
+    theme = builtins.readFile ./dotfiles/gitui/catppuccin-mocha.ron;
+  };
 
 }
 
