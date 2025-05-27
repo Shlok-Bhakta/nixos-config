@@ -83,4 +83,23 @@
   vim.lsp.trouble = {
     enable = true;
   };
+
+  # Setup Colorizer for showig # colors
+  vim.ui.colorizer = {
+    enable = true;
+    setupOpts = {
+      filetypes = {
+        "*" = {
+          "AARRGGBB" = true;
+          "RGB" = true;
+          "RRGGBB" = true;
+          "RRGGBBAA" = true;
+          "css" = true;
+          "css_fn" = true;
+          "hsl_fn" = true;
+          "names" = true; 
+        };
+      };
+    };
+  };
 }

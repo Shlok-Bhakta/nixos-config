@@ -204,6 +204,7 @@ in{
       tmux.enable = false;
       rofi.enable = false;
       starship.enable = false;
+      gitui.enable = false;
     };
     base16Scheme = { 
       base00 = "1e1e2e"; # base
