@@ -4,12 +4,14 @@
   # explicit configuration 🔧
   vim.globals.mapleader = " ";
   vim.globals.maplocalleader = ",";
+
   # Set the tab size to 4 spaces
   vim.options = {
     tabstop = 2;
     expandtab = true;
     shiftwidth = 2;
   };
+
   # Languages 💬
   vim.languages.nix = {
     enable = true;
@@ -33,13 +35,13 @@
           })
         '';
     };
-    supermaven = {
-      package = supermaven-nvim;
-      setup = # lua
-        ''
-          require("supermaven-nvim").setup({})
-        '';
-    };
+    #    supermaven = {
+    #package = supermaven-nvim;
+    #setup = # lua
+    #''
+    #     require("supermaven-nvim").setup({})
+    #   '';
+    #}; 
     vim-visual-multi = {
       package = vim-visual-multi;
     };
@@ -74,7 +76,6 @@
       buffer = "[Buffer]";
       nvim-cmp = null;
       path = "[Path]";
-      supermaven = "supermaven";
     };
   };
 
@@ -82,7 +83,7 @@
   vim.autopairs.nvim-autopairs = {
     enable = true;
   };
-  
+
   # Setup a file explorer 📂
   vim.utility.oil-nvim = {
     enable = true;
@@ -115,4 +116,46 @@
   vim.comments.comment-nvim = {
     enable = true;
   };
+
+  # Enable Surround
+  vim.utility.surround = {
+    enable = true;
+    useVendoredKeybindings = false;
+  };
+
+
+  # Setup a Tabline
+vim.tabline.nvimBufferline = {
+  enable = true;
+  mappings.closeCurrent = "<leader>bx";
+  
+  setupOpts = {
+    options = {
+      separator_style = "slant";
+      diagnostics = "nvim_lsp";
+      diagnostics_update_in_insert = false;
+      show_buffer_icons = true;
+      show_buffer_close_icons = true;
+      show_close_icon = false;
+      show_tab_indicators = true;
+      color_icons = true;
+      
+      # Compact sizing for minimal vertical space
+      tab_size = 16;
+      max_name_length = 16;
+      max_prefix_length = 12;
+      
+      indicator = {
+        style = "icon";
+      };
+      style_preset = "minimal";
+      numbers = "none";
+      sort_by = "extension";
+      modified_icon = "●";
+      always_show_bufferline = true;
+      auto_toggle_bufferline = true;
+    };
+  };
+};
+
 }
