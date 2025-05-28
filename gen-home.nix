@@ -385,10 +385,7 @@ in{
   };
   programs.tmux = {
     enable = true;
-    plugins = [
-      pkgs.tmuxPlugins.catppuccin
-    ];
-   extraConfig = builtins.readFile ./dotfiles/tmux/tmux.conf;
+    extraConfig = builtins.readFile ./dotfiles/tmux/tmux.conf;
   };
 
 
