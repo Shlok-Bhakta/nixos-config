@@ -10,7 +10,6 @@
     expandtab = true;
     shiftwidth = 2;
   };
-
   # Languages 💬
   vim.languages.nix = {
     enable = true;
@@ -27,17 +26,19 @@
   vim.extraPlugins = with pkgs.vimPlugins; {
     catppuccin = {
       package = catppuccin-nvim;
-      setup = /* lua */ ''
-        require("catppuccin").setup({
-          flavour = "mocha",
-        })
-      '';
+      setup = # lua
+        ''
+          require("catppuccin").setup({
+            flavour = "mocha",
+          })
+        '';
     };
     supermaven = {
       package = supermaven-nvim;
-      setup = /* lua */ ''
-        require("supermaven-nvim").setup({})
-      '';
+      setup = # lua
+        ''
+          require("supermaven-nvim").setup({})
+        '';
     };
     vim-visual-multi = {
       package = vim-visual-multi;
@@ -45,9 +46,11 @@
   };
   vim.visuals.nvim-web-devicons.enable = true;
 
-  vim.luaConfigRC.applyTheme = lib.nvim.dag.entryAnywhere /* lua */ ''
-    vim.cmd('colorscheme catppuccin')
-  '';
+  vim.luaConfigRC.applyTheme =
+    lib.nvim.dag.entryAnywhere # lua
+      ''
+        vim.cmd('colorscheme catppuccin')
+      '';
 
   # Setup Telescope 🔭
   vim.telescope = {
@@ -67,18 +70,23 @@
   # Setup Autocomplete with nvim-cmp 🔎
   vim.autocomplete.nvim-cmp = {
     enable = true;
+    sources = {
+      buffer = "[Buffer]";
+      nvim-cmp = null;
+      path = "[Path]";
+      supermaven = "supermaven";
+    };
   };
 
   # Setup autopairing
   vim.autopairs.nvim-autopairs = {
     enable = true;
   };
-
+  
   # Setup a file explorer 📂
   vim.utility.oil-nvim = {
     enable = true;
   };
-
   # Setup Trouble 🚨
   vim.lsp.trouble = {
     enable = true;
@@ -97,9 +105,14 @@
           "css" = true;
           "css_fn" = true;
           "hsl_fn" = true;
-          "names" = true; 
+          "names" = true;
         };
       };
     };
+  };
+
+  # setup Comment tooling
+  vim.comments.comment-nvim = {
+    enable = true;
   };
 }
