@@ -1,24 +1,11 @@
 { lib, config, pkgs, inputs, mynvf, ... }:
 let
   unstable = import ./unstable.nix { inherit inputs pkgs; };  
-  affinity = import inputs.affinity { 
-    system = pkgs.system;
-    config = {
-      allowUnfree = true;
-    };
-  };
   wallpaper-path = ./dotfiles/wallpaper/wallpaper.gif;
-  # goo-engine = pkgs.callPackage ./pkgs/goo-engine/default.nix {
-  # };
-  # fabric-ai = unstable.callPackage ./pkgs/fabric/package.nix {};
-  pureref = pkgs.callPackage (import ./pkgs/pureref/pureref.nix) {};
-
 in{
   imports = [ 
     inputs.ags.homeManagerModules.default 
     inputs.stylix.homeModules.stylix
-    ./pkgs/goo-engine/goo.nix
-
   ];
   home.username = "shlok";
   home.homeDirectory = "/home/shlok";
@@ -54,13 +41,10 @@ in{
     pkgs.nix-output-monitor
     pkgs.wtype
     pkgs.nodejs_22
-    # fabric-ai
     pkgs.nvidia-vaapi-driver
-    # unstable.ollama
     pkgs.ffmpeg
     unstable.openai-whisper-cpp
     unstable.nvtopPackages.panthor
-    # pkgs.nvidia-vaapi-driver
     unstable.egl-wayland
     pkgs.pciutils
     pkgs.udisks2
@@ -71,24 +55,18 @@ in{
     pkgs.yt-dlp
     unstable.docker-compose
     unstable.vesktop
-    # pkgs.modrinth-app
     unstable.obsidian
     pkgs.wget
-    # update with "nix flake lock --update-input zen-browser"
     inputs.zen-browser.packages."${pkgs.system}".default
     inputs.yapper.packages."${pkgs.system}".default
-    # inputs.affinity.packages.${pkgs.system}.photo
-    # affinity.Photo
     pkgs.speechd
     pkgs.nautilus
-    pkgs.boatswain
     unstable.deckmaster
     pkgs.gnome-calculator
     pkgs.gnome-characters
     pkgs.apostrophe
     pkgs.impression
     pkgs.textpieces
-    # pkgs.gnome.adwaita-icon-theme
     pkgs.candy-icons
     pkgs.gnome-themes-extra
     pkgs.dust
@@ -100,12 +78,9 @@ in{
     unstable.hyprshot
     unstable.annotator
     unstable.anki
-    pkgs.gnome-calendar
     pkgs.gnome-clocks
-    # nix flake lock --update-input kando-nixpkgs
     pkgs.fragments
     pkgs.gnome-disk-utility
-    pureref
     pkgs.nixfmt-rfc-style
     pkgs.vlc
     unstable.gnome-pomodoro
@@ -118,8 +93,6 @@ in{
     unstable.kando
     unstable.nodePackages_latest.pnpm
     pkgs.parabolic
-    pkgs.prismlauncher
-    # unstable.blender
     unstable.walker
     pkgs.libqalculate
     pkgs.wlogout
@@ -127,17 +100,13 @@ in{
     pkgs.tesseract
     pkgs.pavucontrol           
     mynvf.neovim
-    pkgs.brightnessctl
-    pkgs.uv
-    # fabric-ai = unstable.callPackage ./pkgs/fabric/package.nix {};.git
-    # unstable.alvr
-    # pkgs.bottles
-    # pkgs.lazydocker
-    # pkgs.wine
-    # pkgs.ollama-cuda
-    # hypkgs.hyprpanel
-    # agsconf
+    pkgs.brightnessctl 
+    pkgs.lazygit
+    unstable.bun
+    unstable.opencode
+    unstable.claude-code
   ];
+        
 
   programs.home-manager.enable = true;
   services.udiskie = {

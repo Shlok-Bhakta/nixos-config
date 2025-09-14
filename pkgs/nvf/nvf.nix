@@ -23,6 +23,7 @@
   # General language options
   vim.languages.enableLSP = true;
   vim.languages.enableTreesitter = true;
+  vim.languages.python.enable = true;
 
   # setup colorscheme 🎨
   vim.extraPlugins = with pkgs.vimPlugins; {

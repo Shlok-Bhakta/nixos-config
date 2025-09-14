@@ -41,6 +41,7 @@ in{
     pkgs.man-pages
     pkgs.man-pages-posix
     pkgs.cachix
+    (pkgs.callPackage ./pkgs/deskthing/deskthing.nix {})
   ];
 
   # kanata
@@ -110,10 +111,18 @@ in{
     enable = true;
   };
 
+  # Enable ADB for DeskThing device detection
+  programs.adb.enable = true;
+
   services.avahi.enable = true;
   services.upower.enable = true;
   documentation.dev.enable = true;
 
+  # Car Thing udev rules for flashing
+  services.udev.extraRules = ''
+    SUBSYSTEM=="usb", ATTRS{idVendor}=="1b8e", ATTRS{idProduct}=="c003", OWNER="shlok", MODE="0666"
+    SUBSYSTEM=="usb", ATTRS{idVendor}=="1d6b", ATTRS{idProduct}=="1014", OWNER="shlok", MODE="0666"
+  '';
 
   # Virt Manager Setup
   programs.virt-manager.enable = true;
