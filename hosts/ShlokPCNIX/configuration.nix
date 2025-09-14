@@ -1,10 +1,7 @@
-{ lib, config, pkgs, inputs, ... }:
-let
-  unstable = import ../unstable.nix { inherit inputs pkgs; };
-in
+{ lib, config, pkgs, inputs, unstable, ... }:
 {
   imports = [
-    ../gen-configuration.nix 
+    ../../modules/system/configuration.nix
   ];
   # support for my wakom drawing tablet!
 

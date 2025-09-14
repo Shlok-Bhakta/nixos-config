@@ -1,6 +1,5 @@
-{ lib, config, pkgs, inputs, ... }: let
+{ lib, config, pkgs, inputs, unstable, ... }: let
   wallpaper-path = ../dotfiles/wallpaper/wallpaper.gif;
-  unstable = import ../unstable.nix { inherit inputs pkgs; };
 in {
   imports = [
     ./gen-hypr.nix

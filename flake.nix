@@ -40,13 +40,13 @@
     nvf.url = "github:notashelf/nvf";
 };
 
-  outputs = { self, nixpkgs, home-manager, stylix, nvf, ... } @ inputs: let 
+  outputs = { self, nixpkgs, UNSTABLE, home-manager, stylix, nvf, ... } @ inputs: let 
       system = "x86_64-linux";
       mynvf = nvf.lib.neovimConfiguration {
         pkgs = nixpkgs.legacyPackages.${system};
-        modules = [ ./pkgs/nvf/nvf.nix];
+        modules = [ ./modules/custom-pkgs/nvf/nvf.nix];
       };
-      unstable = import pkgs.UNSTABLE {
+      unstable = import UNSTABLE {
         inherit system;
         allowUnfree = true;
       };
@@ -57,7 +57,7 @@
 
     nixosConfigurations.ShlokPCNIX = nixpkgs.lib.nixosSystem {
       specialArgs = {
-        inherit inputs;
+        inherit inputs unstable;
       };
       modules = [
         {
@@ -66,41 +66,41 @@
             cudaSupport = true;
           };
         }
-        ./desktop/desk-configuration.nix
-        ./desktop/desk-hardware-configuration.nix
-        ./desktop/desk-system-settings.nix
+        ./hosts/ShlokPCNIX/configuration.nix
+        ./hosts/ShlokPCNIX/hardware-configuration.nix
+        ./hosts/ShlokPCNIX/system-settings.nix
         home-manager.nixosModules.home-manager
         {
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
-          home-manager.users.shlok = import ./desktop/desk-home.nix;
+          home-manager.users.shlok = import ./hosts/ShlokPCNIX/home-manager/home.nix;
           home-manager.backupFileExtension = "old";
           home-manager.extraSpecialArgs = {
-            inherit inputs self mynvf;
+            inherit inputs self mynvf unstable;
           };
         }
       ];
     };
     nixosConfigurations.ShlokLAPNIX = nixpkgs.lib.nixosSystem {
       specialArgs = {
-        inherit inputs;
+        inherit inputs unstable;
       };
       modules = [
         {
           nixpkgs.config.allowUnfree = true;
           # nixpkgs.overlays = [ overlay-kando ];
         }
-        ./laptop/laptop-configuration.nix
-        ./laptop/laptop-hardware-configuration.nix
-        ./laptop/laptop-system-settings.nix
+        ./hosts/ShlokLAPNIX/configuration.nix
+        ./hosts/ShlokLAPNIX/hardware-configuration.nix
+        ./hosts/ShlokLAPNIX/system-settings.nix
         home-manager.nixosModules.home-manager
         {
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
-          home-manager.users.shlok = import ./laptop/laptop-home.nix;
+          home-manager.users.shlok = import ./hosts/ShlokLAPNIX/home-manager/home.nix;
           home-manager.backupFileExtension = "old";
           home-manager.extraSpecialArgs = {
-            inherit inputs self mynvf;
+            inherit inputs self mynvf unstable;
           };
         }
       ];

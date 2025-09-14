@@ -1,7 +1,6 @@
-{ lib, config, pkgs, inputs, ... }:
+{ lib, config, pkgs, inputs, unstable, ... }:
 let
   wallpaper-path = ./dotfiles/wallpaper/wallpaper.png;
-  unstable = import ./unstable.nix { inherit inputs pkgs; };
 
 in{
 

@@ -1,7 +1,6 @@
-{ lib, config, pkgs, inputs, ... }:
+{ lib, config, pkgs, inputs, unstable, ... }:
 let
   # wallpaper-path = /home/shlok/nixos-config/dotfiles/wallpaper/wallpaper.gif;
-  unstable = import ../unstable.nix { inherit inputs pkgs; };
   wallpaper-path = ../dotfiles/wallpaper/wallpaper.gif;
 
 in{

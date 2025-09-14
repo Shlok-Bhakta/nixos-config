@@ -1,7 +1,7 @@
-{ lib, config, pkgs, inputs, ... }:
+{ lib, config, pkgs, inputs, unstable, ... }:
 {
   imports = [
-    ../gen-configuration.nix 
+    ../../modules/system/configuration.nix
   ];
   fonts.fontconfig.enable = true; 
   environment.variables = {

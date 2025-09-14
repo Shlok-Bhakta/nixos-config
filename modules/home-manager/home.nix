@@ -1,6 +1,5 @@
-{ lib, config, pkgs, inputs, mynvf, ... }:
-let
-  unstable = import ./unstable.nix { inherit inputs pkgs; };  
+{ lib, config, pkgs, inputs, mynvf, unstable, ... }:
+let  
   wallpaper-path = ./dotfiles/wallpaper/wallpaper.gif;
 in{
   imports = [ 
