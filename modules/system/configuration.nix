@@ -45,16 +45,7 @@ in{
   ];
 
   # kanata
-  services.kanata = {
-    enable = true;
-    package = pkgs.kanata;
-    keyboards.keychron = {
-      devices = [
-        "/dev/input/by-id/usb-Keychron_Keychron_K8_Pro-event-kbd"
-      ];
-      configFile = ./dotfiles/kanata/kanata.kbd;
-    };
-  };
+
 
   nixpkgs.config.cudaSupport = true;
   system.stateVersion = "25.05"; 

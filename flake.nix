@@ -13,8 +13,6 @@
     ];
   };
 
-
-
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-25.05";
     UNSTABLE.url = "github:nixos/nixpkgs?ref=nixos-unstable";
@@ -48,6 +46,10 @@
         pkgs = nixpkgs.legacyPackages.${system};
         modules = [ ./pkgs/nvf/nvf.nix];
       };
+      unstable = import pkgs.UNSTABLE {
+        inherit system;
+        allowUnfree = true;
+      };
   in {
 
     # setup the nvf stuff
@@ -63,12 +65,10 @@
             allowUnfree = true;
             cudaSupport = true;
           };
-          # nixpkgs.overlays = [ ];
         }
         ./desktop/desk-configuration.nix
         ./desktop/desk-hardware-configuration.nix
         ./desktop/desk-system-settings.nix
-        ./gen-steamconfig.nix
         home-manager.nixosModules.home-manager
         {
           home-manager.useGlobalPkgs = true;
@@ -93,7 +93,6 @@
         ./laptop/laptop-configuration.nix
         ./laptop/laptop-hardware-configuration.nix
         ./laptop/laptop-system-settings.nix
-        ./gen-steamconfig.nix 
         home-manager.nixosModules.home-manager
         {
           home-manager.useGlobalPkgs = true;
