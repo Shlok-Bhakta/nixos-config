@@ -105,6 +105,7 @@ in{
     unstable.bun
     unstable.opencode
     unstable.claude-code
+    pkgs.uv
   ];
         
 
