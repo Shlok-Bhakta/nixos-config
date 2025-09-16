@@ -2,8 +2,18 @@
   wallpaper-path = ../dotfiles/wallpaper/wallpaper.gif;
 in {
   imports = [
-    ./gen-hypr.nix
+    ../../../modules/home-manager/home.nix
   ];
+
+  home.sessionVariables = {
+      "HYPRCURSOR_THEME" = "bibata-ice-hypr";
+      "HYPRCURSOR_SIZE" = 24;
+  };
+
+  home.file.".local/share/icons/bibata-ice-hypr" = {
+    source = ../dotfiles/bibata-ice-hypr;
+    recursive = true;
+  };
   home.packages = [
     # pkgs.hypridle
   ];

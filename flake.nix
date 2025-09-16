@@ -57,7 +57,7 @@
 
     nixosConfigurations.ShlokPCNIX = nixpkgs.lib.nixosSystem {
       specialArgs = {
-        inherit inputs unstable;
+        inherit inputs self mynvf unstable;
       };
       modules = [
         {
@@ -67,8 +67,6 @@
           };
         }
         ./hosts/ShlokPCNIX/configuration.nix
-        ./hosts/ShlokPCNIX/hardware-configuration.nix
-        ./hosts/ShlokPCNIX/system-settings.nix
         home-manager.nixosModules.home-manager
         {
           home-manager.useGlobalPkgs = true;
@@ -83,16 +81,13 @@
     };
     nixosConfigurations.ShlokLAPNIX = nixpkgs.lib.nixosSystem {
       specialArgs = {
-        inherit inputs unstable;
+        inherit inputs self mynvf unstable;
       };
       modules = [
         {
           nixpkgs.config.allowUnfree = true;
-          # nixpkgs.overlays = [ overlay-kando ];
         }
         ./hosts/ShlokLAPNIX/configuration.nix
-        ./hosts/ShlokLAPNIX/hardware-configuration.nix
-        ./hosts/ShlokLAPNIX/system-settings.nix
         home-manager.nixosModules.home-manager
         {
           home-manager.useGlobalPkgs = true;

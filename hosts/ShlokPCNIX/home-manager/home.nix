@@ -1,7 +1,7 @@
-{ lib, config, pkgs, inputs, ... }: {
+{ lib, config, pkgs, inputs, unstable, ... }: {
   imports = [ 
-    ../pkgs/desk-hypr.nix
-    ../gen-home.nix
+    ./programs/hypr.nix
+    ../../../modules/home-manager/home.nix
   ];
   home.packages = [
   ];

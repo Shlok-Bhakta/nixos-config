@@ -1,7 +1,7 @@
 { config, pkgs, inputs, ... }: {
 
   imports = [
-    ../gen-system-settings.nix 
+    ../../modules/system/system-settings.nix
   ];
 
   boot.loader.grub.enable = true;
