@@ -81,7 +81,7 @@
   users.users.shlok = {
     isNormalUser = true;
     description = "Shlok Bhakta";
-    extraGroups = [ "networkmanager" "wheel" "wireshark" "dialout" "uinput" "libvirtd" "adbusers"];
+    extraGroups = [ "networkmanager" "wheel" "wireshark" "dialout" "uinput" "libvirtd" "input" "adbusers"];
   };
 
   # Some programs need SUID wrappers, can be configured further or are

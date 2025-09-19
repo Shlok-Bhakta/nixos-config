@@ -1,9 +1,16 @@
-{ lib, config, pkgs, inputs, ... }:
+{
+  lib,
+  config,
+  pkgs,
+  inputs,
+  ...
+}:
 let
   wallpaper-path = ./dotfiles/wallpaper/wallpaper.png;
   unstable = import ./unstable.nix { inherit inputs pkgs; };
 
-in{
+in
+{
 
   # hyprland
   programs.hyprland = {
@@ -33,7 +40,7 @@ in{
     cudaPackages.cudnn
     (pkgs.catppuccin-sddm.override {
       flavor = "mocha";
-      font  = "CaskaydiaCove Nerd Font";
+      font = "CaskaydiaCove Nerd Font";
       fontSize = "9";
       background = "${./dotfiles/hypr/background.png}";
       loginBackground = true;
@@ -44,7 +51,6 @@ in{
     (pkgs.callPackage ./pkgs/deskthing/deskthing.nix {})
   ];
 
-  # kanata
   services.kanata = {
     enable = true;
     package = pkgs.kanata;
@@ -57,8 +63,8 @@ in{
   };
 
   nixpkgs.config.cudaSupport = true;
-  system.stateVersion = "25.05"; 
-  security.pam.services.swaylock = {};
+  system.stateVersion = "25.05";
+  security.pam.services.swaylock = { };
   fonts.packages = with pkgs; [
     nerd-fonts.caskaydia-cove
     (stdenv.mkDerivation {
@@ -84,18 +90,13 @@ in{
   services.udisks2.enable = true;
   hardware.bluetooth.enable = true;
   hardware.bluetooth.powerOnBoot = true;
-  # services.blueman.enable = true;
+  services.blueman.enable = true;
   services.tailscale = {
     enable = true;
     package = unstable.tailscale;
   };
-  environment.sessionVariables = {
-    # NIXOS_OZONE_WL = "1";
-    # ELECTRON_OZONE_PLATFORM_HINT = "x11";
-    # NVD_BACKEND = "direct";
-  };
   virtualisation.docker = {
-    enable = true; 
+    enable = true;
     rootless = {
       enable = true;
       setSocketVariable = true;
@@ -105,11 +106,14 @@ in{
     };
   };
 
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
-  nix.settings.trusted-users = [ "root" "shlok" ];
-  programs.wireshark = {
-    enable = true;
-  };
+  nix.settings.experimental-features = [
+    "nix-command"
+    "flakes"
+  ];
+  nix.settings.trusted-users = [
+    "root"
+    "shlok"
+  ];
 
   # Enable ADB for DeskThing device detection
   programs.adb.enable = true;
@@ -124,15 +128,15 @@ in{
     SUBSYSTEM=="usb", ATTRS{idVendor}=="1d6b", ATTRS{idProduct}=="1014", OWNER="shlok", MODE="0666"
   '';
 
-  # Virt Manager Setup
-  programs.virt-manager.enable = true;
-  users.groups.libvirtd.members = ["shlok"];
-  virtualisation.libvirtd.enable = true;
-  virtualisation.spiceUSBRedirection.enable = true;
+  # # Virt Manager Setup
+  # programs.virt-manager.enable = true;
+  # users.groups.libvirtd.members = ["shlok"];
+  # virtualisation.libvirtd.enable = true;
+  # virtualisation.spiceUSBRedirection.enable = true;
 
-  # VirtualBox Setup because virt manager bork stuff
-  virtualisation.virtualbox.host.enable = true;
-  users.extraGroups.vboxusers.members = [ "shlok" ];
+  # # VirtualBox Setup because virt manager bork stuff
+  # virtualisation.virtualbox.host.enable = true;
+  # users.extraGroups.vboxusers.members = [ "shlok" ];
 
 
 }

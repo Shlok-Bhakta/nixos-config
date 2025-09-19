@@ -71,7 +71,6 @@ in{
     pkgs.gnome-themes-extra
     pkgs.dust
     pkgs.ripgrep
-    pkgs.speedtest-rs
     pkgs.gcc
     pkgs.gnumake
     pkgs.libgccjit
@@ -93,7 +92,6 @@ in{
     unstable.kando
     unstable.nodePackages_latest.pnpm
     pkgs.parabolic
-    unstable.walker
     pkgs.libqalculate
     pkgs.wlogout
     unstable.rofi-power-menu
@@ -106,6 +104,10 @@ in{
     unstable.opencode
     unstable.claude-code
     pkgs.uv
+    pkgs.wl-clicker
+    pkgs.lazygit
+    unstable.crush
+    unstable.opencode
   ];
         
 
@@ -223,6 +225,7 @@ in{
       size = 24;
     };
   };
+  
   programs.bat = {
     enable = true;
     config = {
