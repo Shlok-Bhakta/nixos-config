@@ -101,7 +101,6 @@ in{
     pkgs.brightnessctl 
     pkgs.lazygit
     unstable.bun
-    unstable.opencode
     unstable.claude-code
     pkgs.uv
     pkgs.wl-clicker
