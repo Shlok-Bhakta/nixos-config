@@ -107,7 +107,7 @@ in{
     pkgs.wl-clicker
     pkgs.lazygit
     unstable.crush
-    unstable.opencode
+    pkgs.opencode
   ];
         
 
