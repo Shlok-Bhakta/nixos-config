@@ -22,7 +22,7 @@ in{
 
     settings = {
       exec-once = [
-        "swww-daemon --format xrgb"
+        "swww-daemon --format argb"
         "sleep 1; swww img ${wallpaper-path}"
         "sleep 1; waybar"
         "swaync"
@@ -90,9 +90,6 @@ in{
         touchpad = {
           natural_scroll = false;
         };
-      };
-      gestures = {
-        workspace_swipe = true;
       };
       device = {
         name = "epic-mouse-v1";
