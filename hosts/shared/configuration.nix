@@ -28,9 +28,6 @@ in
   programs.zsh.enable = true;
   users.defaultUserShell = pkgs.zsh;
 
-  nixpkgs.config.allowUnfree = true;
-  nixpkgs.config.cudaSupport = true;
-
   environment.systemPackages = with pkgs; [
     home-manager
     pyprland

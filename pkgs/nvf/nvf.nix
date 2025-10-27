@@ -21,7 +21,7 @@
   };
 
   # General language options
-  vim.languages.enableLSP = true;
+  vim.lsp.enable = true;
   vim.languages.enableTreesitter = true;
   vim.languages.python.enable = true;
 

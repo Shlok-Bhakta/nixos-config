@@ -66,6 +66,10 @@
       };
       modules = [
         ./hosts/desktop/configuration.nix
+        {
+          nixpkgs.config.allowUnfree = true;
+          nixpkgs.config.cudaSupport = true;
+        }
         home-manager.nixosModules.home-manager
         {
           home-manager.useGlobalPkgs = true;
@@ -75,7 +79,7 @@
           home-manager.extraSpecialArgs = {
             inherit inputs self mynvf;
           };
-          home-manager.sharedModules = [ stylix.homeManagerModules.stylix ];
+          home-manager.sharedModules = [ stylix.homeModules.stylix ];
         }
       ];
     };
@@ -85,6 +89,10 @@
       };
       modules = [
         ./hosts/laptop/configuration.nix
+        {
+          nixpkgs.config.allowUnfree = true;
+          nixpkgs.config.cudaSupport = true;
+        }
         home-manager.nixosModules.home-manager
         {
           home-manager.useGlobalPkgs = true;
@@ -94,7 +102,7 @@
           home-manager.extraSpecialArgs = {
             inherit inputs self mynvf;
           };
-          home-manager.sharedModules = [ stylix.homeManagerModules.stylix ];
+          home-manager.sharedModules = [ stylix.homeModules.stylix ];
         }
       ];
     };

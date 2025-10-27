@@ -122,11 +122,6 @@ in
   services.xserver = {
     enable = true;
     videoDrivers = ["nvidia"];
-    displayManager.sddm = {
-      enable = true;
-      theme = "catppuccin-mocha";
-      package = pkgs.kdePackages.sddm;
-    };
     xrandrHeads = [
       {
         output = "DP-1";
@@ -136,6 +131,12 @@ in
         output = "HDMI-A-1";
       }
     ];
+  };
+
+  services.displayManager.sddm = {
+    enable = true;
+    theme = "catppuccin-mocha";
+    package = pkgs.kdePackages.sddm;
   };
 
   users.users.shlok = {
