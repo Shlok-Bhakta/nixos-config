@@ -106,7 +106,26 @@ in{
     pkgs.wl-clicker
     pkgs.lazygit
     unstable.crush
-    pkgs.opencode
+    inputs.opencode.packages.${pkgs.system}.default
+    inputs.printer-cli.packages.${pkgs.system}.default
+    # (pkgs.writeShellScriptBin "print-task" ''
+    #   #!/usr/bin/env bash
+
+    #   PRINTER_URL="''${PRINTER_URL:-http://kiwi:33025}"
+
+    #   title=$(echo "" | ${pkgs.fzf}/bin/fzf --print-query --prompt="Task Title: " | tail -n1)
+    #   [ -z "$title" ] && exit 1
+
+    #   description=$(echo "" | ${pkgs.fzf}/bin/fzf --print-query --prompt="Description: " | tail -n1)
+
+    #   priority=$(echo -e "normal\nhigh\nurgent\nlow\nmessage\ninfo" | ${pkgs.fzf}/bin/fzf --prompt="Priority: ")
+    #   [ -z "$priority" ] && priority="normal"
+
+    #   ${pkgs.curl}/bin/curl -X POST "$PRINTER_URL/print-task" \
+    #     -H "Content-Type: application/json" \
+    #     -d "{\"title\":\"$title\",\"description\":\"$description\",\"priority\":\"$priority\"}" \
+    #     && echo "✓ Task sent to printer!"
+    # '')
   ];
         
 
@@ -595,6 +614,10 @@ in{
   programs.gitui = {
     enable = true;
     theme = builtins.readFile ./dotfiles/gitui/catppuccin-mocha.ron;
+  };
+
+  services.arrpc = {
+    enable = true;
   };
 
 }

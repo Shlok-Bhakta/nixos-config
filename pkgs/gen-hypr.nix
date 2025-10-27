@@ -119,7 +119,7 @@ in{
       # "$mainMod, T, exec, bemoji"
       "$mainMod, T, exec, rofi -show emoji"
       "CONTROLALT, Delete, exec, bash /home/shlok/.config/rofi/plugins/powermenu.sh"
-      "$mainMod CTRL, Space, global, kando:main-menu"
+      "$mainMod CTRL, Space, global, :main-menu"
 
       # Move focus with mainMod + arrow keys
       "$mainMod, left, movefocus, l"

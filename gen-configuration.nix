@@ -121,10 +121,10 @@ in
   services.upower.enable = true;
   documentation.dev.enable = true;
 
-  # Car Thing udev rules for flashing
+  # Allow access to all USB devices and printer devices
   services.udev.extraRules = ''
-    SUBSYSTEM=="usb", ATTRS{idVendor}=="1b8e", ATTRS{idProduct}=="c003", OWNER="shlok", MODE="0666"
-    SUBSYSTEM=="usb", ATTRS{idVendor}=="1d6b", ATTRS{idProduct}=="1014", OWNER="shlok", MODE="0666"
+    SUBSYSTEM=="usb", MODE="0666", GROUP="users"
+    KERNEL=="lp[0-9]*", MODE="0666", GROUP="users"
   '';
 
   # # Virt Manager Setup

@@ -37,9 +37,16 @@
     };
     split-monitor-workspaces = {
       url = "github:Duckonaut/split-monitor-workspaces";
-      inputs.hyprland.follows = "hyprland"; # <- make sure this line is present for the plugin to work as intended
+      inputs.hyprland.follows = "hyprland";
     };
     nvf.url = "github:notashelf/nvf";
+    opencode = {
+      url = "github:aodhanhayter/opencode-flake";
+      # inputs.nixpkgs.follows = "nixpkgs";
+    };
+    printer-cli = {
+      url="github:Shlok-Bhakta/ESC-POS-Task-Api?dir=cli";
+    };
 };
 
   outputs = { self, nixpkgs, home-manager, stylix, nvf, ... } @ inputs: let 
