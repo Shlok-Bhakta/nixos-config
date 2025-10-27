@@ -53,7 +53,7 @@
     };
 
     wallpapers = {
-      animated = ../../dotfiles/wallpaper/wallpaper.gif;
+      animated = ../../modules/home/wallpapers/wallpaper.gif;
     };
   };
 }

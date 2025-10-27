@@ -48,7 +48,7 @@ in
       flavor = "mocha";
       font = "CaskaydiaCove Nerd Font";
       fontSize = "9";
-      background = "${../../dotfiles/hypr/background.png}";
+      background = "${../../modules/home/hyprland/background.png}";
       loginBackground = true;
     })
     man-pages
