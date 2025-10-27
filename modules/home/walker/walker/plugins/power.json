@@ -1,0 +1,24 @@
+{
+    "name": "power",
+    "placeholder": "Power",
+    "switcher_only": true,
+    "recalculate_score": true,
+    "show_icon_when_single": true,
+    "entries": [
+      {
+        "label": "Shutdown",
+        "icon": "system-shutdown",
+        "exec": "shutdown now"
+      },
+      {
+        "label": "Reboot",
+        "icon": "system-reboot",
+        "exec": "reboot"
+      },
+      {
+        "label": "Lock Screen",
+        "icon": "system-lock-screen",
+        "exec": "playerctl --all-players pause & hyprlock"
+      }
+    ]
+}

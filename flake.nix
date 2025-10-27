@@ -65,26 +65,17 @@
         inherit inputs;
       };
       modules = [
-        {
-          nixpkgs.config = {
-            allowUnfree = true;
-            cudaSupport = true;
-          };
-          # nixpkgs.overlays = [ ];
-        }
-        ./desktop/desk-configuration.nix
-        ./desktop/desk-hardware-configuration.nix
-        ./desktop/desk-system-settings.nix
-        ./gen-steamconfig.nix
+        ./hosts/desktop/configuration.nix
         home-manager.nixosModules.home-manager
         {
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
-          home-manager.users.shlok = import ./desktop/desk-home.nix;
+          home-manager.users.shlok = import ./hosts/desktop/home.nix;
           home-manager.backupFileExtension = "old";
           home-manager.extraSpecialArgs = {
             inherit inputs self mynvf;
           };
+          home-manager.sharedModules = [ stylix.homeManagerModules.stylix ];
         }
       ];
     };
@@ -93,23 +84,17 @@
         inherit inputs;
       };
       modules = [
-        {
-          nixpkgs.config.allowUnfree = true;
-          # nixpkgs.overlays = [ overlay-kando ];
-        }
-        ./laptop/laptop-configuration.nix
-        ./laptop/laptop-hardware-configuration.nix
-        ./laptop/laptop-system-settings.nix
-        ./gen-steamconfig.nix 
+        ./hosts/laptop/configuration.nix
         home-manager.nixosModules.home-manager
         {
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
-          home-manager.users.shlok = import ./laptop/laptop-home.nix;
+          home-manager.users.shlok = import ./hosts/laptop/home.nix;
           home-manager.backupFileExtension = "old";
           home-manager.extraSpecialArgs = {
             inherit inputs self mynvf;
           };
+          home-manager.sharedModules = [ stylix.homeManagerModules.stylix ];
         }
       ];
     };
