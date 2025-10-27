@@ -4,11 +4,7 @@ let
   cfg = config.custom.stylix;
 in
 {
-  options.custom.stylix = {
-    enable = lib.mkEnableOption "Stylix system theming";
-  };
-
-  config = lib.mkIf cfg.enable {
+  config = {
     stylix = {
       enable = true;
       

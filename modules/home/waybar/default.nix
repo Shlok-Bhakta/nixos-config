@@ -9,8 +9,6 @@ let
 in
 {
   options.custom.waybar = {
-    enable = lib.mkEnableOption "waybar status bar";
-
     isLaptop = lib.mkOption {
       type = lib.types.bool;
       default = false;
@@ -18,7 +16,7 @@ in
     };
   };
 
-  config = lib.mkIf cfg.enable {
+  config = {
     programs.waybar = {
       enable = true;
       package = unstable.waybar;

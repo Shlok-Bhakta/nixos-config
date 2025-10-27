@@ -4,11 +4,7 @@ let
   cfg = config.custom.swaync;
 in
 {
-  options.custom.swaync = {
-    enable = lib.mkEnableOption "SwayNC notification daemon";
-  };
-
-  config = lib.mkIf cfg.enable {
+  config = {
     services.swaync = {
       enable = true;
       

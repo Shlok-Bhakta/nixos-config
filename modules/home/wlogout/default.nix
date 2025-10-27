@@ -4,11 +4,7 @@ let
   cfg = config.custom.wlogout;
 in
 {
-  options.custom.wlogout = {
-    enable = lib.mkEnableOption "wlogout logout menu";
-  };
-
-  config = lib.mkIf cfg.enable {
+  config = {
     programs.wlogout = {
       enable = true;
       layout = [

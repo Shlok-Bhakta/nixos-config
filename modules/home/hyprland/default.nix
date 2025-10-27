@@ -10,8 +10,6 @@ let
 in
 {
   options.custom.hyprland = {
-    enable = lib.mkEnableOption "Hyprland window manager";
-
     isLaptop = lib.mkOption {
       type = lib.types.bool;
       default = false;
@@ -92,7 +90,7 @@ in
     };
   };
 
-  config = lib.mkIf cfg.enable {
+  config = {
     home.sessionVariables = {
       HYPRCURSOR_THEME = "bibata-ice-hypr";
       HYPRCURSOR_SIZE = "24";

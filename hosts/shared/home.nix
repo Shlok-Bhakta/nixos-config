@@ -2,6 +2,15 @@
 
 let
   unstable = import ../../unstable.nix { inherit inputs pkgs; };
+  
+  importModules = dir:
+    let
+      entries = builtins.readDir dir;
+      validModules = lib.filterAttrs (name: type:
+        type == "directory" && builtins.pathExists (dir + "/${name}/default.nix")
+      ) entries;
+    in
+      map (name: dir + "/${name}") (builtins.attrNames validModules);
 in
 {
   home.username = "shlok";
@@ -15,105 +24,9 @@ in
 
   imports = [
     inputs.ags.homeManagerModules.default
-    ../../modules/home/bat
-    ../../modules/home/btop
-    ../../modules/home/chromium
-    ../../modules/home/eza
-    ../../modules/home/fuzzel
-    ../../modules/home/git
-    ../../modules/home/gitui
-    ../../modules/home/hyprland
-    ../../modules/home/kitty
-    ../../modules/home/obs-studio
-    ../../modules/home/ripgrep
-    ../../modules/home/rofi
-    ../../modules/home/starship
-    ../../modules/home/stylix
-    ../../modules/home/swaync
-    ../../modules/home/tmux
-    ../../modules/home/vscode
-    ../../modules/home/walker
-    ../../modules/home/wallpapers
-    ../../modules/home/waybar
-    ../../modules/home/wlogout
-    ../../modules/home/yazi
-    ../../modules/home/zoxide
-    ../../modules/home/zsh
-  ];
-
-  custom = {
-    hyprland.enable = true;
-    stylix.enable = true;
-    swaync.enable = true;
-    waybar.enable = true;
-    wlogout.enable = true;
-  };
+  ] ++ (importModules ../../modules/home);
 
   programs.home-manager.enable = true;
-
-  services.udiskie = {
-    enable = true;
-    automount = true;
-    notify = true;
-    tray = "auto";
-  };
-
-  gtk = {
-    enable = true;
-    iconTheme = {
-      name = "candy-icons";
-    };
-    gtk3.bookmarks = [
-      "file:///home/shlok/Documents/"
-      "file:///home/shlok/Downloads/"
-      "file:///home/shlok/Documents/Programming/"
-      "file:///home/shlok/Sync"
-      "file:///home/shlok/Obsidian"
-    ];
-  };
-
-  services.syncthing = {
-    enable = true;
-  };
-
-  services.nextcloud-client = {
-    enable = true;
-    startInBackground = true;
-  };
-
-  services.gnome-keyring = {
-    enable = true;
-    components = [
-      "secrets"
-    ];
-  };
-
-  dconf.settings = {
-    "org/gnome/desktop/interface" = {
-      icon-theme = "candy-icons";
-    };
-    "org/gnome/nautilus/preferences" = {
-      show-hidden-files = true;
-    };
-    "org/gnome/calculator" = {
-      show-thousands = true;
-      base = 10;
-      word-size = lib.hm.gvariant.mkUint32 64;
-    };
-    "org/virt-manager/virt-manager/connections" = {
-      autoconnect = ["qemu:///system"];
-      uris = ["qemu:///system"];
-    };
-  };
-
-  services.cliphist = {
-    enable = true;
-    allowImages = true;
-  };
-
-  services.arrpc = {
-    enable = true;
-  };
 
   home.packages = [
     pkgs.lolcat
