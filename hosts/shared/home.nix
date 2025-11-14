@@ -118,5 +118,7 @@ in
     unstable.crush
     inputs.opencode.packages.${pkgs.system}.default
     inputs.printer-cli.packages.${pkgs.system}.default
+    unstable.go
+    pkgs.nmap
   ];
 }
