@@ -10,20 +10,33 @@
     tabstop = 2;
     expandtab = true;
     shiftwidth = 2;
+    relativenumber = true;
+    number = true;
+    ignorecase = true;
+    smartcase = true;
   };
 
   # Languages 💬
-  vim.languages.nix = {
-    enable = true;
-    format.enable = true;
-    format.type = "nixfmt";
-    treesitter.enable = true;
+  vim.languages = {
+    nix = {
+      enable = true;
+      format.enable = true;
+      format.type = "nixfmt";
+      treesitter.enable = true;
+    };
+    python.enable = true;
+    go = {
+      enable = true;
+      format.enable = true;
+      lsp.enable = true;
+      treesitter.enable = true;
+    };
   };
+  
 
   # General language options
   vim.lsp.enable = true;
   vim.languages.enableTreesitter = true;
-  vim.languages.python.enable = true;
 
   # setup colorscheme 🎨
   vim.extraPlugins = with pkgs.vimPlugins; {
@@ -36,23 +49,73 @@
           })
         '';
     };
-    #    supermaven = {
-    #package = supermaven-nvim;
-    #setup = # lua
-    #''
-    #     require("supermaven-nvim").setup({})
-    #   '';
-    #}; 
     vim-visual-multi = {
       package = vim-visual-multi;
     };
   };
+  
+  vim.binds.hardtime-nvim = {
+    enable = true;
+    setupOpts = {
+      max_count = 4;
+      restriction_mode = "hint";
+      disabled_filetypes = ["qf" "netrw" "lazy" "mason" "oil" "TelescopePrompt"];
+    };
+  };
+  
+  vim.mini = {
+    ai.enable = true;
+    
+    diff = {
+      enable = true;
+      setupOpts = {
+        view = {
+          style = "sign";
+        };
+      };
+    };
+    
+    icons.enable = true;
+    
+    indentscope = {
+      enable = true;
+      setupOpts = {
+        symbol = "│";
+        ignore_filetypes = ["help" "neo-tree" "notify" "NvimTree" "TelescopePrompt" "oil"];
+      };
+    };
+    
+    jump2d = {
+      enable = true;
+      setupOpts = {
+        mappings = {
+          start_jumping = "<leader>/";
+        };
+      };
+    };
+    
+    trailspace = {
+      enable = true;
+    };
+    
+    move = {
+      enable = true;
+    };
+  };
+  
   vim.visuals.nvim-web-devicons.enable = true;
 
   vim.luaConfigRC.applyTheme =
     lib.nvim.dag.entryAnywhere # lua
       ''
         vim.cmd('colorscheme catppuccin')
+      '';
+  
+  vim.luaConfigRC.customKeybinds = 
+    lib.nvim.dag.entryAnywhere # lua
+      ''
+        vim.keymap.set('n', '<leader>w', ':w<CR>', { desc = 'Save file' })
+        vim.keymap.set('n', '<leader>e', ':e<CR>', { desc = 'Reload file' })
       '';
 
   # Setup Telescope 🔭
@@ -128,33 +191,41 @@
   # Setup a Tabline
 vim.tabline.nvimBufferline = {
   enable = true;
-  mappings.closeCurrent = "<leader>bx";
   
+  mappings = {
+    closeCurrent = "<leader>bx";
+    cycleNext = "<Tab>";
+    cyclePrevious = "<S-Tab>";
+    pick = "<leader>bp";
+  };
+
   setupOpts = {
     options = {
-      separator_style = "slant";
-      diagnostics = "nvim_lsp";
-      diagnostics_update_in_insert = false;
-      show_buffer_icons = true;
-      show_buffer_close_icons = true;
-      show_close_icon = false;
-      show_tab_indicators = true;
-      color_icons = true;
-      
-      # Compact sizing for minimal vertical space
-      tab_size = 16;
-      max_name_length = 16;
-      max_prefix_length = 12;
+      separator_style = "thick";
       
       indicator = {
         style = "icon";
+        icon = "▎";
       };
-      style_preset = "minimal";
-      numbers = "none";
-      sort_by = "extension";
+      
       modified_icon = "●";
+      show_buffer_icons = true;
+      show_buffer_close_icons = true;
+      show_close_icon = false;
+      color_icons = true;
+      
+      tab_size = 20;
+      max_name_length = 18;
+      
       always_show_bufferline = true;
-      auto_toggle_bufferline = true;
+      sort_by = "id";
+      numbers = "none";
+      
+      diagnostics = "nvim_lsp";
+      diagnostics_update_in_insert = false;
+      
+      left_mouse_command = "buffer %d";
+      middle_mouse_command = "bdelete! %d";
     };
   };
 };
