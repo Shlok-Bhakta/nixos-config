@@ -18,6 +18,7 @@
 
   # Languages 💬
   vim.languages = {
+    enableTreesitter = true;
     nix = {
       enable = true;
       format.enable = true;
@@ -31,12 +32,88 @@
       lsp.enable = true;
       treesitter.enable = true;
     };
+    ts = {
+      enable = true;
+      format = {
+        enable = true;
+        type = "prettierd";
+      };
+      lsp.enable = true;
+      treesitter.enable = true;
+    };
+    svelte = {
+      enable = true;
+      format = {
+        enable = true;
+        type = "biome";
+      };
+      lsp.enable = true;
+      treesitter.enable = true;
+    };
+    html = {
+      enable = true;
+      treesitter.enable = true;
+    };
+    css = {
+      enable = true;
+      format = {
+        enable = true;
+        type = "prettierd";
+      };
+      lsp.enable = true;
+      treesitter.enable = true;
+    };
+    tailwind = {
+      enable = true;
+      lsp.enable = true;
+    };
+    bash = {
+      enable = true;
+      format.enable = true;
+      lsp.enable = true;
+      treesitter.enable = true;
+    };
+    clang = {
+      enable = true;
+      lsp.enable = true;
+      treesitter.enable = true;
+    };
+    java = {
+      enable = true;
+      lsp.enable = true;
+      treesitter.enable = true;
+    };
+    markdown = {
+      enable = true;
+      format = {
+        enable = true;
+        type = "prettierd";
+      };
+      lsp.enable = true;
+      treesitter.enable = true;
+    };
+    sql = {
+      enable = true;
+      format.enable = true;
+      lsp.enable = true;
+      treesitter.enable = true;
+    };
+    yaml = {
+      enable = true;
+      lsp.enable = true;
+      treesitter.enable = true;
+    };
   };
   
 
   # General language options
   vim.lsp.enable = true;
-  vim.languages.enableTreesitter = true;
+  
+  # Enable inline error diagnostics (like VSCode ErrorLens)
+  vim.diagnostics = {
+    enable = true;
+    config.virtual_text = true;
+  };
 
   # setup colorscheme 🎨
   vim.extraPlugins = with pkgs.vimPlugins; {
@@ -101,6 +178,14 @@
     move = {
       enable = true;
     };
+    
+    cursorword = {
+      enable = true;
+    };
+    
+    notify = {
+      enable = true;
+    };
   };
   
   vim.visuals.nvim-web-devicons.enable = true;
@@ -160,18 +245,6 @@
   };
   
   vim.autocomplete.enableSharedCmpSources = true;
-
-  # Setup Supermaven AI 🤖
-  vim.assistant.supermaven-nvim = {
-    enable = true;
-    setupOpts = {
-      keymaps = {
-        accept_suggestion = "<C-y>";
-        accept_word = "<C-]>";
-        clear_suggestion = "<C-x>";
-      };
-    };
-  };
 
   # Setup autopairing
   vim.autopairs.nvim-autopairs = {
