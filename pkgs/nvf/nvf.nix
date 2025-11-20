@@ -110,12 +110,16 @@
       ''
         vim.cmd('colorscheme catppuccin')
       '';
-  
-  vim.luaConfigRC.customKeybinds = 
+  vim.luaConfigRC.customKeybinds =
     lib.nvim.dag.entryAnywhere # lua
       ''
         vim.keymap.set('n', '<leader>w', ':w<CR>', { desc = 'Save file' })
         vim.keymap.set('n', '<leader>e', ':e<CR>', { desc = 'Reload file' })
+        
+        vim.keymap.set('i', '<C-h>', '<Left>', { desc = 'Move left in insert mode' })
+        vim.keymap.set('i', '<C-j>', '<Down>', { desc = 'Move down in insert mode' })
+        vim.keymap.set('i', '<C-k>', '<Up>', { desc = 'Move up in insert mode' })
+        vim.keymap.set('i', '<C-l>', '<Right>', { desc = 'Move right in insert mode' })
       '';
 
   # Setup Telescope 🔭
@@ -133,13 +137,39 @@
     enable = true;
   };
 
-  # Setup Autocomplete with nvim-cmp 🔎
-  vim.autocomplete.nvim-cmp = {
+  # Setup Autocomplete with blink.cmp 🔎
+  vim.autocomplete.blink-cmp = {
     enable = true;
-    sources = {
-      buffer = "[Buffer]";
-      nvim-cmp = null;
-      path = "[Path]";
+    friendly-snippets.enable = true;
+    
+    setupOpts = {
+      keymap.preset = "default";
+      
+      sources = {
+        default = [ "lsp" "path" "snippets" "buffer" ];
+      };
+      
+      completion = {
+        menu.auto_show = true;
+        documentation = {
+          auto_show = true;
+          auto_show_delay_ms = 200;
+        };
+      };
+    };
+  };
+  
+  vim.autocomplete.enableSharedCmpSources = true;
+
+  # Setup Supermaven AI 🤖
+  vim.assistant.supermaven-nvim = {
+    enable = true;
+    setupOpts = {
+      keymaps = {
+        accept_suggestion = "<C-y>";
+        accept_word = "<C-]>";
+        clear_suggestion = "<C-x>";
+      };
     };
   };
 
@@ -155,6 +185,12 @@
   # Setup Trouble 🚨
   vim.lsp.trouble = {
     enable = true;
+  };
+
+  # Setup Git integration 🔀
+  vim.git.gitsigns = {
+    enable = true;
+    codeActions.enable = true;
   };
 
   # Setup Colorizer for showig # colors
