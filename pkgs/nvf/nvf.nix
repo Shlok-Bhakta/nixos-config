@@ -254,6 +254,11 @@
   # Setup a file explorer 📂
   vim.utility.oil-nvim = {
     enable = true;
+    setupOpts = {
+      view_options = {
+        show_hidden = true;
+      };
+    };
   };
   # Setup Trouble 🚨
   vim.lsp.trouble = {
