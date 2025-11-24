@@ -229,7 +229,7 @@ in
           "$mainMod, L, exec, hyprlock"
           "SUPER_SHIFT, F, fullscreen"
           "SUPER_SHIFT, S, exec, hyprshot -m region --freeze --clipboard-only"
-          "SUPER_SHIFT, C, exec, hyprpicker | wl-copy"
+          "SUPER_SHIFT, C, exec, hyprpicker 2>/dev/null | wl-copy"
           "$mainMod, T, exec, rofi -show emoji"
           "CONTROLALT, Delete, exec, bash ${config.home.homeDirectory}/.config/rofi/plugins/powermenu.sh"
           "$mainMod CTRL, Space, global, :main-menu"
