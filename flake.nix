@@ -67,10 +67,6 @@
       };
       modules = [
         ./hosts/desktop/configuration.nix
-        {
-          nixpkgs.config.allowUnfree = true;
-          nixpkgs.config.cudaSupport = true;
-        }
         home-manager.nixosModules.home-manager
         {
           home-manager.useGlobalPkgs = true;
@@ -90,10 +86,6 @@
       };
       modules = [
         ./hosts/laptop/configuration.nix
-        {
-          nixpkgs.config.allowUnfree = true;
-          nixpkgs.config.cudaSupport = true;
-        }
         home-manager.nixosModules.home-manager
         {
           home-manager.useGlobalPkgs = true;

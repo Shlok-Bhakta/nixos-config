@@ -2,9 +2,11 @@
 {
   programs.git = {
     enable = true;
-    userName = "Shlok Bhakta";
-    userEmail = "shlokbhakta1@gmail.com";
     lfs.enable = true;
+    settings.user = {
+      name = "Shlok Bhakta";
+      email = "shlokbhakta1@gmail.com";
+    };
   };
 
   programs.git-credential-oauth = {

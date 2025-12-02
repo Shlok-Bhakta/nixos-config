@@ -39,7 +39,7 @@ in
     pkgs.fzf
     unstable.p7zip
     unstable.localsend
-    inputs.swww.packages.${pkgs.system}.swww
+    inputs.swww.packages.${pkgs.stdenv.hostPlatform.system}.swww
     pkgs.cliphist
     pkgs.playerctl
     pkgs.dbus
@@ -68,8 +68,8 @@ in
     unstable.vesktop
     unstable.obsidian
     pkgs.wget
-    inputs.zen-browser.packages."${pkgs.system}".default
-    inputs.yapper.packages."${pkgs.system}".default
+    inputs.zen-browser.packages."${pkgs.stdenv.hostPlatform.system}".default
+    inputs.yapper.packages."${pkgs.stdenv.hostPlatform.system}".default
     pkgs.speechd
     pkgs.nautilus
     unstable.deckmaster
@@ -116,8 +116,8 @@ in
     pkgs.uv
     pkgs.wl-clicker
     unstable.crush
-    inputs.opencode.packages.${pkgs.system}.default
-    inputs.printer-cli.packages.${pkgs.system}.default
+    inputs.opencode.packages.${pkgs.stdenv.hostPlatform.system}.default
+    inputs.printer-cli.packages.${pkgs.stdenv.hostPlatform.system}.default
     unstable.go
     pkgs.nmap
   ];

@@ -1,7 +1,7 @@
 { inputs, pkgs }:
 
 import inputs.UNSTABLE {
-  system = pkgs.system;
+  system = pkgs.stdenv.hostPlatform.system;
   config = {
     allowUnfree = true;
   };
