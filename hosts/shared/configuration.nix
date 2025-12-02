@@ -54,7 +54,7 @@ in
     (callPackage ../../pkgs/deskthing/deskthing.nix {})
   ];
 
-  system.stateVersion = "25.05";
+  system.stateVersion = "25.11";
   security.pam.services.swaylock = {};
 
   services.gvfs.enable = true;
@@ -77,4 +77,6 @@ in
     "root"
     "shlok"
   ];
+  nix.settings.accept-flake-config = true;
+
 }

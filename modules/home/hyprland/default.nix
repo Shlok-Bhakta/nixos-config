@@ -296,15 +296,15 @@ in
         ];
 
         windowrule = [
-          "suppressevent maximize, class:.*"
-          "bordercolor rgba(fab387ee) rgba(eba0acee) 45deg,class:(brave-browser)"
-          "bordercolor rgba(f9e2afee) rgba(f9e2afee) 45deg,class:(zen-alpha)"
-          "bordercolor rgba(e78284ee) rgba(ea999cee) 45deg,title:(.*)(YouTube)(.*)$"
-          "bordercolor rgba(cba6f7ee) rgba(f38ba8ee) rgba(fab387ee) rgba(a6e3a1ee) rgba(74c7ecee) 45deg, title:(.*)(Catppuccin)(.*)$"
-          "bordercolor rgba(cba6f7ee) rgba(f38ba8ee) rgba(fab387ee) rgba(a6e3a1ee) rgba(74c7ecee) 45deg, title:(.*)(catppuccin)(.*)$"
-          "bordercolor rgba(8bd5caee) rgba(91d7e3ee) 45deg,class:(code-url-handler)"
-          "bordercolor rgba(7287fdee) rgba(209fb5ee) 45deg,class:(vesktop)"
-          "bordercolor rgba(f5e0dcee) rgba(f2cdcdee) 45deg,floating:1"
+          "suppress_event maximize, match:class .*"
+          "border_color rgba(fab387ee) rgba(eba0acee) 45deg, match:class brave-browser"
+          "border_color rgba(f9e2afee) rgba(f9e2afee) 45deg, match:class zen-alpha"
+          "border_color rgba(e78284ee) rgba(ea999cee) 45deg, match:title (.*)(YouTube)(.*)"
+          "border_color rgba(cba6f7ee) rgba(f38ba8ee) rgba(fab387ee) rgba(a6e3a1ee) rgba(74c7ecee) 45deg, match:title (.*)(Catppuccin)(.*)"
+          "border_color rgba(cba6f7ee) rgba(f38ba8ee) rgba(fab387ee) rgba(a6e3a1ee) rgba(74c7ecee) 45deg, match:title (.*)(catppuccin)(.*)"
+          "border_color rgba(8bd5caee) rgba(91d7e3ee) 45deg, match:class code-url-handler"
+          "border_color rgba(7287fdee) rgba(209fb5ee) 45deg, match:class vesktop"
+          "border_color rgba(f5e0dcee) rgba(f2cdcdee) 45deg, match:float yes"
         ];
       };
     };

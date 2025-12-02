@@ -5,7 +5,7 @@ in
 {
   programs.rofi = {
     enable = true;
-    package = pkgs.rofi-wayland.override {
+    package = pkgs.rofi.override {
       plugins = [
         unstable.rofi-calc
         unstable.rofi-emoji

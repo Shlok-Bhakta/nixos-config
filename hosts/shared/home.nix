@@ -15,7 +15,7 @@ in
 {
   home.username = "shlok";
   home.homeDirectory = "/home/shlok";
-  home.stateVersion = "25.05";
+  home.stateVersion = "25.11";
 
   home.sessionVariables = {
     EDITOR = "code";
@@ -44,7 +44,7 @@ in
     pkgs.playerctl
     pkgs.dbus
     pkgs.wl-clipboard
-    unstable.onlyoffice-bin
+    unstable.onlyoffice-desktopeditors
     pkgs.openssl
     pkgs.bemoji
     pkgs.youtube-music
@@ -54,7 +54,7 @@ in
     pkgs.nodejs_22
     pkgs.nvidia-vaapi-driver
     pkgs.ffmpeg
-    unstable.openai-whisper-cpp
+    unstable.whisper-cpp
     unstable.nvtopPackages.panthor
     unstable.egl-wayland
     pkgs.pciutils
