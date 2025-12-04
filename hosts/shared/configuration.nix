@@ -82,13 +82,6 @@ in
     "shlok"
   ];
   nix.settings.accept-flake-config = true;
-  nix.settings.substituters = [
-    "https://cache.nixos.org"
-    "http://shlokpcnix:5000"
-  ];
-  nix.settings.trusted-substituters = [
-    "http://shlokpcnix:5000"
-  ];
 
   networking.networkmanager.enable = true;
   networking.firewall = { 

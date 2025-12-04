@@ -204,7 +204,7 @@ in
         };
 
         gestures = lib.mkIf cfg.isLaptop {
-          workspace_swipe = true;
+          gesture = "3, horizontal, workspace";
         };
 
         device = {
@@ -304,7 +304,7 @@ in
           "border_color rgba(cba6f7ee) rgba(f38ba8ee) rgba(fab387ee) rgba(a6e3a1ee) rgba(74c7ecee) 45deg, match:title (.*)(catppuccin)(.*)"
           "border_color rgba(8bd5caee) rgba(91d7e3ee) 45deg, match:class code-url-handler"
           "border_color rgba(7287fdee) rgba(209fb5ee) 45deg, match:class vesktop"
-          "border_color rgba(f5e0dcee) rgba(f2cdcdee) 45deg, match:float yes"
+          "border_color rgba(f5e0dcee) rgba(f2cdcdee) 45deg, match:floating 1"
         ];
       };
     };
