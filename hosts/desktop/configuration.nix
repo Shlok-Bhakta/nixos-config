@@ -12,6 +12,7 @@
       "/dev/input/by-id/usb-Keychron_Keychron_K8_Pro-event-kbd"
     ];
     steam.enable = true;
+    nix-serve.enable = true;
   };
 
   hardware.opentabletdriver.enable = true;

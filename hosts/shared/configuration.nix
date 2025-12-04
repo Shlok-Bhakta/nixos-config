@@ -11,6 +11,7 @@ in
     ../../modules/system/hyprland
     ../../modules/system/kanata
     ../../modules/system/networking
+    ../../modules/system/nix-serve
     ../../modules/system/steam
   ];
 
@@ -81,6 +82,13 @@ in
     "shlok"
   ];
   nix.settings.accept-flake-config = true;
+  nix.settings.substituters = [
+    "https://cache.nixos.org"
+    "http://shlokpcnix:5000"
+  ];
+  nix.settings.trusted-substituters = [
+    "http://shlokpcnix:5000"
+  ];
 
   networking.networkmanager.enable = true;
   networking.firewall = { 
