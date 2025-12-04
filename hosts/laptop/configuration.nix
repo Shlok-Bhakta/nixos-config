@@ -47,8 +47,5 @@
     CUDA_PATH = "${pkgs.cudaPackages.cudatoolkit}";
   };
 
-  services.displayManager = {
-    sddm.wayland.enable = true;
-    defaultSession = "hyprland";
-  };
+  services.displayManager.defaultSession = "hyprland";
 }

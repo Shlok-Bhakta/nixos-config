@@ -173,6 +173,7 @@ in
     };
   in {
     enable = true;
+    wayland.enable = true;
     theme = "${sddmTheme}/share/sddm/themes/catppuccin-mocha-mauve";
     package = pkgs.kdePackages.sddm;
   };

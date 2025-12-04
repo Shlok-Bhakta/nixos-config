@@ -1,4 +1,4 @@
-{ pkgs, config, ... }:
+{ pkgs, config, lib, ... }:
 
 {
   imports = [
@@ -48,4 +48,9 @@
       output = "HDMI-A-1";
     }
   ];
+
+  services.displayManager.sddm.wayland.enable = lib.mkForce false;
+  services.displayManager.sddm.setupScript = ''
+    ${pkgs.xorg.xrandr}/bin/xrandr --output DP-1 --primary --auto --output HDMI-A-1 --auto --right-of DP-1
+  '';
 }
