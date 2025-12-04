@@ -45,12 +45,10 @@ let
 
   power-plugged = pkgs.writeShellScriptBin "power-plugged" ''
     ${msi-led-on}/bin/msi-led-on
-    ${pkgs.brightnessctl}/bin/brightnessctl set 100%
   '';
 
   power-unplugged = pkgs.writeShellScriptBin "power-unplugged" ''
     ${msi-led-off}/bin/msi-led-off
-    ${pkgs.brightnessctl}/bin/brightnessctl set 60%
   '';
 in
 {

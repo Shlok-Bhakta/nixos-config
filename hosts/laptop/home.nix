@@ -32,6 +32,10 @@
       isLaptop = true;
     };
 
+    power-monitor = {
+      enable = true;
+    };
+
     wallpapers = {
       animated = ../../modules/home/wallpapers/wallpaper.gif;
     };
