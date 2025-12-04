@@ -10,11 +10,7 @@
   custom = {
     kanata.enable = false;
     steam.enable = false;
-    power-profiles = {
-      enable = true;
-      staticWallpaper = ../../modules/home/wallpapers/wallpaper.png;
-      animatedWallpaper = ../../modules/home/wallpapers/wallpaper.gif;
-    };
+    power-profiles.enable = true;
   };
 
   fonts.fontconfig.enable = true;

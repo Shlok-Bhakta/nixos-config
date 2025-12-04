@@ -33,7 +33,6 @@
 
     wallpapers = {
       animated = ../../modules/home/wallpapers/wallpaper.gif;
-      powerAware = true;
     };
   };
 }

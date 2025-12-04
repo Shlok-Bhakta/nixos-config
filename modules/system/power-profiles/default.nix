@@ -43,42 +43,19 @@ let
     done
   '';
 
-  wallpaper-switch = pkgs.writeShellScriptBin "wallpaper-switch" ''
-    #!/bin/bash
-    USER_ID=1000
-    export WAYLAND_DISPLAY=wayland-1
-    export XDG_RUNTIME_DIR=/run/user/$USER_ID
-    
-    if [ "$1" = "ac" ]; then
-      ${pkgs.sudo}/bin/sudo -u shlok WAYLAND_DISPLAY=$WAYLAND_DISPLAY XDG_RUNTIME_DIR=$XDG_RUNTIME_DIR ${pkgs.swww}/bin/swww img ${cfg.animatedWallpaper} --transition-type fade --transition-duration 1
-    else
-      ${pkgs.sudo}/bin/sudo -u shlok WAYLAND_DISPLAY=$WAYLAND_DISPLAY XDG_RUNTIME_DIR=$XDG_RUNTIME_DIR ${pkgs.swww}/bin/swww img ${cfg.staticWallpaper} --transition-type fade --transition-duration 1
-    fi
-  '';
-
   power-plugged = pkgs.writeShellScriptBin "power-plugged" ''
     ${msi-led-on}/bin/msi-led-on
     ${pkgs.brightnessctl}/bin/brightnessctl set 100%
-    ${wallpaper-switch}/bin/wallpaper-switch ac
   '';
 
   power-unplugged = pkgs.writeShellScriptBin "power-unplugged" ''
     ${msi-led-off}/bin/msi-led-off
     ${pkgs.brightnessctl}/bin/brightnessctl set 60%
-    ${wallpaper-switch}/bin/wallpaper-switch battery
   '';
 in
 {
   options.custom.power-profiles = {
     enable = lib.mkEnableOption "power profiles with auto-switching";
-    staticWallpaper = lib.mkOption {
-      type = lib.types.path;
-      description = "Static wallpaper for battery mode";
-    };
-    animatedWallpaper = lib.mkOption {
-      type = lib.types.path;
-      description = "Animated wallpaper for AC mode";
-    };
   };
 
   config = lib.mkIf cfg.enable {
@@ -148,7 +125,6 @@ in
       pkgs.powertop
       msi-led-off
       msi-led-on
-      wallpaper-switch
     ];
   };
 }
