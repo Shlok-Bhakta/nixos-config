@@ -14,6 +14,7 @@
         "network",
         "pulseaudio",
         "backlight",
+        "custom/power-profile",
         "battery",
         "custom/notification",
         "tray"
@@ -111,6 +112,35 @@
             "warning": 31,
             "critical": 16
         },
+        "format": "󰁹 {capacity}%",
+        "format-charging": "󰢜 {capacity}%",
+        "format-plugged": "󰚥 {capacity}%",
+        "on-click": "ags -t quicksettings"
+    },
+    "custom/power-profile": {
+        "exec": "power-profile-status",
+        "return-type": "json",
+        "interval": 5,
+        "format": "{}"
+    },
+        "format": "{icon} {capacity}%",
+        "format-charging": "󰢜 {capacity}%",
+        "format-plugged": "󰚥 {capacity}%",
+        "format-icons": [
+            "",
+            "",
+            "",
+            "",
+            ""
+        ],
+        "on-click": "ags -t quicksettings"
+    },
+    "custom/power-profile": {
+        "exec": "power-profile-status",
+        "return-type": "json",
+        "interval": 5,
+        "format": "{}"
+    },
         "format": "{icon} {capacity}%",
         "format-charging": "󰢜 {capacity}%",
         "format-plugged": " {capacity}%",

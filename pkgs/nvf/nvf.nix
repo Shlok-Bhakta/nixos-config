@@ -103,6 +103,11 @@
       lsp.enable = true;
       treesitter.enable = true;
     };
+    rust = {
+      enable = true;
+      lsp.enable = true;
+      treesitter.enable = true;
+    };
   };
   
 

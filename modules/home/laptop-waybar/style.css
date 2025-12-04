@@ -146,13 +146,41 @@ window#waybar {
     color: @mauve;
 }
 
-#battery.charging,
-#battery.plugged {
+#battery {
     margin: 4px 0px;
     padding: 2px 10px;
     margin-left: 0px;
     background-color: @background;
+    color: @peach;
+}
+
+#battery.charging,
+#battery.plugged {
     color: @green;
+}
+
+#battery.warning {
+    color: @yellow;
+}
+
+#battery.critical {
+    color: @red;
+}
+
+#custom-power-profile {
+    margin: 4px 0px;
+    padding: 2px 10px;
+    margin-left: 0px;
+    background-color: @background;
+    color: @peach;
+}
+
+#custom-power-profile.power-saver {
+    color: @green;
+}
+
+#custom-power-profile.balanced {
+    color: @blue;
 }
 
 

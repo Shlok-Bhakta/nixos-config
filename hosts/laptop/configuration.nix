@@ -4,11 +4,17 @@
   imports = [
     ../shared/configuration.nix
     ./hardware-configuration.nix
+    ../../modules/system/power-profiles
   ];
 
   custom = {
     kanata.enable = false;
     steam.enable = false;
+    power-profiles = {
+      enable = true;
+      staticWallpaper = ../../modules/home/wallpapers/wallpaper.png;
+      animatedWallpaper = ../../modules/home/wallpapers/wallpaper.gif;
+    };
   };
 
   fonts.fontconfig.enable = true;
