@@ -45,13 +45,7 @@ in
     v4l-utils
     cudaPackages.cudatoolkit
     cudaPackages.cudnn
-    (catppuccin-sddm.override {
-      flavor = "mocha";
-      font = "CaskaydiaCove Nerd Font";
-      fontSize = "9";
-      background = "${../../modules/home/hyprland/background.png}";
-      loginBackground = true;
-    })
+
     man-pages
     man-pages-posix
     cachix
@@ -169,9 +163,17 @@ in
     videoDrivers = ["nvidia"];
   };
 
-  services.displayManager.sddm = {
+  services.displayManager.sddm = let
+    sddmTheme = pkgs.catppuccin-sddm.override {
+      flavor = "mocha";
+      font = "CaskaydiaCove Nerd Font";
+      fontSize = "9";
+      background = "${../../modules/home/hyprland/background.png}";
+      loginBackground = true;
+    };
+  in {
     enable = true;
-    theme = "catppuccin-mocha";
+    theme = "${sddmTheme}/share/sddm/themes/catppuccin-mocha-mauve";
     package = pkgs.kdePackages.sddm;
   };
 

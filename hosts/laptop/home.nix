@@ -9,6 +9,7 @@
     hyprland = {
       isLaptop = true;
       enableSplitWorkspaces = false;
+      package = inputs.hyprland.packages.x86_64-linux.hyprland;
       monitors = [
         {
           name = "eDP-1";
