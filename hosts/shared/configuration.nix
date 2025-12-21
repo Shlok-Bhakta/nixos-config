@@ -62,6 +62,44 @@ in
 
   programs.adb.enable = true;
 
+  programs.nix-ld.enable = true;
+  programs.nix-ld.libraries = with pkgs; [
+    stdenv.cc.cc
+    zlib
+    openssl
+    curl
+    glib
+    glibc
+    libGL
+    libGLU
+    xorg.libX11
+    xorg.libXcursor
+    xorg.libXi
+    xorg.libXrandr
+    xorg.libXrender
+    xorg.libXext
+    xorg.libXfixes
+    xorg.libxcb
+    libxkbcommon
+    freetype
+    fontconfig
+    cairo
+    pango
+    expat
+    dbus
+    nspr
+    nss
+    cups
+    libdrm
+    mesa
+    alsa-lib
+    at-spi2-atk
+    gtk3
+    fuse
+    fuse3
+    icu
+  ];
+
   services.udev.extraRules = ''
     SUBSYSTEM=="usb", MODE="0666", GROUP="users"
     KERNEL=="lp[0-9]*", MODE="0666", GROUP="users"
