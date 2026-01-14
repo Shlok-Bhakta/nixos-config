@@ -120,5 +120,6 @@ in
     inputs.printer-cli.packages.${pkgs.stdenv.hostPlatform.system}.default
     unstable.go
     pkgs.nmap
+    pkgs.jdk25_headless
   ];
 }
