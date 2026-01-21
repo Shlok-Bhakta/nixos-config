@@ -8,7 +8,6 @@
   ];
 
   custom = {
-    kanata.enable = false;
     steam.enable = false;
     power-profiles.enable = true;
   };

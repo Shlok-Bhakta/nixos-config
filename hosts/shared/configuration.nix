@@ -27,8 +27,7 @@ in
     hyprland.enable = true;
     networking.enableTailscale = true;
     networking.enableAvahi = true;
-    kanata.enable = true;
-    kanata.devices = [ "/dev/input/by-id/usb-Keychron_Keychron_K8_Pro-event-kbd" ];
+
   };
 
   programs.zsh.enable = true;
