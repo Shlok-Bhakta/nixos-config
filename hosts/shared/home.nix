@@ -121,5 +121,8 @@ in
     unstable.go
     pkgs.nmap
     pkgs.jdk25_headless
+    pkgs.ttyper
+    pkgs.kdePackages.ktouch
+    pkgs.gtypist
   ];
 }

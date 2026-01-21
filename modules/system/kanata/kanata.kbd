@@ -1,18 +1,37 @@
-;; defsrc is still necessary
 (defcfg
   process-unmapped-keys yes
+  danger-enable-cmd yes
 )
 
 (defsrc
-  caps a s d f j k l ;
+  grv  1    2    3    4    5    6    7    8    9    0    -    =    bspc
+  tab  q    w    e    r    t    y    u    i    o    p    [    ]    \
+  caps a    s    d    f    g    h    j    k    l    ;    '    ret
+  lsft z    x    c    v    b    n    m    ,    .    /    rsft
+  lctl lmet lalt           spc            ralt rmet rctl
+  f5
 )
+
 (defvar
   tap-time 150
   hold-time 200
 )
 
 (defalias
-  escctrl (tap-hold 100 100 esc lctl)
+  ;; Mode switching
+  mode (multi
+    (layer-switch normal)
+    (cmd-output-keys notify-send "Keyboard Mode" "Normal Mode - Relaxed typing")
+  )
+  strict (multi
+    (layer-switch base)
+    (cmd-output-keys notify-send "Keyboard Mode" "Strict Mode - Proper hand discipline")
+  )
+  
+  ;; Toggle on ctrl+f5
+  ctrlf5 (fork f5 @mode (lctl rctl))
+  
+  ;; Home row mods
   a (tap-hold $tap-time $hold-time a lmet)
   s (tap-hold $tap-time $hold-time s lalt)
   d (tap-hold $tap-time $hold-time d lsft)
@@ -21,8 +40,73 @@
   k (tap-hold $tap-time $hold-time k rsft)
   l (tap-hold $tap-time $hold-time l ralt)
   ; (tap-hold $tap-time $hold-time ; rmet)
+  
+  ;; Left hand keys - require right shift for caps/symbols
+  1rs (fork 1 S-1 (rsft))
+  2rs (fork 2 S-2 (rsft))
+  3rs (fork 3 S-3 (rsft))
+  4rs (fork 4 S-4 (rsft))
+  5rs (fork 5 S-5 (rsft))
+  qrs (fork q S-q (rsft))
+  wrs (fork w S-w (rsft))
+  ers (fork e S-e (rsft))
+  rrs (fork r S-r (rsft))
+  trs (fork t S-t (rsft))
+  ars (fork a S-a (rsft))
+  srs (fork s S-s (rsft))
+  drs (fork d S-d (rsft))
+  frs (fork f S-f (rsft))
+  grs (fork g S-g (rsft))
+  zrs (fork z S-z (rsft))
+  xrs (fork x S-x (rsft))
+  crs (fork c S-c (rsft))
+  vrs (fork v S-v (rsft))
+  brs (fork b S-b (rsft))
+  grvrs (fork grv S-grv (rsft))
+  
+  ;; Right hand keys - require left shift for caps/symbols
+  6ls (fork 6 S-6 (lsft))
+  7ls (fork 7 S-7 (lsft))
+  8ls (fork 8 S-8 (lsft))
+  9ls (fork 9 S-9 (lsft))
+  0ls (fork 0 S-0 (lsft))
+  minls (fork - S-minus (lsft))
+  eqls (fork = S-= (lsft))
+  yls (fork y S-y (lsft))
+  uls (fork u S-u (lsft))
+  ils (fork i S-i (lsft))
+  ols (fork o S-o (lsft))
+  pls (fork p S-p (lsft))
+  lbls (fork [ S-[ (lsft))
+  rbls (fork ] S-] (lsft))
+  bsls (fork \ S-\ (lsft))
+  hls (fork h S-h (lsft))
+  jls (fork j S-j (lsft))
+  kls (fork k S-k (lsft))
+  lls (fork l S-l (lsft))
+  scls (fork ; S-; (lsft))
+  sqls (fork ' S-' (lsft))
+  nls (fork n S-n (lsft))
+  mls (fork m S-m (lsft))
+  cmls (fork , S-, (lsft))
+  dotls (fork . S-. (lsft))
+  slsls (fork / S-/ (lsft))
 )
 
 (deflayer base
-  @escctrl @a @s @d @f @j @k @l @;
+  @grvrs @1rs  @2rs  @3rs  @4rs  @5rs  @6ls  @7ls  @8ls  @9ls  @0ls  @minls @eqls bspc
+  tab    @qrs  @wrs  @ers  @rrs  @trs  @yls  @uls  @ils  @ols  @pls  @lbls  @rbls @bsls
+  esc    @ars  @srs  @drs  @frs  @grs  @hls  @jls  @kls  @lls  @scls @sqls  ret
+  lsft   @zrs  @xrs  @crs  @vrs  @brs  @nls  @mls  @cmls @dotls @slsls rsft
+  lctl   lmet  lalt            spc             ralt  rmet  rctl
+  @ctrlf5
+)
+
+(deflayer normal
+  grv  1    2    3    4    5    6    7    8    9    0    -    =    bspc
+  tab  q    w    e    r    t    y    u    i    o    p    [    ]    \
+  esc  a    s    d    f    g    h    j    k    l    ;    '    ret
+  lsft z    x    c    v    b    n    m    ,    .    /    rsft
+  lctl lmet lalt           spc            ralt  rmet  rctl
+  @ctrlf5
 )

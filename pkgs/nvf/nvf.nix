@@ -14,6 +14,9 @@
     number = true;
     ignorecase = true;
     smartcase = true;
+    completeopt = "menu,menuone,noinsert,noselect";
+    wildmenu = true;
+    wildmode = "longest:full,full";
   };
 
   # Languages 💬
@@ -233,7 +236,11 @@
     friendly-snippets.enable = true;
     
     setupOpts = {
-      keymap.preset = "default";
+      keymap = {
+        preset = "super-tab";
+        "<C-e>" = [ "hide" "fallback" ];
+        "<CR>" = [ "fallback" ];
+      };
       
       sources = {
         default = [ "lsp" "path" "snippets" "buffer" ];
@@ -241,6 +248,7 @@
       
       completion = {
         menu.auto_show = true;
+        list.selection.preselect = false;
         documentation = {
           auto_show = true;
           auto_show_delay_ms = 200;

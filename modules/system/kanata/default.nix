@@ -2,6 +2,9 @@
 
 let
   cfg = config.custom.kanata;
+  kanata-with-cmd = pkgs.kanata.override {
+    withCmd = true;
+  };
 in
 {
   options.custom.kanata = {
@@ -17,7 +20,7 @@ in
   config = lib.mkIf cfg.enable {
     services.kanata = {
       enable = true;
-      package = pkgs.kanata;
+      package = kanata-with-cmd;
       keyboards.keychron = {
         devices = cfg.devices;
         configFile = ./kanata.kbd;
