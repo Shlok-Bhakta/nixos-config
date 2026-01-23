@@ -125,6 +125,7 @@ in
       8080
       80
       443
+      8081
     ];
     allowedTCPPortRanges = [ 
       { from = 1714; to = 1764; }
