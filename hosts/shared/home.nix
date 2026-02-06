@@ -124,5 +124,6 @@ in
     pkgs.ttyper
     pkgs.kdePackages.ktouch
     pkgs.gtypist
+    pkgs.unzip
   ];
 }
