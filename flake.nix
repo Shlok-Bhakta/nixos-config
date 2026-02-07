@@ -15,11 +15,10 @@
     ];
   };
 
-
-
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-25.11";
     UNSTABLE.url = "github:nixos/nixpkgs?ref=nixos-unstable";
+    opencode-unstable.url = "github:nixos/nixpkgs?ref=nixos-unstable";
     home-manager = {
       url = "github:nix-community/home-manager/release-25.11";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -41,64 +40,70 @@
       inputs.hyprland.follows = "hyprland";
     };
     nvf.url = "github:notashelf/nvf";
-    opencode = {
-      url = "github:aodhanhayter/opencode-flake";
-      # inputs.nixpkgs.follows = "nixpkgs";
-    };
     printer-cli = {
-      url="github:Shlok-Bhakta/ESC-POS-Task-Api?dir=cli";
+      url = "github:Shlok-Bhakta/ESC-POS-Task-Api?dir=cli";
     };
-};
+  };
 
-  outputs = { self, nixpkgs, home-manager, stylix, nvf, ... } @ inputs: let 
+  outputs =
+    {
+      self,
+      nixpkgs,
+      home-manager,
+      stylix,
+      nvf,
+      ...
+    }@inputs:
+    let
       system = "x86_64-linux";
       mynvf = nvf.lib.neovimConfiguration {
         pkgs = nixpkgs.legacyPackages.${system};
-        modules = [ ./pkgs/nvf/nvf.nix];
+        modules = [ ./pkgs/nvf/nvf.nix ];
       };
-  in {
+    in
+    {
 
-    # setup the nvf stuff
-    packages.${system}.mynvf = mynvf.neovim;
+      # setup the nvf stuff
+      packages.${system}.mynvf = mynvf.neovim;
 
-    nixosConfigurations.ShlokPCNIX = nixpkgs.lib.nixosSystem {
-      specialArgs = {
-        inherit inputs;
+      nixosConfigurations.ShlokPCNIX = nixpkgs.lib.nixosSystem {
+        specialArgs = {
+          inherit inputs;
+        };
+        modules = [
+          ./hosts/desktop/configuration.nix
+          home-manager.nixosModules.home-manager
+          {
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+            home-manager.users.shlok = import ./hosts/desktop/home.nix;
+            home-manager.backupFileExtension = "old";
+            home-manager.extraSpecialArgs = {
+              inherit inputs self mynvf;
+            };
+            home-manager.sharedModules = [ stylix.homeModules.stylix ];
+          }
+        ];
       };
-      modules = [
-        ./hosts/desktop/configuration.nix
-        home-manager.nixosModules.home-manager
-        {
-          home-manager.useGlobalPkgs = true;
-          home-manager.useUserPackages = true;
-          home-manager.users.shlok = import ./hosts/desktop/home.nix;
-          home-manager.backupFileExtension = "old";
-          home-manager.extraSpecialArgs = {
-            inherit inputs self mynvf;
-          };
-          home-manager.sharedModules = [ stylix.homeModules.stylix ];
-        }
-      ];
+      nixosConfigurations.ShlokLAPNIX = nixpkgs.lib.nixosSystem {
+        specialArgs = {
+          inherit inputs;
+        };
+        modules = [
+          ./hosts/laptop/configuration.nix
+          home-manager.nixosModules.home-manager
+          {
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+            home-manager.users.shlok = import ./hosts/laptop/home.nix;
+            home-manager.backupFileExtension = "old";
+            home-manager.extraSpecialArgs = {
+              inherit inputs self mynvf;
+            };
+            home-manager.sharedModules = [ stylix.homeModules.stylix ];
+          }
+        ];
+      };
+
     };
-    nixosConfigurations.ShlokLAPNIX = nixpkgs.lib.nixosSystem {
-      specialArgs = {
-        inherit inputs;
-      };
-      modules = [
-        ./hosts/laptop/configuration.nix
-        home-manager.nixosModules.home-manager
-        {
-          home-manager.useGlobalPkgs = true;
-          home-manager.useUserPackages = true;
-          home-manager.users.shlok = import ./hosts/laptop/home.nix;
-          home-manager.backupFileExtension = "old";
-          home-manager.extraSpecialArgs = {
-            inherit inputs self mynvf;
-          };
-          home-manager.sharedModules = [ stylix.homeModules.stylix ];
-        }
-      ];
-    };
-
-  };
 }

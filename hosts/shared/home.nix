@@ -1,16 +1,28 @@
-{ lib, config, inputs, pkgs, mynvf, ... }:
+{
+  lib,
+  config,
+  inputs,
+  pkgs,
+  mynvf,
+  ...
+}:
 
 let
   unstable = import ../../unstable.nix { inherit inputs pkgs; };
-  
-  importModules = dir:
+  opencode-unstable = import inputs.opencode-unstable {
+    system = pkgs.stdenv.hostPlatform.system;
+    config.allowUnfree = true;
+  };
+
+  importModules =
+    dir:
     let
       entries = builtins.readDir dir;
-      validModules = lib.filterAttrs (name: type:
-        type == "directory" && builtins.pathExists (dir + "/${name}/default.nix")
+      validModules = lib.filterAttrs (
+        name: type: type == "directory" && builtins.pathExists (dir + "/${name}/default.nix")
       ) entries;
     in
-      map (name: dir + "/${name}") (builtins.attrNames validModules);
+    map (name: dir + "/${name}") (builtins.attrNames validModules);
 in
 {
   home.username = "shlok";
@@ -24,7 +36,8 @@ in
 
   imports = [
     inputs.ags.homeManagerModules.default
-  ] ++ (importModules ../../modules/home);
+  ]
+  ++ (importModules ../../modules/home);
 
   programs.home-manager.enable = true;
 
@@ -116,7 +129,7 @@ in
     pkgs.uv
     pkgs.wl-clicker
     unstable.crush
-    inputs.opencode.packages.${pkgs.stdenv.hostPlatform.system}.default
+    opencode-unstable.opencode
     inputs.printer-cli.packages.${pkgs.stdenv.hostPlatform.system}.default
     unstable.go
     pkgs.nmap

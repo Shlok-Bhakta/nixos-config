@@ -7,7 +7,7 @@
   ];
 
   custom = {
-    kanata.enable = true;
+    kanata.enable = false;
     kanata.devices = [
       "/dev/input/by-id/usb-Keychron_Keychron_K8_Pro-event-kbd"
     ];
