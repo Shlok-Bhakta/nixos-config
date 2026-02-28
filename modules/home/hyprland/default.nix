@@ -224,7 +224,7 @@ in
           "$mainMod CTRL, R, exec, rofi -show calc"
           "$mainMod CTRL, W, exec, fuzzel"
           "$mainMod, V, exec, cliphist list | rofi -dmenu | cliphist decode | wl-copy"
-          "$mainMod, B, exec, zen"
+          "$mainMod, B, exec, zen-beta"
           "$mainMod, Y, exec, code"
           "$mainMod, L, exec, hyprlock"
           "SUPER_SHIFT, F, fullscreen"
@@ -298,7 +298,7 @@ in
         windowrule = [
           "suppress_event maximize, match:class .*"
           "border_color rgba(fab387ee) rgba(eba0acee) 45deg, match:class brave-browser"
-          "border_color rgba(f9e2afee) rgba(f9e2afee) 45deg, match:class zen-alpha"
+          "border_color rgba(f9e2afee) rgba(f9e2afee) 45deg, match:class zen-beta"
           "border_color rgba(e78284ee) rgba(ea999cee) 45deg, match:title (.*)(YouTube)(.*)"
           "border_color rgba(cba6f7ee) rgba(f38ba8ee) rgba(fab387ee) rgba(a6e3a1ee) rgba(74c7ecee) 45deg, match:title (.*)(Catppuccin)(.*)"
           "border_color rgba(cba6f7ee) rgba(f38ba8ee) rgba(fab387ee) rgba(a6e3a1ee) rgba(74c7ecee) 45deg, match:title (.*)(catppuccin)(.*)"
