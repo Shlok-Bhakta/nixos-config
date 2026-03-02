@@ -129,6 +129,8 @@ in
       3000
       3001
       3002
+      8082
+      8083
     ];
     allowedTCPPortRanges = [ 
       { from = 1714; to = 1764; }

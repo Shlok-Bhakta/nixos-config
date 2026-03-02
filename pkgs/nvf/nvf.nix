@@ -25,7 +25,7 @@
     nix = {
       enable = true;
       format.enable = true;
-      format.type = "nixfmt";
+      format.type = [ "nixfmt" ];
       treesitter.enable = true;
     };
     python.enable = true;
@@ -39,7 +39,7 @@
       enable = true;
       format = {
         enable = true;
-        type = "prettierd";
+        type = [ "prettierd" ];
       };
       lsp.enable = true;
       treesitter.enable = true;
@@ -48,7 +48,7 @@
       enable = true;
       format = {
         enable = true;
-        type = "biome";
+        type = [ "biome" ];
       };
       lsp.enable = true;
       treesitter.enable = true;
@@ -61,7 +61,7 @@
       enable = true;
       format = {
         enable = true;
-        type = "prettierd";
+        type = [ "prettierd" ];
       };
       lsp.enable = true;
       treesitter.enable = true;
@@ -90,7 +90,7 @@
       enable = true;
       format = {
         enable = true;
-        type = "prettierd";
+        type = [ "prettierd" ];
       };
       lsp.enable = true;
       treesitter.enable = true;
@@ -112,11 +112,10 @@
       treesitter.enable = true;
     };
   };
-  
 
   # General language options
   vim.lsp.enable = true;
-  
+
   # Enable inline error diagnostics (like VSCode ErrorLens)
   vim.diagnostics = {
     enable = true;
@@ -137,20 +136,42 @@
     vim-visual-multi = {
       package = vim-visual-multi;
     };
+    nui-nvim = {
+      package = nui-nvim;
+    };
+    competitest-nvim = {
+      package = competitest-nvim;
+      after = [ "nui-nvim" ];
+      setup = # lua
+        ''
+          require("competitest").setup({
+            runner_ui = {
+              interface = "split",
+            },
+          })
+        '';
+    };
   };
-  
+
   vim.binds.hardtime-nvim = {
     enable = true;
     setupOpts = {
       max_count = 4;
       restriction_mode = "hint";
-      disabled_filetypes = ["qf" "netrw" "lazy" "mason" "oil" "TelescopePrompt"];
+      disabled_filetypes = [
+        "qf"
+        "netrw"
+        "lazy"
+        "mason"
+        "oil"
+        "TelescopePrompt"
+      ];
     };
   };
-  
+
   vim.mini = {
     ai.enable = true;
-    
+
     diff = {
       enable = true;
       setupOpts = {
@@ -159,17 +180,24 @@
         };
       };
     };
-    
+
     icons.enable = true;
-    
+
     indentscope = {
       enable = true;
       setupOpts = {
         symbol = "│";
-        ignore_filetypes = ["help" "neo-tree" "notify" "NvimTree" "TelescopePrompt" "oil"];
+        ignore_filetypes = [
+          "help"
+          "neo-tree"
+          "notify"
+          "NvimTree"
+          "TelescopePrompt"
+          "oil"
+        ];
       };
     };
-    
+
     jump2d = {
       enable = true;
       setupOpts = {
@@ -178,24 +206,24 @@
         };
       };
     };
-    
+
     trailspace = {
       enable = true;
     };
-    
+
     move = {
       enable = true;
     };
-    
+
     cursorword = {
       enable = true;
     };
-    
+
     notify = {
       enable = true;
     };
   };
-  
+
   vim.visuals.nvim-web-devicons.enable = true;
 
   vim.luaConfigRC.applyTheme =
@@ -208,11 +236,35 @@
       ''
         vim.keymap.set('n', '<leader>w', ':w<CR>', { desc = 'Save file' })
         vim.keymap.set('n', '<leader>e', ':e<CR>', { desc = 'Reload file' })
-        
+
         vim.keymap.set('i', '<C-h>', '<Left>', { desc = 'Move left in insert mode' })
         vim.keymap.set('i', '<C-j>', '<Down>', { desc = 'Move down in insert mode' })
         vim.keymap.set('i', '<C-k>', '<Up>', { desc = 'Move up in insert mode' })
         vim.keymap.set('i', '<C-l>', '<Right>', { desc = 'Move right in insert mode' })
+      '';
+
+  vim.luaConfigRC.competitestKeybinds =
+    lib.nvim.dag.entryAnywhere # lua
+      ''
+        -- CompetiTest keybinds under <leader>c
+        local wk = require('which-key')
+        wk.add({
+          { '<leader>c', group = 'CompetiTest' },
+          { '<leader>cr', '<cmd>CompetiTest run<CR>',             desc = 'Run testcases' },
+          { '<leader>cR', '<cmd>CompetiTest run_no_compile<CR>',  desc = 'Run (no compile)' },
+          { '<leader>cu', '<cmd>CompetiTest show_ui<CR>',         desc = 'Show UI' },
+          { '<leader>ca', '<cmd>CompetiTest add_testcase<CR>',    desc = 'Add testcase' },
+          { '<leader>ce', '<cmd>CompetiTest edit_testcase<CR>',   desc = 'Edit testcase' },
+          { '<leader>cd', '<cmd>CompetiTest delete_testcase<CR>', desc = 'Delete testcase' },
+          { '<leader>cc', '<cmd>CompetiTest convert auto<CR>',    desc = 'Convert testcase storage' },
+          { '<leader>cx', group = 'Receive' },
+          { '<leader>cxt', '<cmd>CompetiTest receive testcases<CR>',   desc = 'Receive testcases' },
+          { '<leader>cxp', '<cmd>CompetiTest receive problem<CR>',     desc = 'Receive problem' },
+          { '<leader>cxc', '<cmd>CompetiTest receive contest<CR>',     desc = 'Receive contest' },
+          { '<leader>cxr', '<cmd>CompetiTest receive persistently<CR>', desc = 'Receive persistently' },
+          { '<leader>cxs', '<cmd>CompetiTest receive status<CR>',      desc = 'Receive status' },
+          { '<leader>cxx', '<cmd>CompetiTest receive stop<CR>',        desc = 'Stop receiving' },
+        })
       '';
 
   # Setup Telescope 🔭
@@ -234,18 +286,26 @@
   vim.autocomplete.blink-cmp = {
     enable = true;
     friendly-snippets.enable = true;
-    
+
     setupOpts = {
       keymap = {
         preset = "super-tab";
-        "<C-e>" = [ "hide" "fallback" ];
+        "<C-e>" = [
+          "hide"
+          "fallback"
+        ];
         "<CR>" = [ "fallback" ];
       };
-      
+
       sources = {
-        default = [ "lsp" "path" "snippets" "buffer" ];
+        default = [
+          "lsp"
+          "path"
+          "snippets"
+          "buffer"
+        ];
       };
-      
+
       completion = {
         menu.auto_show = true;
         list.selection.preselect = false;
@@ -256,7 +316,7 @@
       };
     };
   };
-  
+
   vim.autocomplete.enableSharedCmpSources = true;
 
   # Setup autopairing
@@ -314,47 +374,46 @@
     useVendoredKeybindings = false;
   };
 
-
   # Setup a Tabline
-vim.tabline.nvimBufferline = {
-  enable = true;
-  
-  mappings = {
-    closeCurrent = "<leader>bx";
-    cycleNext = "<Tab>";
-    cyclePrevious = "<S-Tab>";
-    pick = "<leader>bp";
-  };
+  vim.tabline.nvimBufferline = {
+    enable = true;
 
-  setupOpts = {
-    options = {
-      separator_style = "thick";
-      
-      indicator = {
-        style = "icon";
-        icon = "▎";
+    mappings = {
+      closeCurrent = "<leader>bx";
+      cycleNext = "<Tab>";
+      cyclePrevious = "<S-Tab>";
+      pick = "<leader>bp";
+    };
+
+    setupOpts = {
+      options = {
+        separator_style = "thick";
+
+        indicator = {
+          style = "icon";
+          icon = "▎";
+        };
+
+        modified_icon = "●";
+        show_buffer_icons = true;
+        show_buffer_close_icons = true;
+        show_close_icon = false;
+        color_icons = true;
+
+        tab_size = 20;
+        max_name_length = 18;
+
+        always_show_bufferline = true;
+        sort_by = "id";
+        numbers = "none";
+
+        diagnostics = "nvim_lsp";
+        diagnostics_update_in_insert = false;
+
+        left_mouse_command = "buffer %d";
+        middle_mouse_command = "bdelete! %d";
       };
-      
-      modified_icon = "●";
-      show_buffer_icons = true;
-      show_buffer_close_icons = true;
-      show_close_icon = false;
-      color_icons = true;
-      
-      tab_size = 20;
-      max_name_length = 18;
-      
-      always_show_bufferline = true;
-      sort_by = "id";
-      numbers = "none";
-      
-      diagnostics = "nvim_lsp";
-      diagnostics_update_in_insert = false;
-      
-      left_mouse_command = "buffer %d";
-      middle_mouse_command = "bdelete! %d";
     };
   };
-};
 
 }
