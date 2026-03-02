@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 let
   cfg = config.custom.hyprland;
@@ -11,6 +16,7 @@ in
   config = lib.mkIf cfg.enable {
     programs.hyprland = {
       enable = true;
+      withUWSM = true;
       xwayland.enable = true;
     };
 
