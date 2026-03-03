@@ -214,6 +214,24 @@
       package = pkgs.kdePackages.sddm;
     };
 
+  services.displayManager.defaultSession = "hyprland-start";
+  services.displayManager.sessionPackages = [
+    (pkgs.symlinkJoin {
+      name = "hyprland-start-session";
+      paths = [
+        (pkgs.writeTextDir "share/wayland-sessions/hyprland-start.desktop" ''
+          [Desktop Entry]
+          Name=Hyprland (start-hyprland)
+          Comment=Hyprland session launched via start-hyprland
+          Exec=${pkgs.bash}/bin/bash -lc 'exec /etc/profiles/per-user/$USER/bin/start-hyprland'
+          Type=Application
+          DesktopNames=Hyprland
+        '')
+      ];
+      passthru.providedSessions = [ "hyprland-start" ];
+    })
+  ];
+
   users.users.shlok = {
     isNormalUser = true;
     description = "Shlok Bhakta";

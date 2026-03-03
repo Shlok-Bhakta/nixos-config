@@ -41,5 +41,4 @@
     CUDA_PATH = "${pkgs.cudaPackages.cudatoolkit}";
   };
 
-  services.displayManager.defaultSession = "hyprland-uwsm";
 }

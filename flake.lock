@@ -1112,13 +1112,13 @@
       "locked": {
         "lastModified": 1772378818,
         "narHash": "sha256-9K+Cnv0usOg7WBtEZrIOxchossRGjlwJxyA//o2XoHM=",
-        "owner": "Duckonaut",
+        "owner": "zjeffer",
         "repo": "split-monitor-workspaces",
         "rev": "9b0ce94d069709d599a4cee876c4dd5dadaf7b18",
         "type": "github"
       },
       "original": {
-        "owner": "Duckonaut",
+        "owner": "zjeffer",
         "repo": "split-monitor-workspaces",
         "type": "github"
       }
