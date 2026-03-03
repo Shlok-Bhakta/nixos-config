@@ -4,13 +4,8 @@
   imports = [
     ../shared/configuration.nix
     ./hardware-configuration.nix
-    ../../modules/system/power-profiles
+    ../../system/profiles/laptop.nix
   ];
-
-  custom = {
-    steam.enable = false;
-    power-profiles.enable = true;
-  };
 
   fonts.fontconfig.enable = true;
 

@@ -1,0 +1,154 @@
+{
+  pkgs,
+  mynvf,
+  inputs,
+  unstable,
+  opencode-unstable,
+  ...
+}:
+{
+  home.username = "shlok";
+  home.homeDirectory = "/home/shlok";
+  home.stateVersion = "25.11";
+
+  home.sessionVariables = {
+    EDITOR = "code";
+    XCURSOR_SIZE = 24;
+  };
+
+  imports = [
+    inputs.ags.homeManagerModules.default
+    ./features/arrpc
+    ./features/bat
+    ./features/btop
+    ./features/chromium
+    ./features/cliphist
+    ./features/dconf
+    ./features/excalidraw
+    ./features/eza
+    ./features/fuzzel
+    ./features/git
+    ./features/gitui
+    ./features/gnome-keyring
+    ./features/gtk
+    ./features/hyprland
+    ./features/kitty
+    ./features/nextcloud
+    ./features/opencode
+    ./features/obs-studio
+    ./features/ripgrep
+    ./features/rofi
+    ./features/starship
+    ./features/stylix
+    ./features/swaync
+    ./features/syncthing
+    ./features/tmux
+    ./features/udiskie
+    ./features/vscode
+    ./features/walker
+    ./features/wlogout
+    ./features/yazi
+    ./features/zoxide
+    ./features/zsh
+  ];
+
+  programs.home-manager.enable = true;
+
+  home.packages = [
+    pkgs.lolcat
+    pkgs.direnv
+    pkgs.python313
+    pkgs.cmatrix
+    pkgs.cbonsai
+    pkgs.fastfetch
+    pkgs.cowsay
+    pkgs.fzf
+    unstable.p7zip
+    unstable.localsend
+    inputs.swww.packages.${pkgs.stdenv.hostPlatform.system}.swww
+    pkgs.cliphist
+    pkgs.playerctl
+    pkgs.dbus
+    pkgs.wl-clipboard
+    unstable.onlyoffice-desktopeditors
+    pkgs.openssl
+    pkgs.bemoji
+    pkgs.youtube-music
+    pkgs.nh
+    pkgs.nix-output-monitor
+    pkgs.wtype
+    pkgs.nodejs_22
+    pkgs.nvidia-vaapi-driver
+    pkgs.ffmpeg
+    unstable.whisper-cpp
+    unstable.nvtopPackages.panthor
+    unstable.egl-wayland
+    pkgs.pciutils
+    pkgs.udisks2
+    pkgs.udiskie
+    pkgs.polkit
+    pkgs.polkit_gnome
+    pkgs.libnotify
+    pkgs.yt-dlp
+    unstable.docker-compose
+    unstable.vesktop
+    unstable.obsidian
+    pkgs.wget
+    inputs.zen-browser.packages."${pkgs.stdenv.hostPlatform.system}".default
+    inputs.yapper.packages."${pkgs.stdenv.hostPlatform.system}".default
+    pkgs.speechd
+    pkgs.nautilus
+    unstable.deckmaster
+    pkgs.gnome-calculator
+    pkgs.gnome-characters
+    pkgs.apostrophe
+    pkgs.impression
+    pkgs.textpieces
+    pkgs.candy-icons
+    pkgs.gnome-themes-extra
+    pkgs.dust
+    pkgs.ripgrep
+    pkgs.gcc
+    pkgs.gnumake
+    pkgs.libgccjit
+    unstable.hyprshot
+    unstable.annotator
+    unstable.anki
+    pkgs.gnome-clocks
+    pkgs.fragments
+    pkgs.gnome-disk-utility
+    pkgs.nixfmt-rfc-style
+    pkgs.vlc
+    unstable.gnome-pomodoro
+    pkgs.yt-dlg
+    pkgs.github-desktop
+    pkgs.git-credential-manager
+    pkgs.rclone
+    pkgs.rclone-browser
+    unstable.immich-go
+    unstable.kando
+    unstable.nodePackages_latest.pnpm
+    pkgs.parabolic
+    pkgs.libqalculate
+    pkgs.wlogout
+    unstable.rofi-power-menu
+    pkgs.tesseract
+    pkgs.pavucontrol
+    mynvf.neovim
+    pkgs.brightnessctl
+    pkgs.lazygit
+    unstable.bun
+    unstable.claude-code
+    pkgs.uv
+    pkgs.wl-clicker
+    unstable.crush
+    inputs.printer-cli.packages.${pkgs.stdenv.hostPlatform.system}.default
+    unstable.go
+    pkgs.nmap
+    pkgs.jdk25_headless
+    pkgs.ttyper
+    pkgs.kdePackages.ktouch
+    pkgs.gtypist
+    pkgs.unzip
+  ];
+}

@@ -1,34 +1,17 @@
-{ pkgs, inputs, config, ... }:
-
-let
-  unstable = import ../../unstable.nix { inherit inputs pkgs; };
-in
+{
+  pkgs,
+  inputs,
+  unstable,
+  config,
+  ...
+}:
 {
   imports = [
-    ../../modules/system/bluetooth
-    ../../modules/system/docker
-    ../../modules/system/fonts
-    ../../modules/system/hyprland
-    ../../modules/system/kanata
-    ../../modules/system/networking
-    ../../modules/system/nix-serve
-    ../../modules/system/steam
+    ../../system/base.nix
   ];
 
   nixpkgs.config.allowUnfree = true;
   nixpkgs.config.cudaSupport = true;
-
-  custom = {
-    bluetooth.enable = true;
-    bluetooth.powerOnBoot = true;
-    docker.enable = true;
-    docker.dataRoot = "/home/shlok/Docker";
-    fonts.enable = true;
-    hyprland.enable = true;
-    networking.enableTailscale = true;
-    networking.enableAvahi = true;
-
-  };
 
   programs.zsh.enable = true;
   users.defaultUserShell = pkgs.zsh;
@@ -50,11 +33,11 @@ in
     man-pages
     man-pages-posix
     cachix
-    (callPackage ../../pkgs/deskthing/deskthing.nix {})
+    (callPackage ../../pkgs/deskthing/deskthing.nix { })
   ];
 
   system.stateVersion = "25.11";
-  security.pam.services.swaylock = {};
+  security.pam.services.swaylock = { };
 
   services.gvfs.enable = true;
   services.udisks2.enable = true;
@@ -117,11 +100,12 @@ in
   nix.settings.accept-flake-config = true;
 
   networking.networkmanager.enable = true;
-  networking.firewall = { 
+  networking.firewall = {
     enable = true;
-    allowedTCPPorts = [ 
+    allowedTCPPorts = [
       53317
       5173
+      4097
       8080
       80
       443
@@ -132,12 +116,18 @@ in
       8082
       8083
     ];
-    allowedTCPPortRanges = [ 
-      { from = 1714; to = 1764; }
-    ];  
-    allowedUDPPortRanges = [ 
-      { from = 1714; to = 1764; }
-    ];  
+    allowedTCPPortRanges = [
+      {
+        from = 1714;
+        to = 1764;
+      }
+    ];
+    allowedUDPPortRanges = [
+      {
+        from = 1714;
+        to = 1764;
+      }
+    ];
   };
 
   time.timeZone = "America/Chicago";
@@ -205,27 +195,38 @@ in
 
   services.xserver = {
     enable = true;
-    videoDrivers = ["nvidia"];
+    videoDrivers = [ "nvidia" ];
   };
 
-  services.displayManager.sddm = let
-    sddmTheme = pkgs.catppuccin-sddm.override {
-      flavor = "mocha";
-      font = "CaskaydiaCove Nerd Font";
-      fontSize = "9";
-      background = "${../../modules/home/hyprland/background.png}";
-      loginBackground = true;
+  services.displayManager.sddm =
+    let
+      sddmTheme = pkgs.catppuccin-sddm.override {
+        flavor = "mocha";
+        font = "CaskaydiaCove Nerd Font";
+        fontSize = "9";
+        background = "${../../home/features/hyprland/background.png}";
+        loginBackground = true;
+      };
+    in
+    {
+      enable = true;
+      wayland.enable = true;
+      theme = "${sddmTheme}/share/sddm/themes/catppuccin-mocha-mauve";
+      package = pkgs.kdePackages.sddm;
     };
-  in {
-    enable = true;
-    wayland.enable = true;
-    theme = "${sddmTheme}/share/sddm/themes/catppuccin-mocha-mauve";
-    package = pkgs.kdePackages.sddm;
-  };
 
   users.users.shlok = {
     isNormalUser = true;
     description = "Shlok Bhakta";
-    extraGroups = [ "networkmanager" "wheel" "wireshark" "dialout" "uinput" "libvirtd" "input" "adbusers"];
+    extraGroups = [
+      "networkmanager"
+      "wheel"
+      "wireshark"
+      "dialout"
+      "uinput"
+      "libvirtd"
+      "input"
+      "adbusers"
+    ];
   };
 }

@@ -9,16 +9,8 @@
   imports = [
     ../shared/configuration.nix
     ./hardware-configuration.nix
+    ../../system/profiles/desktop.nix
   ];
-
-  custom = {
-    kanata.enable = false;
-    kanata.devices = [
-      "/dev/input/by-id/usb-Keychron_Keychron_K8_Pro-event-kbd"
-    ];
-    steam.enable = true;
-    nix-serve.enable = true;
-  };
 
   hardware.opentabletdriver.enable = true;
 

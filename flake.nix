@@ -56,6 +56,14 @@
     }@inputs:
     let
       system = "x86_64-linux";
+      unstable = import inputs.UNSTABLE {
+        inherit system;
+        config.allowUnfree = true;
+      };
+      opencode-unstable = import inputs.opencode-unstable {
+        inherit system;
+        config.allowUnfree = true;
+      };
       mynvf = nvf.lib.neovimConfiguration {
         pkgs = nixpkgs.legacyPackages.${system};
         modules = [ ./pkgs/nvf/nvf.nix ];
@@ -68,7 +76,7 @@
 
       nixosConfigurations.ShlokPCNIX = nixpkgs.lib.nixosSystem {
         specialArgs = {
-          inherit inputs;
+          inherit inputs unstable opencode-unstable;
         };
         modules = [
           ./hosts/desktop/configuration.nix
@@ -79,7 +87,13 @@
             home-manager.users.shlok = import ./hosts/desktop/home.nix;
             home-manager.backupFileExtension = "old";
             home-manager.extraSpecialArgs = {
-              inherit inputs self mynvf;
+              inherit
+                inputs
+                self
+                mynvf
+                unstable
+                opencode-unstable
+                ;
             };
             home-manager.sharedModules = [ stylix.homeModules.stylix ];
           }
@@ -87,7 +101,7 @@
       };
       nixosConfigurations.ShlokLAPNIX = nixpkgs.lib.nixosSystem {
         specialArgs = {
-          inherit inputs;
+          inherit inputs unstable opencode-unstable;
         };
         modules = [
           ./hosts/laptop/configuration.nix
@@ -98,7 +112,13 @@
             home-manager.users.shlok = import ./hosts/laptop/home.nix;
             home-manager.backupFileExtension = "old";
             home-manager.extraSpecialArgs = {
-              inherit inputs self mynvf;
+              inherit
+                inputs
+                self
+                mynvf
+                unstable
+                opencode-unstable
+                ;
             };
             home-manager.sharedModules = [ stylix.homeModules.stylix ];
           }
