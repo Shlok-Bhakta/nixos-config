@@ -18,7 +18,7 @@
 
   imports = [
     inputs.ags.homeManagerModules.default
-    ./features/arrpc
+    # ./features/arrpc
     ./features/bat
     ./features/btop
     ./features/chromium
@@ -45,9 +45,9 @@
     ./features/tmux
     ./features/udiskie
     ./features/vscode
-    ./features/walker
+    # ./features/walker
     ./features/wlogout
-    ./features/yazi
+    # ./features/yazi
     ./features/zoxide
     ./features/zsh
   ];
@@ -76,7 +76,7 @@
     pkgs.youtube-music
     pkgs.nh
     pkgs.nix-output-monitor
-    pkgs.wtype
+    # pkgs.wtype
     pkgs.nodejs_22
     pkgs.nvidia-vaapi-driver
     pkgs.ffmpeg
@@ -98,11 +98,11 @@
     inputs.yapper.packages."${pkgs.stdenv.hostPlatform.system}".default
     pkgs.speechd
     pkgs.nautilus
-    unstable.deckmaster
+    # unstable.deckmaster
     pkgs.gnome-calculator
-    pkgs.gnome-characters
+    # pkgs.gnome-characters
     pkgs.apostrophe
-    pkgs.impression
+    # pkgs.impression
     pkgs.textpieces
     pkgs.candy-icons
     pkgs.gnome-themes-extra
@@ -121,11 +121,11 @@
     pkgs.vlc
     unstable.gnome-pomodoro
     pkgs.yt-dlg
-    pkgs.github-desktop
+    # pkgs.github-desktop
     pkgs.git-credential-manager
-    pkgs.rclone
-    pkgs.rclone-browser
-    unstable.immich-go
+    # pkgs.rclone
+    # pkgs.rclone-browser
+    # unstable.immich-go
     unstable.kando
     unstable.nodePackages_latest.pnpm
     pkgs.parabolic
@@ -141,14 +141,14 @@
     unstable.claude-code
     pkgs.uv
     pkgs.wl-clicker
-    unstable.crush
+    # unstable.crush
     inputs.printer-cli.packages.${pkgs.stdenv.hostPlatform.system}.default
     unstable.go
     pkgs.nmap
     pkgs.jdk25_headless
-    pkgs.ttyper
-    pkgs.kdePackages.ktouch
-    pkgs.gtypist
+    # pkgs.ttyper
+    # pkgs.kdePackages.ktouch
+    # pkgs.gtypist
     pkgs.unzip
   ];
 }
