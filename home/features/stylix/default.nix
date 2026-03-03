@@ -16,6 +16,7 @@
       rofi.enable = false;
       starship.enable = false;
       gitui.enable = false;
+      opencode.enable = false;
     };
 
     base16Scheme = {

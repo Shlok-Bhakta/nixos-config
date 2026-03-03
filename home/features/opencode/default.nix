@@ -11,21 +11,13 @@
       theme = "catppuccin";
     };
 
-    # Expose OpenCode web on a non-standard port.
-    web = {
-      enable = true;
-      extraArgs = [
-        "--hostname"
-        "0.0.0.0"
-        "--port"
-        "4097"
-      ];
-    };
-
-    # Skill scaffolding only; SKILL.md contents can be filled in later.
-    skills = {
-      human-writing = ./skills/human-writing;
-      frontend-design = ./skills/frontend-design;
-    };
   };
+
+  # Keep desktop app and CLI in sync from the same unstable source.
+  home.packages = [ opencode-unstable.opencode-desktop ];
+
+  # TODO(26.05): migrate this to `programs.opencode.skills` once available.
+  xdg.configFile."opencode/skills/human-writing/SKILL.md".source = ./skills/human-writing/SKILL.md;
+  xdg.configFile."opencode/skills/frontend-design/SKILL.md".source =
+    ./skills/frontend-design/SKILL.md;
 }
