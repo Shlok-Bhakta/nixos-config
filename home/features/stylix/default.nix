@@ -3,6 +3,7 @@
 {
   stylix = {
     enable = true;
+    overlays.enable = false;
 
     targets = {
       vscode.enable = false;

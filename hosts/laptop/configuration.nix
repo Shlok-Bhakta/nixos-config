@@ -38,7 +38,7 @@
     XDG_SESSION_TYPE = "wayland";
     no_hardware_cursors = "1";
     WLR_NO_HARDWARE_CURSORS = "1";
-    CUDA_PATH = "${pkgs.cudaPackages.cudatoolkit}";
+    CUDA_PATH = "${pkgs.cudatoolkit}";
   };
 
 }

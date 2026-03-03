@@ -11,7 +11,6 @@
   ];
 
   nixpkgs.config.allowUnfree = true;
-  nixpkgs.config.cudaSupport = true;
 
   programs.zsh.enable = true;
   users.defaultUserShell = pkgs.zsh;
@@ -27,8 +26,8 @@
     })
     wireshark
     v4l-utils
-    cudaPackages.cudatoolkit
-    cudaPackages.cudnn
+    cudaPackages_12_8.cudatoolkit
+    cudaPackages_12_8.cudnn
 
     man-pages
     man-pages-posix
@@ -197,40 +196,15 @@
     videoDrivers = [ "nvidia" ];
   };
 
-  services.displayManager.sddm =
-    let
-      sddmTheme = pkgs.catppuccin-sddm.override {
-        flavor = "mocha";
-        font = "CaskaydiaCove Nerd Font";
-        fontSize = "9";
-        background = "${../../home/features/hyprland/background.png}";
-        loginBackground = true;
+  services.greetd = {
+    enable = true;
+    settings = {
+      default_session = {
+        command = "${pkgs.greetd.tuigreet}/bin/tuigreet --time --remember --asterisks --cmd \"${pkgs.zsh}/bin/zsh -lc hyprland-start\"";
+        user = "greeter";
       };
-    in
-    {
-      enable = true;
-      wayland.enable = true;
-      theme = "${sddmTheme}/share/sddm/themes/catppuccin-mocha-mauve";
-      package = pkgs.kdePackages.sddm;
     };
-
-  services.displayManager.defaultSession = "hyprland-start";
-  services.displayManager.sessionPackages = [
-    (pkgs.symlinkJoin {
-      name = "hyprland-start-session";
-      paths = [
-        (pkgs.writeTextDir "share/wayland-sessions/hyprland-start.desktop" ''
-          [Desktop Entry]
-          Name=Hyprland (start-hyprland)
-          Comment=Hyprland session launched via start-hyprland
-          Exec=${pkgs.bash}/bin/bash -lc 'exec /etc/profiles/per-user/$USER/bin/start-hyprland'
-          Type=Application
-          DesktopNames=Hyprland
-        '')
-      ];
-      passthru.providedSessions = [ "hyprland-start" ];
-    })
-  ];
+  };
 
   users.users.shlok = {
     isNormalUser = true;
