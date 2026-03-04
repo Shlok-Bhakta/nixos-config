@@ -10,6 +10,8 @@
     tabstop = 2;
     expandtab = true;
     shiftwidth = 2;
+    autoindent = true;
+    smartindent = true;
     relativenumber = true;
     number = true;
     ignorecase = true;

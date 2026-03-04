@@ -200,7 +200,7 @@
     enable = true;
     settings = {
       default_session = {
-        command = "${pkgs.greetd.tuigreet}/bin/tuigreet --time --remember --asterisks --cmd \"${pkgs.zsh}/bin/zsh -lc hyprland-start\"";
+        command = "${pkgs.greetd.tuigreet}/bin/tuigreet --time --remember --asterisks --cmd \"/etc/profiles/per-user/shlok/bin/start-hyprland\"";
         user = "greeter";
       };
     };
