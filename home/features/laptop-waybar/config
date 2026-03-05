@@ -1,176 +1,145 @@
-{
-    "height": 33,
-    "spacing": 11,
+[
+  {
+    "height": 32,
+    "spacing": 10,
     "modules-left": [
-        "hyprland/workspaces",
-        "custom/media",
-        "hyprland/window"
+      "hyprland/workspaces",
+      "custom/media"
     ],
     "modules-center": [
-        "clock"
+      "clock"
     ],
     "modules-right": [
-        "custom/weather",
-        "network",
-        "pulseaudio",
-        "backlight",
-        "custom/power-profile",
-        "battery",
-        "custom/notification",
-        "tray"
+      "custom/weather",
+      "network",
+      "pulseaudio",
+      "backlight",
+      "custom/power-profile",
+      "battery",
+      "custom/notification",
+      "tray"
     ],
     "hyprland/workspaces": {
-        "format": "{name}",
-        "on-click": "activate",
-        "sort-by-number": true,
-        "on-scroll-up": "hyprctl dispatch workspace e+2",
-        "on-scroll-down": "hyprctl dispatch workspace e0",
-        "all-outputs": false
-    },    
-    "custom/media": {
-        "format": "  {}",
-        "escape": true,
-        "max-length": 20,
-        "on-click": "playerctl play-pause",
-        "on-click-right": "playerctl stop",
-        "on-scroll-up": "playerctl next",
-        "on-scroll-down": "playerctl previous",
-        "interval": 11,
-        "exec": "playerctl status | grep -q 'Stopped' && echo '' || playerctl metadata -f '{{xesam:title}}'"
+      "format": "{name}",
+      "on-click": "activate",
+      "sort-by-number": true,
+      "on-scroll-up": "hyprctl dispatch workspace e+1",
+      "on-scroll-down": "hyprctl dispatch workspace e-1",
+      "all-outputs": false
     },
-    "hyprland/window": {
-        "max-length": 20,
-        "tooltip": false
+    "custom/media": {
+      "format": "  {}",
+      "escape": true,
+      "max-length": 40,
+      "on-click": "playerctl play-pause",
+      "on-click-right": "playerctl stop",
+      "on-scroll-up": "playerctl next",
+      "on-scroll-down": "playerctl previous",
+      "interval": 10,
+      "exec": "playerctl status | grep -q 'Stopped' && echo '' || playerctl metadata -f '{{xesam:artist}}:{{xesam:title}}'"
     },
     "clock": {
-        "interval": 2,
-        "format": "{:%I:%M %p  %A %b %d}",
-        "format-alt": "{:%I:%M %p  %Y-%m-%d}",
-        "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>"
+      "interval": 1,
+      "format": "{:%I:%M %p  %A %b %d}",
+      "format-alt": "{:%I:%M %p  %Y-%m-%d}",
+      "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>"
     },
     "custom/weather": {
-        "format": "{}",
-        "interval": 3601,
-        "exec": "curl -s 'https://wttr.in/?format=1' | sed 's/   / /g' | sed 's/+//g'",
-        "exec-if": "ping wttr.in -c2",
-        "tooltip-format": "{}"
-        
+      "format": "{}",
+      "interval": 3600,
+      "exec": "curl -s 'https://wttr.in/?format=1' | sed 's/   / /g' | sed 's/+//g'",
+      "exec-if": "ping wttr.in -c1",
+      "tooltip-format": "{}"
     },
     "network": {
-        "format-wifi": " {essid} ({signalStrength}%)",
-        "format-ethernet": "⬇{bandwidthDownBytes} ⬆{bandwidthUpBytes}",
-        "interval": 4,
-        "format-linked": "{ifname} (No IP) ",
-        "format": "",
-        "format-disconnected": "",
-        "format-alt": "{ifname}: {ipaddr}/{cidr}",
-        "on-click": "wl-copy $(ip address show up scope global | grep inet | head -n2 | cut -d/ -f 1 | tr -d [:space:] | cut -c5-)",
-        "tooltip-format": " {bandwidthUpBits}  {bandwidthDownBits}\n{ifname}\n{ipaddr}/{cidr}\n",
-        "tooltip-format-wifi": " {essid} {frequency}MHz\nStrength: {signaldBm}dBm ({signalStrength}%)\nIP: {ipaddr}/{cidr}\n {bandwidthUpBits}  {bandwidthDownBits}",
-        "min-length": 18,
-        "max-length": 18
+      "format-wifi": " {essid} ({signalStrength}%)",
+      "format-ethernet": "⬇{bandwidthDownBytes} ⬆{bandwidthUpBytes}",
+      "interval": 3,
+      "format-linked": "{ifname} (No IP) ",
+      "format": "",
+      "format-disconnected": "",
+      "format-alt": "{ifname}: {ipaddr}/{cidr}",
+      "on-click": "wl-copy $(ip address show up scope global | grep inet | head -n1 | cut -d/ -f 1 | tr -d [:space:] | cut -c5-)",
+      "tooltip-format": " {bandwidthUpBits}  {bandwidthDownBits}\n{ifname}\n{ipaddr}/{cidr}\n",
+      "tooltip-format-wifi": " {essid} {frequency}MHz\nStrength: {signaldBm}dBm ({signalStrength}%)\nIP: {ipaddr}/{cidr}\n {bandwidthUpBits}  {bandwidthDownBits}",
+      "min-length": 17,
+      "max-length": 17
     },
     "pulseaudio": {
-        "format": "{icon} {volume}% {format_source}",
-        "format-bluetooth": " {icon} {volume}% {format_source}",
-        "format-bluetooth-muted": "  {icon} {format_source}",
-        "format-muted": "  {format_source}",
-        "format-source": " {volume}%",
-        "format-source-muted": "",
-        "format-icons": {
-            "default": [
-                "",
-                "",
-                " "
-            ]
-        },
-        "scroll-step": 2,
-        "on-click": "pavucontrol"
+      "format": "{icon} {volume}% {format_source}",
+      "format-bluetooth": " {icon} {volume}% {format_source}",
+      "format-bluetooth-muted": "  {icon} {format_source}",
+      "format-muted": "  {format_source}",
+      "format-source": " {volume}%",
+      "format-source-muted": "",
+      "format-icons": {
+        "default": [
+          "",
+          "",
+          " "
+        ]
+      },
+      "scroll-step": 1,
+      "on-click": "pavucontrol"
     },
     "tray": {
-        "spacing": 9
+      "spacing": 8
     },
     "backlight": {
-        "format": "{icon} {percent}%",
-        "scroll-step": 1,
-        "on-scroll-up":   "brightnessctl set +5%",
-        "on-scroll-down": "brightnessctl set 5%- -n 5%",
-        "format-icons": [
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            ""
-        ]
+      "format": "{icon} {percent}%",
+      "format-icons": [
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        ""
+      ]
     },
     "battery": {
-        "states": {
-            "warning": 31,
-            "critical": 16
-        },
-        "format": "󰁹 {capacity}%",
-        "format-charging": "󰢜 {capacity}%",
-        "format-plugged": "󰚥 {capacity}%",
-        "on-click": "ags -t quicksettings"
+      "states": {
+        "warning": 30,
+        "critical": 15
+      },
+      "format": "{icon} {capacity}%",
+      "format-charging": "󰢜 {capacity}%",
+      "format-plugged": " {capacity}%",
+      "format-icons": [
+        "",
+        "",
+        "",
+        "",
+        ""
+      ],
+      "on-click": "ags -t quicksettings"
     },
     "custom/power-profile": {
-        "exec": "power-profile-status",
-        "return-type": "json",
-        "interval": 5,
-        "format": "{}"
+      "exec": "power-profile-status",
+      "return-type": "json",
+      "interval": 5,
+      "format": "{}"
     },
-        "format": "{icon} {capacity}%",
-        "format-charging": "󰢜 {capacity}%",
-        "format-plugged": "󰚥 {capacity}%",
-        "format-icons": [
-            "",
-            "",
-            "",
-            "",
-            ""
-        ],
-        "on-click": "ags -t quicksettings"
-    },
-    "custom/power-profile": {
-        "exec": "power-profile-status",
-        "return-type": "json",
-        "interval": 5,
-        "format": "{}"
-    },
-        "format": "{icon} {capacity}%",
-        "format-charging": "󰢜 {capacity}%",
-        "format-plugged": " {capacity}%",
-        "format-icons": [
-            "",
-            "",
-            "",
-            "",
-            ""
-        ],
-        "on-click": "ags -t quicksettings"
-    },
-
     "custom/notification": {
-        "tooltip": false,
-        "format": "{icon}",
-        "format-icons": {
-            "notification": "<span foreground='red'><sup></sup></span>",
-            "none": "",
-            "dnd-notification": "<span foreground='red'><sup></sup></span>",
-            "dnd-none": ""
-        },
-        "return-type": "json",
-        "exec-if": "which swaync-client",
-        "exec": "swaync-client -swb",
-        "on-click": "swaync-client -t -sw",
-        "on-click-right": "swaync-client -d -sw",
-        "escape": true
+      "tooltip": false,
+      "format": "{icon}",
+      "format-icons": {
+        "notification": "<span foreground='red'><sup></sup></span>",
+        "none": "",
+        "dnd-notification": "<span foreground='red'><sup></sup></span>",
+        "dnd-none": ""
+      },
+      "return-type": "json",
+      "exec-if": "which swaync-client",
+      "exec": "swaync-client -swb",
+      "on-click": "swaync-client -t -sw",
+      "on-click-right": "swaync-client -d -sw",
+      "escape": true
     },
     "custom/rightpad": {
-        "format": " "
+      "format": " "
     }
-}
+  }
+]
