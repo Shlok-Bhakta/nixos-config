@@ -245,6 +245,19 @@
         vim.keymap.set('i', '<C-l>', '<Right>', { desc = 'Move right in insert mode' })
       '';
 
+  vim.luaConfigRC.disableCppTreesitterIndent =
+    lib.nvim.dag.entryAnywhere # lua
+      ''
+        vim.api.nvim_create_autocmd('FileType', {
+          pattern = 'cpp',
+          callback = function(ev)
+            pcall(vim.cmd, 'TSBufDisable indent')
+            vim.bo[ev.buf].indentexpr = ""
+            vim.bo[ev.buf].cindent = true
+          end,
+        })
+      '';
+
   vim.luaConfigRC.competitestKeybinds =
     lib.nvim.dag.entryAnywhere # lua
       ''
