@@ -1,14 +1,22 @@
 { config, pkgs, ... }:
 
 let
-  headlessOutputName = "IPAD-STREAM";
-  headlessOutputMode = "1920x1440@60";
-  headlessOutputScale = "1";
+  sunshineBasePort = 47989;
+  sunshineTcpPorts = [
+    (sunshineBasePort - 5)
+    sunshineBasePort
+    (sunshineBasePort + 21)
+  ];
+  sunshineUdpPorts = [
+    (sunshineBasePort + 9)
+    (sunshineBasePort + 10)
+    (sunshineBasePort + 11)
+    (sunshineBasePort + 13)
+    (sunshineBasePort + 21)
+  ];
 
-  hyprctlBin = "${config.programs.hyprland.package}/bin/hyprctl";
   systemctlBin = "${pkgs.systemd}/bin/systemctl";
-  grepBin = "${pkgs.gnugrep}/bin/grep";
-  sleepBin = "${pkgs.coreutils}/bin/sleep";
+  sunshineBin = "${config.services.sunshine.package}/bin/sunshine";
 
   sunshineIpad = pkgs.writeShellApplication {
     name = "sunshine-ipad";
@@ -16,55 +24,79 @@ let
     text = ''
       set -euo pipefail
 
-      output_name="${headlessOutputName}"
-      output_mode="${headlessOutputMode}"
-      output_scale="${headlessOutputScale}"
+      sunshine_state_file="''${XDG_CONFIG_HOME:-$HOME/.config}/sunshine/sunshine_state.json"
 
-      monitor_exists() {
-        "${hyprctlBin}" monitors all | "${grepBin}" -q "^Monitor ''${output_name} "
-      }
+      ensure_credentials() {
+        local username password confirm_password
 
-      require_hyprland() {
-        if [[ -z "''${HYPRLAND_INSTANCE_SIGNATURE-}" ]]; then
-          printf 'Run this from inside your Hyprland session.\n' >&2
+        if [[ -s "''${sunshine_state_file}" ]]; then
+          return 0
+        fi
+
+        if [[ ! -t 0 ]]; then
+          printf 'No Sunshine credentials found at %s. Run this interactively to create them.\n' "''${sunshine_state_file}" >&2
           exit 1
         fi
+
+        printf 'No Sunshine web UI credentials found.\n'
+        printf 'Create local credentials for https://localhost:%s\n' "$(( ${toString sunshineBasePort} + 1 ))"
+
+        while [[ -z "''${username:-}" ]]; do
+          printf 'Username: '
+          IFS= read -r username
+        done
+
+        while true; do
+          read -rsp 'Password: ' password
+          printf '\n'
+          read -rsp 'Confirm password: ' confirm_password
+          printf '\n'
+
+          if [[ -z "''${password}" ]]; then
+            printf 'Password cannot be empty.\n' >&2
+            continue
+          fi
+
+          if [[ "''${password}" != "''${confirm_password}" ]]; then
+            printf 'Passwords did not match. Try again.\n' >&2
+            continue
+          fi
+
+          break
+        done
+
+        "${sunshineBin}" --creds "''${username}" "''${password}"
+        printf 'Saved Sunshine credentials to %s\n' "''${sunshine_state_file}"
       }
 
       start_streaming() {
-        require_hyprland
-
-        if ! monitor_exists; then
-          "${hyprctlBin}" output create headless "''${output_name}"
-          "${sleepBin}" 1
-        fi
-
-        "${hyprctlBin}" keyword monitor "''${output_name},''${output_mode},auto-right,''${output_scale}"
+        ensure_credentials
         "${systemctlBin}" --user start sunshine.service
 
-        printf 'Sunshine is up with headless output %s (%s).\n' "''${output_name}" "''${output_mode}"
-        printf 'Open Moonlight after pairing and pick the desktop stream.\n'
+        printf 'Sunshine is up on your current desktop.\n'
+        printf 'Approve pairing or manage Sunshine at https://localhost:%s\n' "$(( ${toString sunshineBasePort} + 1 ))"
+        printf 'In Moonlight, disable the touch controller overlay if it pops up.\n'
       }
 
       stop_streaming() {
-        require_hyprland
+        "${systemctlBin}" --user stop sunshine.service || true
+        printf 'Sunshine is down.\n'
+      }
 
+      reset_credentials() {
         "${systemctlBin}" --user stop sunshine.service || true
 
-        if monitor_exists; then
-          "${hyprctlBin}" output remove "''${output_name}"
+        if [[ -e "''${sunshine_state_file}" ]]; then
+          rm -f "''${sunshine_state_file}"
+          printf 'Removed Sunshine credentials at %s\n' "''${sunshine_state_file}"
+        else
+          printf 'No Sunshine credentials found at %s\n' "''${sunshine_state_file}"
         fi
 
-        printf 'Sunshine is down and %s is removed.\n' "''${output_name}"
+        printf 'Next run of sunshine-ipad start will ask for new web UI credentials.\n'
       }
 
       show_status() {
-        if [[ -n "''${HYPRLAND_INSTANCE_SIGNATURE-}" ]] && monitor_exists; then
-          printf 'Output: %s present\n' "''${output_name}"
-        else
-          printf 'Output: %s absent\n' "''${output_name}"
-        fi
-
         if "${systemctlBin}" --user is-active --quiet sunshine.service; then
           printf 'Sunshine: running\n'
         else
@@ -83,11 +115,14 @@ let
           stop_streaming
           start_streaming
           ;;
+        reset-creds)
+          reset_credentials
+          ;;
         status)
           show_status
           ;;
         *)
-          printf 'Usage: sunshine-ipad [start|stop|restart|status]\n' >&2
+          printf 'Usage: sunshine-ipad [start|stop|restart|reset-creds|status]\n' >&2
           exit 1
           ;;
       esac
@@ -98,9 +133,19 @@ in
   services.sunshine = {
     enable = true;
     autoStart = false;
-    openFirewall = true;
+    openFirewall = false;
     capSysAdmin = true;
+    settings.port = sunshineBasePort;
   };
+
+  networking.firewall.interfaces.tailscale0 = {
+    allowedTCPPorts = sunshineTcpPorts;
+    allowedUDPPorts = sunshineUdpPorts;
+  };
+
+  services.udev.extraRules = ''
+    KERNEL=="uinput", MODE="0660", GROUP="input", OPTIONS+="static_node=uinput"
+  '';
 
   environment.systemPackages = [ sunshineIpad ];
 }

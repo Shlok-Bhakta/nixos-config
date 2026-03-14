@@ -41,4 +41,10 @@
     CUDA_PATH = "${pkgs.cudatoolkit}";
   };
 
+  services.sunshine.settings = {
+    capture = "kms";
+    encoder = "vaapi";
+    adapter_name = "/dev/dri/renderD128";
+  };
+
 }
