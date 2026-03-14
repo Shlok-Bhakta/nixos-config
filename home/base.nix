@@ -150,5 +150,7 @@
     # pkgs.kdePackages.ktouch
     # pkgs.gtypist
     pkgs.unzip
+    pkgs.mprocs
+    pkgs.cloudflared
   ];
 }

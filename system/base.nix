@@ -7,5 +7,6 @@
     ./features/fonts
     ./features/hyprland
     ./features/networking
+    ./features/sunshine
   ];
 }
