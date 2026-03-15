@@ -69,7 +69,7 @@
       _sunshine_ipad() {
         local -a commands
         commands=(
-          'start:Mirror DP-1 and start Sunshine'
+          'start:Extend DP-1 and start Sunshine'
           'stop:Stop Sunshine and disable DP-1'
           'restart:Restart Sunshine'
           'reset-creds:Delete saved Sunshine web UI credentials'

@@ -1,9 +1,9 @@
 { config, pkgs, ... }:
 
 let
-  mirrorOutputName = "DP-1";
-  mirrorOutputMode = "640x480@60";
-  mirrorOutputScale = "1";
+  extendOutputName = "DP-1";
+  extendOutputMode = "640x480@60";
+  extendOutputScale = "1";
   internalOutputName = "eDP-1";
 
   sunshineBasePort = 47989;
@@ -36,9 +36,9 @@ let
     text = ''
       set -euo pipefail
 
-      output_name="''${SUNSHINE_IPAD_OUTPUT_NAME:-${mirrorOutputName}}"
-      output_mode="''${SUNSHINE_IPAD_OUTPUT_MODE:-${mirrorOutputMode}}"
-      output_scale="''${SUNSHINE_IPAD_OUTPUT_SCALE:-${mirrorOutputScale}}"
+      output_name="''${SUNSHINE_IPAD_OUTPUT_NAME:-${extendOutputName}}"
+      output_mode="''${SUNSHINE_IPAD_OUTPUT_MODE:-${extendOutputMode}}"
+      output_scale="''${SUNSHINE_IPAD_OUTPUT_SCALE:-${extendOutputScale}}"
       internal_output_name="''${SUNSHINE_IPAD_INTERNAL_OUTPUT_NAME:-${internalOutputName}}"
 
       sunshine_state_file="''${XDG_CONFIG_HOME:-$HOME/.config}/sunshine/sunshine_state.json"
@@ -98,7 +98,7 @@ let
       }
 
       enable_output() {
-        "${hyprctlBin}" keyword monitor "''${output_name},''${output_mode},auto,''${output_scale},mirror,''${internal_output_name}"
+        "${hyprctlBin}" keyword monitor "''${output_name},''${output_mode},auto-right,''${output_scale}"
         "${sleepBin}" 1
 
         if ! monitor_exists; then
@@ -122,8 +122,9 @@ let
         enable_output
         "${systemctlBin}" --user start sunshine.service
 
-        printf 'Sunshine is up and %s is mirroring %s at %s.\n' "''${output_name}" "''${internal_output_name}" "''${output_mode}"
+        printf 'Sunshine is up and %s is extended from %s at %s.\n' "''${output_name}" "''${internal_output_name}" "''${output_mode}"
         printf 'Approve pairing or manage Sunshine at https://localhost:%s\n' "$(( ${toString sunshineBasePort} + 1 ))"
+        printf 'Use wdisplays if you want to move or resize the new monitor.\n'
         printf 'In Moonlight, disable the touch controller overlay if it pops up.\n'
       }
 

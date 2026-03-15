@@ -55,6 +55,7 @@ in
     capture = "kms";
     encoder = "vaapi";
     adapter_name = "/dev/dri/renderD128";
+    output_name = 1;
   };
 
 }
