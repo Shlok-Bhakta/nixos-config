@@ -8,7 +8,7 @@
 
   wayland.windowManager.hyprland.settings.monitor = [
     "eDP-1, preferred, auto, 1"
-    ", preferred, auto, 1, mirror, eDP-1"
+    "DP-1, disable"
   ];
 
   wayland.windowManager.hyprland.settings.gestures = {

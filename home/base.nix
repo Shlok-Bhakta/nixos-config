@@ -69,6 +69,7 @@
     pkgs.cliphist
     pkgs.playerctl
     pkgs.dbus
+    pkgs.wdisplays
     pkgs.wl-clipboard
     unstable.onlyoffice-desktopeditors
     pkgs.openssl
