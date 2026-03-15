@@ -28,6 +28,13 @@ in
     "video=DP-1:e"
   ];
 
+  boot.kernelPatches = [
+    {
+      name = "i915-headless-dp-fallback";
+      patch = ./patches/i915-headless-dp-fallback.patch;
+    }
+  ];
+
   hardware.firmware = [ ipadEdidFirmware ];
 
   hardware.nvidia = {

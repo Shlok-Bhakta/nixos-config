@@ -1,0 +1,22 @@
+diff --git a/drivers/gpu/drm/i915/display/intel_dp.c b/drivers/gpu/drm/i915/display/intel_dp.c
+index 13cfd7afacb7..5a8e0b5f3db7 100644
+--- a/drivers/gpu/drm/i915/display/intel_dp.c
++++ b/drivers/gpu/drm/i915/display/intel_dp.c
+@@ -185,7 +185,7 @@ static int max_dprx_lane_count(struct intel_dp *intel_dp)
+ 
+ static void intel_dp_set_default_sink_rates(struct intel_dp *intel_dp)
+ {
+-	intel_dp->sink_rates[0] = 162000;
++	intel_dp->sink_rates[0] = 270000;
+ 	intel_dp->num_sink_rates = 1;
+ }
+ 
+@@ -281,7 +281,7 @@ static void intel_dp_set_default_max_sink_lane_count(struct intel_dp *intel_dp)
+ 
+ static void intel_dp_set_default_max_sink_lane_count(struct intel_dp *intel_dp)
+ {
+-	intel_dp->max_sink_lane_count = 1;
++	intel_dp->max_sink_lane_count = 4;
+ }
+ 
+ static void intel_dp_set_max_sink_lane_count(struct intel_dp *intel_dp)
