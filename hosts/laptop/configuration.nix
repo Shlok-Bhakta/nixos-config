@@ -1,5 +1,11 @@
 { pkgs, config, ... }:
 
+let
+  ipadEdidFirmware = pkgs.runCommand "laptop-edid-firmware" { } ''
+    install -Dm644 ${./edid/hp-lp2065-1600x1200.bin} \
+      $out/lib/firmware/edid/ipad-1600x1200.bin
+  '';
+in
 {
   imports = [
     ../shared/configuration.nix
@@ -18,9 +24,11 @@
 
   boot.kernelParams = [
     "nvidia_drm.fbdev=1"
-    "drm.edid_firmware=DP-1:edid/1600x1200.bin"
+    "drm.edid_firmware=DP-1:edid/ipad-1600x1200.bin"
     "video=DP-1:e"
   ];
+
+  hardware.firmware = [ ipadEdidFirmware ];
 
   hardware.nvidia = {
     powerManagement.enable = true;
