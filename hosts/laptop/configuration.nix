@@ -25,7 +25,7 @@ in
   boot.kernelParams = [
     "nvidia_drm.fbdev=1"
     "drm.edid_firmware=DP-1:edid/ipad-mirror.bin"
-    "video=DP-1:e"
+    "video=DP-1:1600x1200M@60e"
   ];
 
   hardware.firmware = [ ipadEdidFirmware ];
