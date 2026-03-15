@@ -2,8 +2,8 @@
 
 let
   extendOutputName = "DP-1";
-  extendOutputMode = "1600x1200@60";
-  extendOutputScale = "0.5";
+  extendOutputMode = "1600x1200@120";
+  extendOutputScale = "1";
   internalOutputName = "eDP-1";
 
   sunshineBasePort = 47989;
