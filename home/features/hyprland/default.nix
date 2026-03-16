@@ -53,6 +53,21 @@ in
           cursor {
             no_hardware_cursors = true
           }
+
+          device {
+            name = touch-passthrough-1
+            output = DP-1
+          }
+
+          device {
+            name = pen-passthrough
+            output = DP-1
+          }
+
+          device {
+            name = mouse-passthrough-(absolute)
+            output = DP-1
+          }
         '';
 
       settings = {

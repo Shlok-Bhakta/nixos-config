@@ -23,6 +23,7 @@ let
   systemctlBin = "${pkgs.systemd}/bin/systemctl";
   hyprctlBin = "${config.programs.hyprland.package}/bin/hyprctl";
   sunshineBin = "${config.services.sunshine.package}/bin/sunshine";
+  waybarBin = "${pkgs.waybar}/bin/waybar";
   sleepBin = "${pkgs.coreutils}/bin/sleep";
   grepBin = "${pkgs.gnugrep}/bin/grep";
 
@@ -107,6 +108,12 @@ let
         fi
       }
 
+      restart_waybar() {
+        pkill -x waybar >/dev/null 2>&1 || true
+        "${sleepBin}" 1
+        nohup "${waybarBin}" >/dev/null 2>&1 &
+      }
+
       disable_output() {
         if ! monitor_exists; then
           return 0
@@ -120,6 +127,7 @@ let
         ensure_credentials
 
         enable_output
+        restart_waybar
         "${systemctlBin}" --user start sunshine.service
 
         printf 'Sunshine is up and %s is extended from %s at %s.\n' "''${output_name}" "''${internal_output_name}" "''${output_mode}"
@@ -133,6 +141,7 @@ let
         "${systemctlBin}" --user stop sunshine.service || true
 
         disable_output
+        restart_waybar
 
         printf 'Sunshine is down and %s is disabled.\n' "''${output_name}"
       }
