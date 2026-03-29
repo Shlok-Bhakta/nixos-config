@@ -65,7 +65,7 @@
       plugins = [ "git" ];
     };
 
-    initExtra = ''
+    initContent = ''
       _sunshine_ipad() {
         local -a commands
         commands=(
