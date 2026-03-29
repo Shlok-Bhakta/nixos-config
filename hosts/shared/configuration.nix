@@ -86,6 +86,7 @@
   services.udev.extraRules = ''
     SUBSYSTEM=="usb", MODE="0666", GROUP="users"
     KERNEL=="lp[0-9]*", MODE="0666", GROUP="users"
+    KERNEL=="hidraw*", SUBSYSTEM=="hidraw", MODE="0666"
   '';
 
   nix.settings.experimental-features = [

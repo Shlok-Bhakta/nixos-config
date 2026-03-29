@@ -43,6 +43,7 @@
     printer-cli = {
       url = "github:Shlok-Bhakta/ESC-POS-Task-Api?dir=cli";
     };
+    t3code-nix.url = "github:Sawrz/t3code-nix";
   };
 
   outputs =
@@ -52,6 +53,7 @@
       home-manager,
       stylix,
       nvf,
+      t3code-nix,
       ...
     }@inputs:
     let
@@ -93,6 +95,7 @@
                 mynvf
                 unstable
                 opencode-unstable
+                t3code-nix
                 ;
             };
             home-manager.sharedModules = [ stylix.homeModules.stylix ];
@@ -118,6 +121,7 @@
                 mynvf
                 unstable
                 opencode-unstable
+                t3code-nix
                 ;
             };
             home-manager.sharedModules = [ stylix.homeModules.stylix ];

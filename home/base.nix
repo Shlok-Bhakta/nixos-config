@@ -3,7 +3,8 @@
   mynvf,
   inputs,
   unstable,
-  opencode-unstable,
+  python313,
+  t3code-nix,
   ...
 }:
 {
@@ -153,5 +154,8 @@
     pkgs.unzip
     pkgs.mprocs
     pkgs.cloudflared
+    unstable.codex
+    t3code-nix.packages.${pkgs.stdenv.hostPlatform.system}.t3code-cli
+    t3code-nix.packages.${pkgs.stdenv.hostPlatform.system}.t3code-desktop
   ];
 }
