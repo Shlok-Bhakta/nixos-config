@@ -16,7 +16,7 @@ let
 
   wallpaperPath = ../wallpapers/wallpaper.gif;
   backgroundPath = ./background.png;
-  facePath = ./face.png;
+  facePath = ./dragon.png;
 
   catppuccinColors = builtins.readFile ./hyprlock-colors.conf;
 in
