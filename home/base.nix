@@ -158,5 +158,6 @@
     opencode-unstable.codex
     t3code-nix.packages.${pkgs.stdenv.hostPlatform.system}.t3code-cli
     t3code-nix.packages.${pkgs.stdenv.hostPlatform.system}.t3code-desktop
+    unstable.blender
   ];
 }
