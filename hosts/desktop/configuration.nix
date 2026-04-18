@@ -24,6 +24,8 @@
 
   boot.kernelParams = [
     "initcall_blacklist=simpledrm_platform_driver_init"
+    "amd_iommu=on"
+    "iommu=pt"
     "nvidia-drm.modeset=1"
     "nvidia_drm.fbdev=1"
     "nvidia"
