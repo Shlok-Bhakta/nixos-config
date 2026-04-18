@@ -160,5 +160,7 @@
     t3code-nix.packages.${pkgs.stdenv.hostPlatform.system}.t3code-desktop
     unstable.blender
     unstable.gh
+    unstable.code-cursor-fhs
+    pkgs.sshpass
   ];
 }
