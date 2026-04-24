@@ -1292,11 +1292,11 @@
         "nixpkgs": "nixpkgs_8"
       },
       "locked": {
-        "lastModified": 1774765929,
-        "narHash": "sha256-nG7J3C040auuOcZNfq8fFZx5oXZcybox1kCMreFg+rE=",
+        "lastModified": 1776969145,
+        "narHash": "sha256-MY0lwul1fA1jI/Ka9EuaHBOA9Da1Q+PCHP7p2dYWNx0=",
         "owner": "Sawrz",
         "repo": "t3code-nix",
-        "rev": "55a2c504dc6473bd8004571bb784790743d0ea6b",
+        "rev": "967c9a5c10a7bae21063a127cdb4131af684e734",
         "type": "github"
       },
       "original": {
