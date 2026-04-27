@@ -6,6 +6,7 @@
   python313,
   opencode-unstable,
   t3code-nix,
+  zed,
   ...
 }:
 {
@@ -55,7 +56,6 @@
   ];
 
   programs.home-manager.enable = true;
-
   home.packages = [
     pkgs.lolcat
     pkgs.direnv
@@ -161,6 +161,9 @@
     unstable.blender
     unstable.gh
     unstable.code-cursor-fhs
+    unstable.cursor-cli
     pkgs.sshpass
+    zed.packages.${pkgs.stdenv.hostPlatform.system}.default
+    # unstable.zed-editor
   ];
 }

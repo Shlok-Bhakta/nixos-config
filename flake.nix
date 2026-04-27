@@ -19,6 +19,7 @@
     nixpkgs.url = "github:nixos/nixpkgs/nixos-25.11";
     UNSTABLE.url = "github:nixos/nixpkgs?ref=nixos-unstable";
     opencode-unstable.url = "github:nixos/nixpkgs?ref=nixos-unstable";
+    opencode.url = "github:anomalyco/opencode";
     home-manager = {
       url = "github:nix-community/home-manager/release-25.11";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -44,6 +45,7 @@
       url = "github:Shlok-Bhakta/ESC-POS-Task-Api?dir=cli";
     };
     t3code-nix.url = "github:Sawrz/t3code-nix";
+    zed.url = "github:zed-industries/zed";
   };
 
   outputs =
@@ -54,6 +56,7 @@
       stylix,
       nvf,
       t3code-nix,
+      zed,
       ...
     }@inputs:
     let
@@ -96,6 +99,7 @@
                 unstable
                 opencode-unstable
                 t3code-nix
+                zed
                 ;
             };
             home-manager.sharedModules = [ stylix.homeModules.stylix ];
@@ -122,12 +126,12 @@
                 unstable
                 opencode-unstable
                 t3code-nix
+                zed
                 ;
             };
             home-manager.sharedModules = [ stylix.homeModules.stylix ];
           }
         ];
       };
-
     };
 }
