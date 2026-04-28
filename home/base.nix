@@ -163,7 +163,7 @@
     unstable.code-cursor-fhs
     unstable.cursor-cli
     pkgs.sshpass
-    zed.packages.${pkgs.stdenv.hostPlatform.system}.default
     # unstable.zed-editor
+    pkgs.inotify-tools
   ];
 }
