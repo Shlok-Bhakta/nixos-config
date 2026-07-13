@@ -4,8 +4,7 @@
   inputs,
   unstable,
   python313,
-  opencode-unstable,
-  t3code-nix,
+  ai-unstable,
   zed,
   ...
 }:
@@ -76,14 +75,14 @@
     unstable.onlyoffice-desktopeditors
     pkgs.openssl
     pkgs.bemoji
-    pkgs.youtube-music
+    pkgs.pear-desktop
     pkgs.nh
     pkgs.nix-output-monitor
     # pkgs.wtype
     pkgs.nodejs_22
     pkgs.nvidia-vaapi-driver
     pkgs.ffmpeg
-    unstable.whisper-cpp
+    (unstable.whisper-cpp.override { cudaSupport = true; })
     unstable.nvtopPackages.panthor
     unstable.egl-wayland
     pkgs.pciutils
@@ -105,7 +104,7 @@
     pkgs.gnome-calculator
     # pkgs.gnome-characters
     pkgs.apostrophe
-    # pkgs.impression
+    pkgs.impression
     pkgs.textpieces
     pkgs.candy-icons
     pkgs.gnome-themes-extra
@@ -120,7 +119,7 @@
     pkgs.gnome-clocks
     pkgs.fragments
     pkgs.gnome-disk-utility
-    pkgs.nixfmt-rfc-style
+    pkgs.nixfmt
     pkgs.vlc
     unstable.gnome-pomodoro
     pkgs.yt-dlg
@@ -130,7 +129,7 @@
     # pkgs.rclone-browser
     # unstable.immich-go
     unstable.kando
-    unstable.nodePackages_latest.pnpm
+    unstable.pnpm
     pkgs.parabolic
     pkgs.libqalculate
     pkgs.wlogout
@@ -141,10 +140,10 @@
     pkgs.brightnessctl
     pkgs.lazygit
     unstable.bun
-    unstable.claude-code
+    ai-unstable.claude-code
     pkgs.uv
     pkgs.wl-clicker
-    # unstable.crush
+    # ai-unstable.crush
     inputs.printer-cli.packages.${pkgs.stdenv.hostPlatform.system}.default
     unstable.go
     pkgs.nmap
@@ -155,13 +154,12 @@
     pkgs.unzip
     pkgs.mprocs
     pkgs.cloudflared
-    opencode-unstable.codex
-    t3code-nix.packages.${pkgs.stdenv.hostPlatform.system}.t3code-cli
-    t3code-nix.packages.${pkgs.stdenv.hostPlatform.system}.t3code-desktop
+    ai-unstable.codex
+    ai-unstable.t3code
     unstable.blender
     unstable.gh
-    unstable.code-cursor-fhs
-    unstable.cursor-cli
+    ai-unstable.code-cursor-fhs
+    ai-unstable.cursor-cli
     pkgs.sshpass
     # unstable.zed-editor
     pkgs.inotify-tools

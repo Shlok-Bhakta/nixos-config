@@ -6,14 +6,7 @@
     ../features/power-monitor
   ];
 
-  wayland.windowManager.hyprland.settings.monitor = [
-    "eDP-1, preferred, auto, 1"
-    "DP-1, disable"
-  ];
-
-  wayland.windowManager.hyprland.settings.gestures = {
-    gesture = "3, horizontal, workspace";
-  };
+  xdg.configFile."hypr/profile.lua".source = ../features/hyprland/profile-laptop.lua;
 
   services.hypridle = {
     enable = true;

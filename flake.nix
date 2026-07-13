@@ -16,15 +16,14 @@
   };
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-25.11";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-26.05";
     UNSTABLE.url = "github:nixos/nixpkgs?ref=nixos-unstable";
-    opencode-unstable.url = "github:nixos/nixpkgs?ref=nixos-unstable";
-    opencode.url = "github:anomalyco/opencode";
+    ai-unstable.url = "github:nixos/nixpkgs?ref=nixos-unstable";
     home-manager = {
-      url = "github:nix-community/home-manager/release-25.11";
+      url = "github:nix-community/home-manager/release-26.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    stylix.url = "github:danth/stylix/release-25.11";
+    stylix.url = "github:danth/stylix/release-26.05";
     ags.url = "github:Aylur/ags";
     zen-browser.url = "github:0xc000022070/zen-browser-flake";
     yapper = {
@@ -44,7 +43,6 @@
     printer-cli = {
       url = "github:Shlok-Bhakta/ESC-POS-Task-Api?dir=cli";
     };
-    t3code-nix.url = "github:Sawrz/t3code-nix";
     zed.url = "github:zed-industries/zed";
   };
 
@@ -55,7 +53,6 @@
       home-manager,
       stylix,
       nvf,
-      t3code-nix,
       zed,
       ...
     }@inputs:
@@ -65,7 +62,7 @@
         inherit system;
         config.allowUnfree = true;
       };
-      opencode-unstable = import inputs.opencode-unstable {
+      ai-unstable = import inputs.ai-unstable {
         inherit system;
         config.allowUnfree = true;
       };
@@ -81,7 +78,7 @@
 
       nixosConfigurations.ShlokPCNIX = nixpkgs.lib.nixosSystem {
         specialArgs = {
-          inherit inputs unstable opencode-unstable;
+          inherit inputs unstable ai-unstable;
         };
         modules = [
           ./hosts/desktop/configuration.nix
@@ -97,8 +94,7 @@
                 self
                 mynvf
                 unstable
-                opencode-unstable
-                t3code-nix
+                ai-unstable
                 zed
                 ;
             };
@@ -108,7 +104,7 @@
       };
       nixosConfigurations.ShlokLAPNIX = nixpkgs.lib.nixosSystem {
         specialArgs = {
-          inherit inputs unstable opencode-unstable;
+          inherit inputs unstable ai-unstable;
         };
         modules = [
           ./hosts/laptop/configuration.nix
@@ -124,8 +120,7 @@
                 self
                 mynvf
                 unstable
-                opencode-unstable
-                t3code-nix
+                ai-unstable
                 zed
                 ;
             };

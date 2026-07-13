@@ -1,5 +1,6 @@
 {
   config,
+  lib,
   ...
 }:
 
@@ -22,6 +23,34 @@
   ];
 
   networking.hostName = "ShlokPCNIX";
+
+  services.nfs.server = {
+    enable = true;
+    hostName = "127.0.0.1";
+    mountdPort = 4002;
+    statdPort = 4000;
+    lockdPort = 4001;
+    exports = ''
+      /home/shlok/Documents/Programming/Sandbox/MBApps 127.0.0.1(rw,sync,no_subtree_check)
+      /mnt/pickles/OSX-KVM 127.0.0.1(rw,sync,no_subtree_check)
+    '';
+  };
+
+  services.nfs.settings.nfsd.udp = false;
+
+  # Keep rpcbind on loopback so the exports stay host-local.
+  systemd.sockets.rpcbind.socketConfig = {
+    ListenStream = lib.mkForce [
+      ""
+      "127.0.0.1:111"
+      "[::1]:111"
+    ];
+    ListenDatagram = lib.mkForce [
+      ""
+      "127.0.0.1:111"
+      "[::1]:111"
+    ];
+  };
 
   boot.kernelParams = [
     "initcall_blacklist=simpledrm_platform_driver_init"

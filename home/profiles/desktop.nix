@@ -1,16 +1,17 @@
-{ inputs, pkgs, ... }:
+{ inputs, ... }:
 
 {
   imports = [
     ../features/waybar
   ];
 
-  wayland.windowManager.hyprland.plugins = [
-    inputs.split-monitor-workspaces.packages.${pkgs.stdenv.hostPlatform.system}.split-monitor-workspaces
-  ];
+  home.sessionVariables.HYPRLAND_PRIMARY_MONITOR = "DP-1";
 
-  wayland.windowManager.hyprland.settings.monitor = [
-    "DP-1, 1920x1080@144, 0x0, 1"
-    "HDMI-A-1, 1920x1080@144, -1080x-650, 1, transform, 1"
-  ];
+  xdg.configFile = {
+    "hypr/profile.lua".source = ../features/hyprland/profile-desktop.lua;
+    "hypr/plugins/split-monitor-workspaces" = {
+      source = inputs.split-monitor-workspaces;
+      recursive = true;
+    };
+  };
 }

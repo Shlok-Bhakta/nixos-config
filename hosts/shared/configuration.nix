@@ -5,6 +5,17 @@
   config,
   ...
 }:
+let
+  startHyprland = pkgs.writeShellScript "start-hyprland" ''
+    legacy_config="$HOME/.config/hypr/hyprland.conf"
+
+    if [ -f "$legacy_config" ] && ${pkgs.gnugrep}/bin/grep -q "This config is a STUB" "$legacy_config"; then
+      rm "$legacy_config"
+    fi
+
+    exec /etc/profiles/per-user/shlok/bin/start-hyprland
+  '';
+in
 {
   imports = [
     ../../system/base.nix
@@ -31,6 +42,7 @@
 
     man-pages
     man-pages-posix
+    android-tools
     cachix
     (callPackage ../../pkgs/deskthing/deskthing.nix { })
   ];
@@ -43,8 +55,6 @@
   services.upower.enable = true;
   documentation.dev.enable = true;
 
-  programs.adb.enable = true;
-
   programs.nix-ld.enable = true;
   programs.nix-ld.libraries = with pkgs; [
     stdenv.cc.cc
@@ -55,14 +65,14 @@
     glibc
     libGL
     libGLU
-    xorg.libX11
-    xorg.libXcursor
-    xorg.libXi
-    xorg.libXrandr
-    xorg.libXrender
-    xorg.libXext
-    xorg.libXfixes
-    xorg.libxcb
+    libx11
+    libxcursor
+    libxi
+    libxrandr
+    libxrender
+    libxext
+    libxfixes
+    libxcb
     libxkbcommon
     freetype
     fontconfig
@@ -204,7 +214,7 @@
     enable = true;
     settings = {
       default_session = {
-        command = "${pkgs.tuigreet}/bin/tuigreet --time --remember --asterisks --cmd \"/etc/profiles/per-user/shlok/bin/start-hyprland\"";
+        command = "${pkgs.tuigreet}/bin/tuigreet --time --remember --asterisks --cmd ${startHyprland}";
         user = "greeter";
       };
     };
