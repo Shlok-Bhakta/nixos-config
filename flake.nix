@@ -128,5 +128,31 @@
           }
         ];
       };
+      nixosConfigurations.shlokthinkpad = nixpkgs.lib.nixosSystem {
+        specialArgs = {
+          inherit inputs unstable ai-unstable;
+        };
+        modules = [
+          ./hosts/thinkpad/configuration.nix
+          home-manager.nixosModules.home-manager
+          {
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+            home-manager.users.shlok = import ./hosts/thinkpad/home.nix;
+            home-manager.backupFileExtension = "old";
+            home-manager.extraSpecialArgs = {
+              inherit
+                inputs
+                self
+                mynvf
+                unstable
+                ai-unstable
+                zed
+                ;
+            };
+            home-manager.sharedModules = [ stylix.homeModules.stylix ];
+          }
+        ];
+      };
     };
 }

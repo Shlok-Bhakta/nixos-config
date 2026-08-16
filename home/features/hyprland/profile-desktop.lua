@@ -16,4 +16,11 @@ return {
   primary_monitor = "DP-1",
   split_workspaces = true,
   monitor_priority = { "DP-1", "HDMI-A-1" },
+  no_hardware_cursors = true,
+  autostart = {
+    "swaync",
+    "kando",
+    "vesktop",
+    "syncthing",
+  },
 }

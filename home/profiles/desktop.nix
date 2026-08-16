@@ -1,4 +1,9 @@
-{ inputs, ... }:
+{
+  inputs,
+  mynvf,
+  unstable,
+  ...
+}:
 
 {
   imports = [
@@ -14,4 +19,9 @@
       recursive = true;
     };
   };
+
+  home.packages = [
+    mynvf.neovim
+    unstable.docker-compose
+  ];
 }

@@ -1,17 +1,14 @@
 {
+  lib,
   pkgs,
-  mynvf,
   inputs,
   unstable,
-  python313,
-  ai-unstable,
-  zed,
   ...
 }:
 {
   home.username = "shlok";
   home.homeDirectory = "/home/shlok";
-  home.stateVersion = "25.11";
+  home.stateVersion = lib.mkDefault "25.11";
 
   home.sessionVariables = {
     EDITOR = "code";
@@ -21,6 +18,7 @@
   imports = [
     inputs.ags.homeManagerModules.default
     # ./features/arrpc
+    ./features/ai
     ./features/bat
     ./features/btop
     ./features/chromium
@@ -28,7 +26,6 @@
     ./features/dconf
     ./features/excalidraw
     ./features/eza
-    ./features/fuzzel
     ./features/git
     ./features/gitui
     ./features/gnome-keyring
@@ -36,7 +33,6 @@
     ./features/hyprland
     ./features/kitty
     ./features/nextcloud
-    ./features/opencode
     ./features/obs-studio
     ./features/ripgrep
     ./features/rofi
@@ -72,6 +68,7 @@
     pkgs.dbus
     pkgs.wdisplays
     pkgs.wl-clipboard
+    pkgs.xdg-utils
     unstable.onlyoffice-desktopeditors
     pkgs.openssl
     pkgs.bemoji
@@ -80,11 +77,7 @@
     pkgs.nix-output-monitor
     # pkgs.wtype
     pkgs.nodejs_22
-    pkgs.nvidia-vaapi-driver
     pkgs.ffmpeg
-    (unstable.whisper-cpp.override { cudaSupport = true; })
-    unstable.nvtopPackages.panthor
-    unstable.egl-wayland
     pkgs.pciutils
     pkgs.udisks2
     pkgs.udiskie
@@ -92,12 +85,10 @@
     pkgs.polkit_gnome
     pkgs.libnotify
     pkgs.yt-dlp
-    unstable.docker-compose
     unstable.vesktop
     unstable.obsidian
     pkgs.wget
     inputs.zen-browser.packages."${pkgs.stdenv.hostPlatform.system}".default
-    inputs.yapper.packages."${pkgs.stdenv.hostPlatform.system}".default
     pkgs.speechd
     pkgs.nautilus
     # unstable.deckmaster
@@ -114,6 +105,7 @@
     pkgs.gnumake
     pkgs.libgccjit
     unstable.hyprshot
+    pkgs.hyprpicker
     unstable.annotator
     unstable.anki
     pkgs.gnome-clocks
@@ -136,14 +128,11 @@
     unstable.rofi-power-menu
     pkgs.tesseract
     pkgs.pavucontrol
-    mynvf.neovim
     pkgs.brightnessctl
     pkgs.lazygit
     unstable.bun
-    ai-unstable.claude-code
     pkgs.uv
     pkgs.wl-clicker
-    # ai-unstable.crush
     inputs.printer-cli.packages.${pkgs.stdenv.hostPlatform.system}.default
     unstable.go
     pkgs.nmap
@@ -154,12 +143,7 @@
     pkgs.unzip
     pkgs.mprocs
     pkgs.cloudflared
-    ai-unstable.codex
-    ai-unstable.t3code
-    unstable.blender
     unstable.gh
-    ai-unstable.code-cursor-fhs
-    ai-unstable.cursor-cli
     pkgs.sshpass
     # unstable.zed-editor
     pkgs.inotify-tools

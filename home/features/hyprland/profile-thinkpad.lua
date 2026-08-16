@@ -6,19 +6,8 @@ return {
       position = "auto",
       scale = "1",
     },
-    {
-      output = "DP-1",
-      disabled = true,
-    },
   },
   split_workspaces = false,
-  no_hardware_cursors = true,
-  passthrough_output = "DP-1",
-  passthrough_devices = {
-    "touch-passthrough-1",
-    "pen-passthrough",
-    "mouse-passthrough-(absolute)",
-  },
   gestures = {
     {
       fingers = 3,
@@ -28,8 +17,5 @@ return {
   },
   autostart = {
     "swaync",
-    "kando",
-    "vesktop",
-    "syncthing",
   },
 }

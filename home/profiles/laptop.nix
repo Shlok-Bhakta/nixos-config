@@ -1,40 +1,16 @@
-{ pkgs, ... }:
+{ mynvf, unstable, ... }:
 
 {
   imports = [
+    ../features/hypridle
     ../features/laptop-waybar
     ../features/power-monitor
   ];
 
   xdg.configFile."hypr/profile.lua".source = ../features/hyprland/profile-laptop.lua;
 
-  services.hypridle = {
-    enable = true;
-    package = pkgs.hypridle;
-    settings = {
-      "$lock_cmd" = "pidof hyprlock || hyprlock";
-      "$suspend_cmd" = "pidof steam || systemctl suspend || loginctl suspend";
-
-      general = {
-        lock_cmd = "$lock_cmd";
-        before_sleep_cmd = "loginctl lock-session";
-      };
-
-      listener = [
-        {
-          timeout = 180;
-          on-timeout = "loginctl lock-session";
-        }
-        {
-          timeout = 240;
-          on-timeout = "hyprctl dispatch dpms off";
-          on-resume = "hyprctl dispatch dpms on";
-        }
-        {
-          timeout = 540;
-          on-timeout = "$suspend_cmd";
-        }
-      ];
-    };
-  };
+  home.packages = [
+    mynvf.neovim
+    unstable.docker-compose
+  ];
 }

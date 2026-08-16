@@ -7,7 +7,6 @@
 
     targets = {
       vscode.enable = false;
-      fuzzel.enable = false;
       kitty.enable = false;
       hyprland.enable = false;
       bat.enable = false;
@@ -18,6 +17,7 @@
       starship.enable = false;
       gitui.enable = false;
       opencode.enable = false;
+      waybar.enable = false;
     };
 
     base16Scheme = {

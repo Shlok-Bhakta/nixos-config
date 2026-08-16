@@ -54,7 +54,7 @@ hl.config({
     },
   },
   cursor = {
-    no_hardware_cursors = true,
+    no_hardware_cursors = profile.no_hardware_cursors == true,
   },
 })
 
@@ -77,15 +77,13 @@ hl.device({
   sensitivity = -0.5,
 })
 
-for _, device in ipairs({
-  "touch-passthrough-1",
-  "pen-passthrough",
-  "mouse-passthrough-(absolute)",
-}) do
-  hl.device({
-    name = device,
-    output = "DP-1",
-  })
+if profile.passthrough_devices then
+  for _, device in ipairs(profile.passthrough_devices) do
+    hl.device({
+      name = device,
+      output = profile.passthrough_output or "DP-1",
+    })
+  end
 end
 
 if profile.gestures then
@@ -101,12 +99,12 @@ hl.on("hyprland.start", function()
     "swww-daemon --format argb",
     "sleep 1; swww img " .. home .. "/.config/hypr/wallpaper.gif",
     "sleep 1; waybar",
-    "swaync",
     "wl-paste --type '[text|image]' --watch cliphist store",
-    "kando",
-    "vesktop",
-    "syncthing",
   }
+
+  for _, command in ipairs(profile.autostart or {}) do
+    table.insert(commands, command)
+  end
 
   if profile.primary_monitor then
     table.insert(commands, "xrandr --output " .. profile.primary_monitor .. " --primary")
@@ -130,7 +128,6 @@ bind(mainMod .. " + P", hl.dsp.window.pseudo())
 bind(mainMod .. " + J", hl.dsp.layout("togglesplit"))
 bind(mainMod .. " + W", hl.dsp.exec_cmd("rofi -show drun"))
 bind(mainMod .. " + CTRL + R", hl.dsp.exec_cmd("rofi -show calc"))
-bind(mainMod .. " + CTRL + W", hl.dsp.exec_cmd("fuzzel"))
 bind(mainMod .. " + V", hl.dsp.exec_cmd("cliphist list | rofi -dmenu | cliphist decode | wl-copy"))
 bind(mainMod .. " + B", hl.dsp.exec_cmd("zen-beta"))
 bind(mainMod .. " + Y", hl.dsp.exec_cmd("code"))

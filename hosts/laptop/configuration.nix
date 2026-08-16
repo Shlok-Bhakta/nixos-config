@@ -51,13 +51,6 @@ in
     };
   };
 
-  environment.sessionVariables = {
-    XDG_SESSION_TYPE = "wayland";
-    no_hardware_cursors = "1";
-    WLR_NO_HARDWARE_CURSORS = "1";
-    CUDA_PATH = "${pkgs.cudatoolkit}";
-  };
-
   services.sunshine.settings = {
     capture = "kms";
     encoder = "vaapi";
@@ -65,4 +58,5 @@ in
     output_name = 1;
   };
 
+  system.stateVersion = "25.11";
 }
