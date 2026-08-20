@@ -4,6 +4,7 @@
   imports = [
     ../features/hypridle
     ../features/laptop-waybar
+    ../features/thinkpad-power
   ];
 
   home.stateVersion = "26.05";
