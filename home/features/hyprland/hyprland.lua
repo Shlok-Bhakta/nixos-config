@@ -95,11 +95,10 @@ end
 hl.on("hyprland.start", function()
   local commands = {
     "dbus-update-activation-environment --systemd DISPLAY HYPRLAND_INSTANCE_SIGNATURE WAYLAND_DISPLAY XDG_CURRENT_DESKTOP XDG_SESSION_TYPE",
-    "systemctl --user stop hyprland-session.target; systemctl --user start hyprland-session.target",
+    "systemctl --user start graphical-session.target",
     "swww-daemon --format argb",
     "sleep 1; swww img " .. home .. "/.config/hypr/wallpaper.gif",
     "sleep 1; waybar",
-    "wl-paste --type '[text|image]' --watch cliphist store",
   }
 
   for _, command in ipairs(profile.autostart or {}) do
@@ -128,7 +127,10 @@ bind(mainMod .. " + P", hl.dsp.window.pseudo())
 bind(mainMod .. " + J", hl.dsp.layout("togglesplit"))
 bind(mainMod .. " + W", hl.dsp.exec_cmd("rofi -show drun"))
 bind(mainMod .. " + CTRL + R", hl.dsp.exec_cmd("rofi -show calc"))
-bind(mainMod .. " + V", hl.dsp.exec_cmd("cliphist list | rofi -dmenu | cliphist decode | wl-copy"))
+bind(
+  mainMod .. " + V",
+  hl.dsp.exec_cmd("cliphist list | rofi -dmenu -i -p Clipboard | cliphist decode | wl-copy")
+)
 bind(mainMod .. " + B", hl.dsp.exec_cmd("zen-beta"))
 bind(mainMod .. " + Y", hl.dsp.exec_cmd("code"))
 bind(mainMod .. " + L", hl.dsp.exec_cmd("hyprlock"))

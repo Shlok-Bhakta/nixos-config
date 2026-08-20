@@ -37,7 +37,7 @@
       lsp.enable = true;
       treesitter.enable = true;
     };
-    ts = {
+    typescript = {
       enable = true;
       format = {
         enable = true;
@@ -67,10 +67,6 @@
       };
       lsp.enable = true;
       treesitter.enable = true;
-    };
-    tailwind = {
-      enable = true;
-      lsp.enable = true;
     };
     bash = {
       enable = true;
@@ -117,6 +113,7 @@
 
   # General language options
   vim.lsp.enable = true;
+  vim.lsp.presets.tailwindcss-language-server.enable = true;
 
   # Enable inline error diagnostics (like VSCode ErrorLens)
   vim.diagnostics = {
