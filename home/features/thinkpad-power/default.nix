@@ -13,13 +13,12 @@ let
   wallpaperStatic = "$HOME/.config/hypr/wallpaper-static.png";
 
   onBattery = pkgs.writeShellScript "hypridle-on-battery" ''
-    for ac in /sys/class/power_supply/AC /sys/class/power_supply/ACAD /sys/class/power_supply/ADP0 /sys/class/power_supply/AC*; do
-      if [ -f "$ac/online" ]; then
-        [ "$(cat "$ac/online")" = "0" ]
-        exit $?
+    for supply in /sys/class/power_supply/*; do
+      if [ -f "$supply/online" ] && [ "$(cat "$supply/online" 2>/dev/null)" = "1" ]; then
+        exit 1
       fi
     done
-    exit 1
+    exit 0
   '';
 
   power-monitor = pkgs.writeShellApplication {
@@ -33,66 +32,80 @@ let
     text = ''
       set -euo pipefail
 
-      AC_PATH=""
-      for ac in /sys/class/power_supply/AC /sys/class/power_supply/ACAD /sys/class/power_supply/ADP0 /sys/class/power_supply/AC*; do
-        if [ -f "$ac/online" ]; then
-          AC_PATH="$ac/online"
-          break
-        fi
-      done
-
       get_ac() {
-        if [ -n "$AC_PATH" ]; then
-          cat "$AC_PATH" 2>/dev/null || echo 1
-        else
-          echo 1
-        fi
+        for supply in /sys/class/power_supply/*; do
+          if [ -f "$supply/online" ] && [ "$(cat "$supply/online" 2>/dev/null)" = "1" ]; then
+            echo 1
+            return
+          fi
+        done
+
+        # Battery is the safe default when adapters are absent or unreadable.
+        echo 0
       }
 
       wait_for_hypr() {
-        for _ in $(seq 1 30); do
+        while true; do
           if hyprctl monitors >/dev/null 2>&1; then
             return 0
           fi
           sleep 1
         done
-        return 1
+      }
+
+      wait_for_swww() {
+        while ! swww query >/dev/null 2>&1; do
+          sleep 1
+        done
       }
 
       apply_ac() {
-        hyprctl eval 'hl.config({ decoration = { blur = { enabled = true }, shadow = { enabled = true } }, animations = { enabled = true } })' >/dev/null 2>&1 || true
+        echo "Applying AC desktop settings"
+        hyprctl eval 'hl.config({ decoration = { blur = { enabled = true }, shadow = { enabled = true } }, animations = { enabled = true } })'
         if [ -f "${wallpaperGif}" ]; then
-          swww img "${wallpaperGif}" >/dev/null 2>&1 || true
+          swww img "${wallpaperGif}"
         fi
-        brightnessctl --class backlight set 100% >/dev/null 2>&1 || true
+        if [ "$1" = "set-brightness" ]; then
+          brightnessctl --class backlight set 100%
+        fi
       }
 
       apply_bat() {
-        hyprctl eval 'hl.config({ decoration = { blur = { enabled = false }, shadow = { enabled = false } }, animations = { enabled = false } })' >/dev/null 2>&1 || true
+        echo "Applying battery desktop settings"
+        hyprctl eval 'hl.config({ decoration = { blur = { enabled = false }, shadow = { enabled = false } }, animations = { enabled = false } })'
         if [ -f "${wallpaperStatic}" ]; then
-          swww img "${wallpaperStatic}" >/dev/null 2>&1 || true
+          swww img "${wallpaperStatic}"
         fi
-        brightnessctl --class backlight set 45% >/dev/null 2>&1 || true
+        if [ "$1" = "set-brightness" ]; then
+          brightnessctl --class backlight set 45%
+        fi
       }
 
       apply() {
         if [ "$(get_ac)" = "1" ]; then
-          apply_ac
+          apply_ac "$1" || echo "Failed to fully apply AC desktop settings" >&2
         else
-          apply_bat
+          apply_bat "$1" || echo "Failed to fully apply battery desktop settings" >&2
         fi
       }
 
-      wait_for_hypr || true
-      apply
+      wait_for_hypr
+      wait_for_swww
+      apply set-brightness
 
       prev="$(get_ac)"
+      reconcile_ticks=0
       while true; do
         sleep 2
         current="$(get_ac)"
+        reconcile_ticks=$((reconcile_ticks + 1))
         if [ "$current" != "$prev" ]; then
-          apply
+          apply set-brightness
           prev="$current"
+          reconcile_ticks=0
+        elif [ "$reconcile_ticks" -ge 30 ]; then
+          apply keep-brightness
+          reconcile_ticks=0
         fi
       done
     '';
@@ -149,7 +162,7 @@ in
     Service = {
       Type = "simple";
       ExecStart = "${power-monitor}/bin/thinkpad-power-monitor";
-      Restart = "on-failure";
+      Restart = "always";
       RestartSec = 5;
     };
 

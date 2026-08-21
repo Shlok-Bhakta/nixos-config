@@ -97,9 +97,14 @@ hl.on("hyprland.start", function()
     "dbus-update-activation-environment --systemd DISPLAY HYPRLAND_INSTANCE_SIGNATURE WAYLAND_DISPLAY XDG_CURRENT_DESKTOP XDG_SESSION_TYPE",
     "systemctl --user start graphical-session.target",
     "swww-daemon --format argb",
-    "sleep 1; swww img " .. home .. "/.config/hypr/wallpaper.gif",
     "sleep 1; waybar",
   }
+
+  if profile.power_aware_wallpaper then
+    table.insert(commands, "sleep 1; systemctl --user restart thinkpad-power-monitor.service")
+  else
+    table.insert(commands, "sleep 1; swww img " .. home .. "/.config/hypr/wallpaper.gif")
+  end
 
   for _, command in ipairs(profile.autostart or {}) do
     table.insert(commands, command)

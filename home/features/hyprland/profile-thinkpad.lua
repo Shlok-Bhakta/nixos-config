@@ -7,6 +7,7 @@ return {
       scale = "1",
     },
   },
+  power_aware_wallpaper = true,
   split_workspaces = false,
   gestures = {
     {
