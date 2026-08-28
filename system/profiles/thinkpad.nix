@@ -1,9 +1,32 @@
 { pkgs, ... }:
 
+let
+  led-off = path: ''
+    if [ -e "${path}" ]; then
+      printf '0\n' > "${path}" || true
+    fi
+  '';
+
+  # Lid logo is decorative. Leave keyboard backlight alone while awake.
+  thinkpad-lid-led-off = pkgs.writeShellScript "thinkpad-lid-led-off" ''
+    ${led-off "/sys/class/leds/tpacpi::lid_logo_dot/brightness"}
+    ${led-off "/sys/class/leds/tpacpi::thinkvantage/brightness"}
+  '';
+
+  # Keyboard / ThinkLight actually draw power if left on into suspend.
+  thinkpad-sleep-leds-off = pkgs.writeShellScript "thinkpad-sleep-leds-off" ''
+    ${thinkpad-lid-led-off}
+    ${led-off "/sys/class/leds/tpacpi::thinklight/brightness"}
+    ${led-off "/sys/class/leds/tpacpi::kbd_backlight/brightness"}
+  '';
+in
 {
   imports = [
-    ../features/howdy
+    ../features/fingerprint
   ];
+
+  # Howdy is gone. Do not poke the IR camera firmware.
+  services.linux-enable-ir-emitter.enable = false;
 
   hardware.enableRedistributableFirmware = true;
   hardware.graphics = {
@@ -105,7 +128,35 @@
 
   services.udev.extraRules = ''
     ACTION=="add", SUBSYSTEM=="net", KERNEL=="enp*", RUN+="${pkgs.ethtool}/bin/ethtool -s $name wol d"
+    ACTION=="add", SUBSYSTEM=="leds", KERNEL=="tpacpi::lid_logo_dot", ATTR{brightness}="0"
+    ACTION=="add", SUBSYSTEM=="leds", KERNEL=="*::kbd_backlight", RUN+="${pkgs.coreutils}/bin/chgrp video /sys/class/leds/%k/brightness", RUN+="${pkgs.coreutils}/bin/chmod g+w /sys/class/leds/%k/brightness"
   '';
+
+  # Lid logo off at boot. The power-button blink in deep S3 is the EC;
+  # Linux cannot turn that one off.
+  systemd.services.thinkpad-lid-led-off = {
+    description = "Turn off ThinkPad lid logo LED";
+    wantedBy = [ "multi-user.target" ];
+    serviceConfig = {
+      Type = "oneshot";
+      RemainAfterExit = true;
+      ExecStart = thinkpad-lid-led-off;
+    };
+  };
+
+  environment.etc."systemd/system-sleep/thinkpad-leds" = {
+    mode = "0755";
+    source = pkgs.writeShellScript "thinkpad-leds-sleep" ''
+      case "$1" in
+        pre)
+          ${thinkpad-sleep-leds-off}
+          ;;
+        post)
+          ${thinkpad-lid-led-off}
+          ;;
+      esac
+    '';
+  };
 
   environment.systemPackages = [
     pkgs.powertop

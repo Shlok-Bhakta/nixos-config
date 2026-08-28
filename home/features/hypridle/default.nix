@@ -9,8 +9,11 @@
       "$suspend_cmd" = "systemctl suspend || loginctl suspend";
 
       general = {
-        lock_cmd = "$lock_cmd";
+        lock_cmd = "pidof hyprlock || hyprlock";
         before_sleep_cmd = "loginctl lock-session";
+        # Wait until hyprlock actually holds the session lock. Auto-detect can
+        # miss this and let deep S3 freeze the machine still unlocked.
+        inhibit_sleep = 3;
       };
 
       listener = [

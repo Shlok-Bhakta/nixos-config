@@ -18,5 +18,7 @@ return {
   },
   autostart = {
     "swaync",
+    "blueman-applet",
   },
+  lock_on_start = true,
 }

@@ -23,7 +23,7 @@ let
   systemctlBin = "${pkgs.systemd}/bin/systemctl";
   hyprctlBin = "${config.programs.hyprland.package}/bin/hyprctl";
   sunshineBin = "${config.services.sunshine.package}/bin/sunshine";
-  waybarBin = "${pkgs.waybar}/bin/waybar";
+  waybarBin = "waybar";
   sleepBin = "${pkgs.coreutils}/bin/sleep";
   grepBin = "${pkgs.gnugrep}/bin/grep";
 

@@ -25,6 +25,10 @@ in
     xdg.configFile = {
       "hypr/hyprland.lua".source = ./hyprland.lua;
       "hypr/wallpaper.gif".source = wallpaperPath;
+      "hypr/fn-keys.sh" = {
+        source = ./fn-keys.sh;
+        executable = true;
+      };
     };
 
     home.activation.removeLegacyHyprlandStub = lib.hm.dag.entryBefore [ "checkLinkTargets" ] ''

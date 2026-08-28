@@ -11,6 +11,16 @@
 
   xdg.configFile."hypr/profile.lua".source = ../features/hyprland/profile-thinkpad.lua;
 
+  programs.hyprlock.extraConfig = lib.mkAfter ''
+    auth {
+      fingerprint {
+        enabled = true
+        ready_message = Password or fingerprint
+        present_message = Scanning fingerprint
+      }
+    }
+  '';
+
   services.syncthing.enable = lib.mkForce false;
 
   home.packages = [

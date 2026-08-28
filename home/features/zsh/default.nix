@@ -1,5 +1,14 @@
-{ lib, config, ... }:
 {
+  lib,
+  config,
+  pkgs,
+  ...
+}:
+{
+  home.packages = [
+    (pkgs.callPackage ../../../pkgs/caffeinate { })
+  ];
+
   programs.zsh = {
     enable = true;
     enableCompletion = true;
@@ -7,6 +16,7 @@
     syntaxHighlighting.enable = true;
 
     shellAliases = {
+      caffeine = "caffeinate";
       ll = "ls -l";
       update = "sudo nixos-rebuild switch";
       gnrs = "git add . && git commit -m \"update config\" && git push && sudo nixos-rebuild switch --flake \"${config.home.homeDirectory}/nixos-config\" | lolcat -f";

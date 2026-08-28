@@ -1,8 +1,8 @@
-{ unstable, ... }:
+{ pkgs, unstable, ... }:
 {
   programs.waybar = {
     enable = true;
-    package = unstable.waybar;
+    package = pkgs.callPackage ../../../pkgs/waybar { waybar = unstable.waybar; };
   };
 
   xdg.configFile."waybar".source = ./.;

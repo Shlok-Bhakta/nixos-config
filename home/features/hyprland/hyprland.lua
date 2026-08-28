@@ -95,10 +95,21 @@ end
 hl.on("hyprland.start", function()
   local commands = {
     "dbus-update-activation-environment --systemd DISPLAY HYPRLAND_INSTANCE_SIGNATURE WAYLAND_DISPLAY XDG_CURRENT_DESKTOP XDG_SESSION_TYPE",
-    "systemctl --user start graphical-session.target",
-    "swww-daemon --format argb",
-    "sleep 1; waybar",
   }
+
+  if profile.lock_on_start then
+    table.insert(commands, "pidof hyprlock || hyprlock")
+  end
+
+  -- graphical-session.target has RefuseManualStart, so start session
+  -- services directly after the compositor env is imported.
+  table.insert(commands, "sleep 1; systemctl --user start hypridle.service")
+  table.insert(
+    commands,
+    "systemctl --user import-environment WAYLAND_DISPLAY DISPLAY XDG_CURRENT_DESKTOP XDG_SESSION_TYPE HYPRLAND_INSTANCE_SIGNATURE; systemctl --user restart cliphist.service cliphist-images.service"
+  )
+  table.insert(commands, "swww-daemon --format argb")
+  table.insert(commands, "sleep 1; waybar")
 
   if profile.power_aware_wallpaper then
     table.insert(commands, "sleep 1; systemctl --user restart thinkpad-power-monitor.service")
@@ -132,13 +143,13 @@ bind(mainMod .. " + P", hl.dsp.window.pseudo())
 bind(mainMod .. " + J", hl.dsp.layout("togglesplit"))
 bind(mainMod .. " + W", hl.dsp.exec_cmd("rofi -show drun"))
 bind(mainMod .. " + CTRL + R", hl.dsp.exec_cmd("rofi -show calc"))
-bind(
-  mainMod .. " + V",
-  hl.dsp.exec_cmd("cliphist list | rofi -dmenu -i -p Clipboard | cliphist decode | wl-copy")
-)
+bind(mainMod .. " + V", hl.dsp.exec_cmd(home .. "/.config/hypr/clipboard.sh"))
 bind(mainMod .. " + B", hl.dsp.exec_cmd("zen-beta"))
 bind(mainMod .. " + Y", hl.dsp.exec_cmd("code"))
 bind(mainMod .. " + L", hl.dsp.exec_cmd("hyprlock"))
+-- Lid close must lock immediately. logind suspends in parallel; without this
+-- bind (and hypridle inhibit_sleep) resume can come back unlocked.
+bind("switch:on:Lid Switch", hl.dsp.exec_cmd("pidof hyprlock || hyprlock"), { locked = true })
 bind("SUPER + SHIFT + F", hl.dsp.window.fullscreen())
 bind("SUPER + SHIFT + S", hl.dsp.exec_cmd("hyprshot -m region --freeze --clipboard-only"))
 bind("SUPER + SHIFT + C", hl.dsp.exec_cmd("hyprpicker 2>/dev/null | wl-copy"))
@@ -157,6 +168,28 @@ bind("SUPER + ALT + up", hl.dsp.window.resize({ x = 0, y = -15, relative = true 
 bind("SUPER + ALT + down", hl.dsp.window.resize({ x = 0, y = 15, relative = true }))
 bind(mainMod .. " + mouse:272", hl.dsp.window.drag(), { mouse = true })
 bind(mainMod .. " + mouse:273", hl.dsp.window.resize(), { mouse = true })
+
+local fnKeys = home .. "/.config/hypr/fn-keys.sh"
+local mediaRepeat = { locked = true, repeating = true }
+local mediaOnce = { locked = true }
+
+bind("XF86AudioRaiseVolume", hl.dsp.exec_cmd("wpctl set-volume -l 1.0 @DEFAULT_AUDIO_SINK@ 5%+"), mediaRepeat)
+bind("XF86AudioLowerVolume", hl.dsp.exec_cmd("wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"), mediaRepeat)
+bind("XF86AudioMute", hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"), mediaOnce)
+bind("XF86AudioMicMute", hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"), mediaOnce)
+bind("XF86AudioPlay", hl.dsp.exec_cmd("playerctl play-pause"), mediaOnce)
+bind("XF86AudioPause", hl.dsp.exec_cmd("playerctl play-pause"), mediaOnce)
+bind("XF86AudioNext", hl.dsp.exec_cmd("playerctl next"), mediaOnce)
+bind("XF86AudioPrev", hl.dsp.exec_cmd("playerctl previous"), mediaOnce)
+bind("XF86MonBrightnessUp", hl.dsp.exec_cmd("brightnessctl --class backlight set 5%+"), mediaRepeat)
+bind("XF86MonBrightnessDown", hl.dsp.exec_cmd("brightnessctl --class backlight set 5%-"), mediaRepeat)
+bind("XF86Display", hl.dsp.exec_cmd("wdisplays"), mediaOnce)
+bind("XF86WLAN", hl.dsp.exec_cmd("bash " .. fnKeys .. " wifi"), mediaOnce)
+bind("XF86Tools", hl.dsp.exec_cmd("bash " .. fnKeys .. " settings"), mediaOnce)
+bind("XF86Bluetooth", hl.dsp.exec_cmd("bash " .. fnKeys .. " bluetooth"), mediaOnce)
+bind("XF86Keyboard", hl.dsp.exec_cmd("bash " .. fnKeys .. " kbd-backlight"), mediaOnce)
+bind("XF86Search", hl.dsp.exec_cmd("rofi -show drun"), mediaOnce)
+bind("XF86Favorites", hl.dsp.exec_cmd("rofi -show drun"), mediaOnce)
 
 if profile.split_workspaces then
   local splitWorkspaces = require("plugins.split-monitor-workspaces")
