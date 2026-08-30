@@ -30,7 +30,7 @@
         python.enable = true;
         rust.enable = true;
         sql.enable = true;
-        svelte.enable = true;
+        # svelte.enable = true;
         tailwind.enable = true;
         typescript.enable = true;
         yaml.enable = true;
