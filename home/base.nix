@@ -32,6 +32,7 @@
     ./features/gtk
     ./features/hyprland
     ./features/kitty
+    ./features/lazyvim
     ./features/nextcloud
     ./features/obs-studio
     ./features/ripgrep

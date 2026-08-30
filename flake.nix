@@ -40,6 +40,7 @@
       inputs.hyprland.follows = "hyprland";
     };
     nvf.url = "github:notashelf/nvf";
+    lazyvim.url = "github:pfassina/lazyvim-nix";
     printer-cli = {
       url = "github:Shlok-Bhakta/ESC-POS-Task-Api?dir=cli";
     };

@@ -23,6 +23,7 @@ in
 {
   imports = [
     ../features/fingerprint
+    ../features/tpm-unlock
   ];
 
   # Howdy is gone. Do not poke the IR camera firmware.

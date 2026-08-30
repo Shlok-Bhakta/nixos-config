@@ -24,6 +24,6 @@
   services.syncthing.enable = lib.mkForce false;
 
   home.packages = [
-    mynvf.neovim
+    (lib.hiPrio mynvf.neovim)
   ];
 }
