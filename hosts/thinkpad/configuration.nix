@@ -3,6 +3,7 @@
     ../shared/configuration.nix
     ./hardware-configuration.nix
     ../../system/profiles/thinkpad.nix
+    ../../system/features/ios-devices
   ];
 
   boot.loader.systemd-boot.enable = true;
