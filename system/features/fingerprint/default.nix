@@ -28,7 +28,10 @@ in
         fprintAuth = true;
         rules.auth.fprintd.settings = {
           "max-tries" = 3;
-          timeout = 10;
+          # -1 = wait forever for a finger. PAM is serial, so sudo can't
+          # offer password + fingerprint at once; Ctrl-C aborts fprintd
+          # and falls through to pam_unix password prompt.
+          timeout = -1;
         };
       };
     in

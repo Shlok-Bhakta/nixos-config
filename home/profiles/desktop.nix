@@ -1,7 +1,5 @@
 {
-  lib,
   inputs,
-  mynvf,
   unstable,
   ...
 }:
@@ -22,8 +20,6 @@
   };
 
   home.packages = [
-    # Win PATH over home-manager's programs.neovim `nvim` from lazyvim-nix.
-    (lib.hiPrio mynvf.neovim)
     unstable.docker-compose
   ];
 }

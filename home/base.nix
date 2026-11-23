@@ -13,6 +13,7 @@
   home.sessionVariables = {
     EDITOR = "code";
     XCURSOR_SIZE = 24;
+    TABCOMPLETE_COLLECTOR_URL = "http://100.100.163.102:8787";
   };
 
   imports = [
@@ -24,6 +25,7 @@
     ./features/chromium
     ./features/cliphist
     ./features/dconf
+    ./features/devenv
     ./features/excalidraw
     ./features/eza
     ./features/git
@@ -54,7 +56,6 @@
   programs.home-manager.enable = true;
   home.packages = [
     pkgs.lolcat
-    pkgs.direnv
     pkgs.python313
     pkgs.cmatrix
     pkgs.cbonsai
@@ -143,10 +144,17 @@
     # pkgs.gtypist
     pkgs.unzip
     pkgs.mprocs
+    (pkgs.callPackage ../pkgs/dekit { src = inputs.dekit; })
     pkgs.cloudflared
     unstable.gh
     pkgs.sshpass
     # unstable.zed-editor
+    pkgs.cargo
+    pkgs.rustc
+    pkgs.rustfmt
+    pkgs.clippy
+    pkgs.rust-analyzer
+    pkgs.rustlings
     pkgs.inotify-tools
   ];
 }

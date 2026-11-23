@@ -21,6 +21,59 @@ let
     exit 0
   '';
 
+  getAc = ''
+    get_ac() {
+      for supply in /sys/class/power_supply/*; do
+        if [ -f "$supply/online" ] && [ "$(cat "$supply/online" 2>/dev/null)" = "1" ]; then
+          echo 1
+          return
+        fi
+      done
+
+      # Battery is the safe default when adapters are absent or unreadable.
+      echo 0
+    }
+  '';
+
+  # Paints one hotplugged output. Copies whatever the other outputs show, so
+  # a manual override for the session survives; otherwise uses the AC/battery
+  # choice from thinkpad-power-monitor.
+  wallpaper-output = pkgs.writeShellApplication {
+    name = "thinkpad-wallpaper-output";
+    runtimeInputs = [
+      pkgs.coreutils
+      pkgs.gnugrep
+      pkgs.gnused
+      swwwPkg
+    ];
+    text = ''
+      output="''${1:?usage: thinkpad-wallpaper-output OUTPUT}"
+
+      ${getAc}
+
+      # swww-daemon picks up new outputs asynchronously.
+      for _ in $(seq 1 30); do
+        if swww query 2>/dev/null | grep -qF ": $output: "; then
+          break
+        fi
+        sleep 0.5
+      done
+
+      image="$(swww query 2>/dev/null | grep -vF ": $output: " | sed -n 's/.*currently displaying: image: //p' | head -n 1 || true)"
+      if [ -z "$image" ] || [ ! -f "$image" ]; then
+        if [ "$(get_ac)" = "1" ]; then
+          image="${wallpaperGif}"
+        else
+          image="${wallpaperStatic}"
+        fi
+      fi
+
+      if [ -f "$image" ]; then
+        swww img -o "$output" "$image"
+      fi
+    '';
+  };
+
   power-monitor = pkgs.writeShellApplication {
     name = "thinkpad-power-monitor";
     runtimeInputs = [
@@ -32,17 +85,7 @@ let
     text = ''
       set -euo pipefail
 
-      get_ac() {
-        for supply in /sys/class/power_supply/*; do
-          if [ -f "$supply/online" ] && [ "$(cat "$supply/online" 2>/dev/null)" = "1" ]; then
-            echo 1
-            return
-          fi
-        done
-
-        # Battery is the safe default when adapters are absent or unreadable.
-        echo 0
-      }
+      ${getAc}
 
       wait_for_hypr() {
         while true; do
@@ -112,7 +155,10 @@ let
   };
 in
 {
-  home.packages = [ pkgs.brightnessctl ];
+  home.packages = [
+    pkgs.brightnessctl
+    wallpaper-output
+  ];
 
   xdg.configFile."hypr/wallpaper-static.png".source = ../wallpapers/wallpaper.png;
 

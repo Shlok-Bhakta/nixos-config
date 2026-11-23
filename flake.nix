@@ -39,12 +39,16 @@
       url = "github:zjeffer/split-monitor-workspaces";
       inputs.hyprland.follows = "hyprland";
     };
-    nvf.url = "github:notashelf/nvf";
     lazyvim.url = "github:pfassina/lazyvim-nix";
     printer-cli = {
       url = "github:Shlok-Bhakta/ESC-POS-Task-Api?dir=cli";
     };
     zed.url = "github:zed-industries/zed";
+    # Source only; built by pkgs/dekit. Update with `nix flake update dekit`.
+    dekit = {
+      url = "github:pvolok/dekit";
+      flake = false;
+    };
   };
 
   outputs =
@@ -53,7 +57,6 @@
       nixpkgs,
       home-manager,
       stylix,
-      nvf,
       zed,
       ...
     }@inputs:
@@ -67,16 +70,8 @@
         inherit system;
         config.allowUnfree = true;
       };
-      mynvf = nvf.lib.neovimConfiguration {
-        pkgs = nixpkgs.legacyPackages.${system};
-        modules = [ ./pkgs/nvf/nvf.nix ];
-      };
     in
     {
-
-      # setup the nvf stuff
-      packages.${system}.mynvf = mynvf.neovim;
-
       nixosConfigurations.ShlokPCNIX = nixpkgs.lib.nixosSystem {
         specialArgs = {
           inherit inputs unstable ai-unstable;
@@ -93,7 +88,6 @@
               inherit
                 inputs
                 self
-                mynvf
                 unstable
                 ai-unstable
                 zed
@@ -119,7 +113,6 @@
               inherit
                 inputs
                 self
-                mynvf
                 unstable
                 ai-unstable
                 zed
@@ -145,7 +138,6 @@
               inherit
                 inputs
                 self
-                mynvf
                 unstable
                 ai-unstable
                 zed

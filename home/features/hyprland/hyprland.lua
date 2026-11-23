@@ -4,9 +4,80 @@ package.path = home .. "/.config/hypr/?.lua;" .. home .. "/.config/hypr/?/init.l
 local profile = require("profile")
 local mainMod = "SUPER"
 
+local configuredOutputs = {}
 for _, monitor in ipairs(profile.monitors) do
   hl.monitor(monitor)
+  configuredOutputs[monitor.output] = true
 end
+
+-- Monitor rules only match exact names, so outputs covered by
+-- profile.external_monitors get a rule built from their mode list.
+local function isExternalOutput(name)
+  local rule = profile.external_monitors
+  if not rule or configuredOutputs[name] then
+    return false
+  end
+  for _, prefix in ipairs(rule.outputs) do
+    if name:sub(1, #prefix) == prefix then
+      return true
+    end
+  end
+  return false
+end
+
+-- Fastest mode at the wanted resolution that reaches min_refresh (59.94 Hz
+-- counts as 60). Falls back to "preferred" when there is none.
+local function externalMonitorMode(monitor)
+  local rule = profile.external_monitors
+  local best
+  for _, mode in ipairs(monitor.available_modes or {}) do
+    if
+      mode.width == rule.width
+      and mode.height == rule.height
+      and mode.refresh_rate >= rule.min_refresh - 0.1
+      and (not best or mode.refresh_rate > best.refresh_rate)
+    then
+      best = mode
+    end
+  end
+  if not best then
+    return "preferred"
+  end
+  return string.format("%dx%d@%.2f", best.width, best.height, best.refresh_rate)
+end
+
+local function configureExternalMonitor(monitor)
+  if not isExternalOutput(monitor.name) then
+    return
+  end
+  local rule = profile.external_monitors
+  hl.monitor({
+    output = monitor.name,
+    mode = externalMonitorMode(monitor),
+    position = rule.position,
+    scale = rule.scale,
+  })
+end
+
+-- Outputs already connected when the config is reloaded.
+for _, monitor in ipairs(hl.get_monitors()) do
+  configureExternalMonitor(monitor)
+end
+
+hl.on("monitor.added", function(monitor)
+  configureExternalMonitor(monitor)
+
+  -- Profile outputs get the wallpaper at startup. Anything else is a hotplug,
+  -- and swww-daemon only restores its (empty or stale) per-output cache.
+  if configuredOutputs[monitor.name] then
+    return
+  end
+  if profile.power_aware_wallpaper then
+    hl.exec_cmd("thinkpad-wallpaper-output " .. monitor.name)
+  else
+    hl.exec_cmd("sleep 1; swww img -o " .. monitor.name .. " " .. home .. "/.config/hypr/wallpaper.gif")
+  end
+end)
 
 hl.env("HYPRCURSOR_THEME", "bibata-ice-hypr")
 hl.env("HYPRCURSOR_SIZE", "24")
@@ -47,6 +118,7 @@ hl.config({
   },
   input = {
     kb_layout = "us",
+    kb_options = profile.kb_options or "",
     follow_mouse = 1,
     sensitivity = 0,
     touchpad = {
@@ -104,6 +176,10 @@ hl.on("hyprland.start", function()
   -- graphical-session.target has RefuseManualStart, so start session
   -- services directly after the compositor env is imported.
   table.insert(commands, "sleep 1; systemctl --user start hypridle.service")
+  -- graphical-session-pre.target never fires here either, so start the
+  -- secret service directly. T3 Code (Electron safeStorage) needs it to
+  -- save remote environments.
+  table.insert(commands, "systemctl --user start gnome-keyring.service")
   table.insert(
     commands,
     "systemctl --user import-environment WAYLAND_DISPLAY DISPLAY XDG_CURRENT_DESKTOP XDG_SESSION_TYPE HYPRLAND_INSTANCE_SIGNATURE; systemctl --user restart cliphist.service cliphist-images.service"

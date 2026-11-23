@@ -1,4 +1,4 @@
-{ lib, mynvf, ... }:
+{ lib, ... }:
 
 {
   imports = [
@@ -22,8 +22,4 @@
   '';
 
   services.syncthing.enable = lib.mkForce false;
-
-  home.packages = [
-    (lib.hiPrio mynvf.neovim)
-  ];
 }

@@ -121,6 +121,7 @@
     },
     "custom/power-profile": {
       "exec": "power-profile-status",
+      "on-click": "bash ~/.config/hypr/fn-keys.sh power-profile",
       "return-type": "json",
       "interval": 5,
       "format": "{}"
@@ -147,7 +148,8 @@
   },
   {
     "output": [
-      "DP-1"
+      "!eDP-1",
+      "*"
     ],
     "height": 32,
     "spacing": 10,
@@ -263,6 +265,7 @@
     },
     "custom/power-profile": {
       "exec": "power-profile-status",
+      "on-click": "bash ~/.config/hypr/fn-keys.sh power-profile",
       "return-type": "json",
       "interval": 5,
       "format": "{}"

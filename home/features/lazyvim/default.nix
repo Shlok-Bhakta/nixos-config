@@ -6,6 +6,17 @@
   unstable,
   ...
 }:
+let
+  skipStoreHelptags = ./skip-store-helptags.lua;
+
+  lazyvimNvim = pkgs.writeShellApplication {
+    name = "nvim";
+    text = ''
+      export NVIM_APPNAME=lazyvim
+      exec ${lib.getExe config.programs.neovim.finalPackage} --cmd "luafile ${skipStoreHelptags}" "$@"
+    '';
+  };
+in
 {
   imports = [ inputs.lazyvim.homeManagerModules.default ];
 
@@ -14,7 +25,7 @@
 
   programs.lazyvim = {
     enable = true;
-    # Keep ~/.config/nvim free for nvf; launch via `n` with NVIM_APPNAME.
+    # Isolated from home-manager's generated ~/.config/nvim.
     appName = "lazyvim";
     configFiles = ./config;
 
@@ -26,11 +37,16 @@
         java.enable = true;
         json.enable = true;
         markdown.enable = true;
-        nix.enable = true;
-        python.enable = true;
+        nix = {
+          enable = true;
+          installDependencies = true;
+        };
+        python = {
+          enable = true;
+          installDependencies = true;
+        };
         rust.enable = true;
         sql.enable = true;
-        # svelte.enable = true;
         tailwind.enable = true;
         typescript.enable = true;
         yaml.enable = true;
@@ -41,15 +57,17 @@
     extraPackages = with pkgs; [
       nixd
       nixfmt
+      statix
+      pyright
     ];
   };
 
   home.packages = [
+    (lib.hiPrio lazyvimNvim)
     (pkgs.writeShellApplication {
       name = "n";
       text = ''
-        export NVIM_APPNAME=lazyvim
-        exec ${lib.getExe config.programs.neovim.finalPackage} "$@"
+        exec ${lib.getExe lazyvimNvim} "$@"
       '';
     })
   ];
