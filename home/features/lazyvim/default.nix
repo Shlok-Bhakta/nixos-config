@@ -62,6 +62,10 @@ in
     ];
   };
 
+  # programs.lazyvim only deploys configFiles' config/ and plugins/ dirs,
+  # so ship the local tabcomplete_trajectory Lua module ourselves.
+  xdg.configFile."lazyvim/lua/tabcomplete_trajectory".source = ./config/tabcomplete_trajectory;
+
   home.packages = [
     (lib.hiPrio lazyvimNvim)
     (pkgs.writeShellApplication {
