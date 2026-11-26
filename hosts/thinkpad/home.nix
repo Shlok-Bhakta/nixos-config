@@ -2,8 +2,7 @@
 
 {
   imports = [
-    ../../home/base.nix
+    ../../home/profiles/shared.nix
     ../../home/profiles/thinkpad.nix
-    ../../home/features/tabcomplete
   ];
 }

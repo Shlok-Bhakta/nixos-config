@@ -48,6 +48,10 @@ in
       enable = true;
       configType = "lua";
       package = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
+      # Portals come from the NixOS module (system/features/hyprland): the
+      # flake's hyprland portal plus the GTK one. Letting Home Manager add its
+      # own hid the GTK portal, so apps never heard "prefer dark".
+      portalPackage = null;
       systemd.enable = false;
     };
 

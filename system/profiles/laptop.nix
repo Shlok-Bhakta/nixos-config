@@ -1,9 +1,10 @@
+# Common to every laptop. Hardware specifics live in the host or in thinkpad.nix.
 { ... }:
 
 {
-  imports = [
-    ./workstation.nix
-    ../features/cuda
-    ../features/power-profiles
-  ];
+  programs.nm-applet.enable = true;
+
+  services.thermald.enable = true;
+  services.fstrim.enable = true;
+  services.fwupd.enable = true;
 }

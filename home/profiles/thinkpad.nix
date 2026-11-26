@@ -2,8 +2,8 @@
 
 {
   imports = [
-    ../features/hypridle
-    ../features/laptop-waybar
+    ./laptop.nix
+    ../features/tabcomplete
     ../features/thinkpad-power
   ];
 

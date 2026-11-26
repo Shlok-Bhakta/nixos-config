@@ -68,14 +68,14 @@ hl.on("monitor.added", function(monitor)
   configureExternalMonitor(monitor)
 
   -- Profile outputs get the wallpaper at startup. Anything else is a hotplug,
-  -- and swww-daemon only restores its (empty or stale) per-output cache.
+  -- and awww-daemon only restores its (empty or stale) per-output cache.
   if configuredOutputs[monitor.name] then
     return
   end
   if profile.power_aware_wallpaper then
     hl.exec_cmd("thinkpad-wallpaper-output " .. monitor.name)
   else
-    hl.exec_cmd("sleep 1; swww img -o " .. monitor.name .. " " .. home .. "/.config/hypr/wallpaper.gif")
+    hl.exec_cmd("sleep 1; awww img -o " .. monitor.name .. " " .. home .. "/.config/hypr/wallpaper.gif")
   end
 end)
 
@@ -125,8 +125,45 @@ hl.config({
       natural_scroll = false,
     },
   },
-  cursor = {
-    no_hardware_cursors = profile.no_hardware_cursors == true,
+  binds = {
+    -- AeroSpace-style: workspaces remember where you came from, so
+    -- SUPER + Tab keeps flipping between the last two.
+    allow_workspace_cycles = true,
+    -- In a tabbed group, SUPER + H / L switches tabs before leaving it.
+    movefocus_cycles_groupfirst = true,
+  },
+  -- Tabbed groups (SUPER + ,): Catppuccin tabs matching the window borders.
+  group = {
+    col = {
+      border_active = {
+        colors = { "rgba(8aadf4ee)", "rgba(91d7e3ee)" },
+        angle = 45,
+      },
+      border_inactive = "rgba(24273aaa)",
+      border_locked_active = "rgba(f5a97fee)",
+      border_locked_inactive = "rgba(24273aaa)",
+    },
+    groupbar = {
+      font_family = "CaskaydiaCove Nerd Font",
+      font_size = 12,
+      font_weight_active = "bold",
+      height = 22,
+      gradients = true,
+      rounding = 6,
+      gradient_rounding = 6,
+      gaps_in = 4,
+      gaps_out = 4,
+      indicator_height = 0,
+      keep_upper_gap = false,
+      text_color = "rgba(1e1e2eff)",
+      text_color_inactive = "rgba(cdd6f4ff)",
+      col = {
+        active = "rgba(8aadf4ee)",
+        inactive = "rgba(313244ee)",
+        locked_active = "rgba(f5a97fee)",
+        locked_inactive = "rgba(313244ee)",
+      },
+    },
   },
 })
 
@@ -148,15 +185,6 @@ hl.device({
   name = "epic-mouse-v1",
   sensitivity = -0.5,
 })
-
-if profile.passthrough_devices then
-  for _, device in ipairs(profile.passthrough_devices) do
-    hl.device({
-      name = device,
-      output = profile.passthrough_output or "DP-1",
-    })
-  end
-end
 
 if profile.gestures then
   for _, gesture in ipairs(profile.gestures) do
@@ -184,13 +212,13 @@ hl.on("hyprland.start", function()
     commands,
     "systemctl --user import-environment WAYLAND_DISPLAY DISPLAY XDG_CURRENT_DESKTOP XDG_SESSION_TYPE HYPRLAND_INSTANCE_SIGNATURE; systemctl --user restart cliphist.service cliphist-images.service"
   )
-  table.insert(commands, "swww-daemon --format argb")
+  table.insert(commands, "awww-daemon")
   table.insert(commands, "sleep 1; waybar")
 
   if profile.power_aware_wallpaper then
     table.insert(commands, "sleep 1; systemctl --user restart thinkpad-power-monitor.service")
   else
-    table.insert(commands, "sleep 1; swww img " .. home .. "/.config/hypr/wallpaper.gif")
+    table.insert(commands, "sleep 1; awww img " .. home .. "/.config/hypr/wallpaper.gif")
   end
 
   for _, command in ipairs(profile.autostart or {}) do
@@ -210,40 +238,115 @@ local function bind(keys, dispatcher, options)
   hl.bind(keys, dispatcher, options)
 end
 
-bind(mainMod .. " + Q", hl.dsp.exec_cmd("kitty"))
-bind(mainMod .. " + C", hl.dsp.window.close())
-bind(mainMod .. " + M", hl.dsp.exit())
-bind(mainMod .. " + E", hl.dsp.exec_cmd("nautilus"))
-bind(mainMod .. " + F", hl.dsp.window.float({ action = "toggle" }))
-bind(mainMod .. " + P", hl.dsp.window.pseudo())
-bind(mainMod .. " + J", hl.dsp.layout("togglesplit"))
-bind(mainMod .. " + W", hl.dsp.exec_cmd("rofi -show drun"))
-bind(mainMod .. " + CTRL + R", hl.dsp.exec_cmd("rofi -show calc"))
-bind(mainMod .. " + V", hl.dsp.exec_cmd(home .. "/.config/hypr/clipboard.sh"))
-bind(mainMod .. " + B", hl.dsp.exec_cmd("zen-beta"))
-bind(mainMod .. " + Y", hl.dsp.exec_cmd("code"))
-bind(mainMod .. " + L", hl.dsp.exec_cmd("hyprlock"))
+local function mod(keys)
+  return mainMod .. " + " .. keys
+end
+
+--------------------------------------------------------------------------------
+-- AeroSpace-style layout
+--
+--   SUPER + 1-9, 0, A-Z (not H J K L V) focus workspace (follows it to its monitor)
+--   SUPER + SHIFT + same key            move window to that workspace
+--   SUPER + H J K L / arrows            focus window in that direction
+--   SUPER + SHIFT + H J K L / arrows    move window in that direction
+--   SUPER + Tab                         back to previous workspace
+--   SUPER + SHIFT + Tab                 send current workspace to next monitor
+--   SUPER + /                           flip split direction
+--   SUPER + ,                           toggle tabbed group (accordion)
+--   SUPER + - / =                       shrink / grow window
+--   SUPER + SHIFT + ;                   service mode (Esc to leave)
+--
+-- Apps and actions live on SUPER + CTRL so every plain letter stays free:
+--   SUPER + Space     launcher           SUPER + Return     terminal
+--   SUPER + CTRL + B  browser            SUPER + CTRL + E   files
+--   SUPER + CTRL + Y  VS Code            SUPER + V          clipboard
+--   SUPER + CTRL + R  calculator         SUPER + CTRL + Space  emoji
+--   SUPER + CTRL + S  screenshot         SUPER + CTRL + C   color picker
+--   SUPER + CTRL + W  close window       SUPER + CTRL + F   fullscreen
+--   SUPER + CTRL + T  toggle floating    SUPER + CTRL + Q   lock (like macOS)
+--   SUPER + `         scratchpad         SUPER + SHIFT + `  send to scratchpad
+--------------------------------------------------------------------------------
+
+local workspaceKeys = { "1", "2", "3", "4", "5", "6", "7", "8", "9", "0" }
+-- H J K L focus windows and V is clipboard, so they are not workspaces.
+for letter in ("ABCDEFGIMNOPQRSTUWXYZ"):gmatch(".") do
+  table.insert(workspaceKeys, letter)
+end
+
+for _, key in ipairs(workspaceKeys) do
+  local workspace
+  if key == "0" then
+    workspace = 10
+  elseif key:match("%d") then
+    workspace = tonumber(key)
+  else
+    workspace = "name:" .. key
+  end
+  bind(mod(key), hl.dsp.focus({ workspace = workspace }))
+  bind(mod("SHIFT + " .. key), hl.dsp.window.move({ workspace = workspace }))
+end
+
+local directions = {
+  { keys = { "H", "left" }, direction = "left" },
+  { keys = { "J", "down" }, direction = "down" },
+  { keys = { "K", "up" }, direction = "up" },
+  { keys = { "L", "right" }, direction = "right" },
+}
+for _, entry in ipairs(directions) do
+  for _, key in ipairs(entry.keys) do
+    bind(mod(key), hl.dsp.focus({ direction = entry.direction }))
+    bind(mod("SHIFT + " .. key), hl.dsp.window.move({ direction = entry.direction }))
+  end
+end
+
+bind(mod("Tab"), hl.dsp.focus({ workspace = "previous" }))
+bind(mod("SHIFT + Tab"), hl.dsp.workspace.move({ monitor = "+1" }))
+bind(mod("slash"), hl.dsp.layout("togglesplit"))
+bind(mod("comma"), hl.dsp.group.toggle())
+bind(mod("minus"), hl.dsp.window.resize({ x = -50, y = -50, relative = true }), { repeating = true })
+bind(mod("equal"), hl.dsp.window.resize({ x = 50, y = 50, relative = true }), { repeating = true })
+bind(mod("ALT + left"), hl.dsp.window.resize({ x = -15, y = 0, relative = true }), { repeating = true })
+bind(mod("ALT + right"), hl.dsp.window.resize({ x = 15, y = 0, relative = true }), { repeating = true })
+bind(mod("ALT + up"), hl.dsp.window.resize({ x = 0, y = -15, relative = true }), { repeating = true })
+bind(mod("ALT + down"), hl.dsp.window.resize({ x = 0, y = 15, relative = true }), { repeating = true })
+bind(mod("mouse_down"), hl.dsp.focus({ workspace = "e+1" }))
+bind(mod("mouse_up"), hl.dsp.focus({ workspace = "e-1" }))
+bind(mod("mouse:272"), hl.dsp.window.drag(), { mouse = true })
+bind(mod("mouse:273"), hl.dsp.window.resize(), { mouse = true })
+
+-- Service mode, like AeroSpace's: one action, then back to normal.
+bind(mod("SHIFT + semicolon"), hl.dsp.submap("service"))
+hl.define_submap("service", "reset", function()
+  bind("Escape", hl.dsp.submap("reset"))
+  bind("R", hl.dsp.reload_config())
+  bind("F", hl.dsp.window.float({ action = "toggle" }))
+  bind("P", hl.dsp.window.pseudo())
+  bind("Backspace", hl.dsp.window.close())
+end)
+
+bind(mod("Space"), hl.dsp.exec_cmd("rofi -show drun"))
+bind(mod("Return"), hl.dsp.exec_cmd("kitty"))
+bind(mod("CTRL + B"), hl.dsp.exec_cmd("helium"))
+bind(mod("CTRL + E"), hl.dsp.exec_cmd("nautilus"))
+bind(mod("CTRL + Y"), hl.dsp.exec_cmd("code"))
+bind(mod("V"), hl.dsp.exec_cmd(home .. "/.config/hypr/clipboard.sh"))
+bind(mod("CTRL + R"), hl.dsp.exec_cmd("rofi -show calc"))
+bind(mod("CTRL + Space"), hl.dsp.exec_cmd("rofi -show emoji"))
+bind(mod("CTRL + S"), hl.dsp.exec_cmd("hyprshot -m region --freeze --clipboard-only"))
+bind("Print", hl.dsp.exec_cmd("hyprshot -m region --freeze --clipboard-only"))
+bind(mod("CTRL + C"), hl.dsp.exec_cmd("hyprpicker 2>/dev/null | wl-copy"))
+bind(mod("CTRL + W"), hl.dsp.window.close())
+bind(mod("CTRL + F"), hl.dsp.window.fullscreen())
+bind(mod("CTRL + T"), hl.dsp.window.float({ action = "toggle" }))
+bind(mod("CTRL + Q"), hl.dsp.exec_cmd("pidof hyprlock || hyprlock"))
+bind(mod("CTRL + SHIFT + E"), hl.dsp.exit())
+bind(mod("grave"), hl.dsp.workspace.toggle_special("magic"))
+bind(mod("SHIFT + grave"), hl.dsp.window.move({ workspace = "special:magic" }))
+bind("CTRL + ALT + Delete", hl.dsp.exec_cmd("bash " .. home .. "/.config/rofi/plugins/powermenu.sh"))
+
 -- Lid close must lock immediately. logind suspends in parallel; without this
 -- bind (and hypridle inhibit_sleep) resume can come back unlocked.
 bind("switch:on:Lid Switch", hl.dsp.exec_cmd("pidof hyprlock || hyprlock"), { locked = true })
-bind("SUPER + SHIFT + F", hl.dsp.window.fullscreen())
-bind("SUPER + SHIFT + S", hl.dsp.exec_cmd("hyprshot -m region --freeze --clipboard-only"))
-bind("SUPER + SHIFT + C", hl.dsp.exec_cmd("hyprpicker 2>/dev/null | wl-copy"))
-bind(mainMod .. " + T", hl.dsp.exec_cmd("rofi -show emoji"))
-bind("CTRL + ALT + Delete", hl.dsp.exec_cmd("bash " .. home .. "/.config/rofi/plugins/powermenu.sh"))
-bind(mainMod .. " + CTRL + Space", hl.dsp.global(":main-menu"))
-bind(mainMod .. " + left", hl.dsp.focus({ direction = "left" }))
-bind(mainMod .. " + right", hl.dsp.focus({ direction = "right" }))
-bind(mainMod .. " + up", hl.dsp.focus({ direction = "up" }))
-bind(mainMod .. " + down", hl.dsp.focus({ direction = "down" }))
-bind(mainMod .. " + D", hl.dsp.workspace.toggle_special("magic"))
-bind(mainMod .. " + SHIFT + D", hl.dsp.window.move({ workspace = "special:magic" }))
-bind("SUPER + ALT + right", hl.dsp.window.resize({ x = 15, y = 0, relative = true }))
-bind("SUPER + ALT + left", hl.dsp.window.resize({ x = -15, y = 0, relative = true }))
-bind("SUPER + ALT + up", hl.dsp.window.resize({ x = 0, y = -15, relative = true }))
-bind("SUPER + ALT + down", hl.dsp.window.resize({ x = 0, y = 15, relative = true }))
-bind(mainMod .. " + mouse:272", hl.dsp.window.drag(), { mouse = true })
-bind(mainMod .. " + mouse:273", hl.dsp.window.resize(), { mouse = true })
 
 local fnKeys = home .. "/.config/hypr/fn-keys.sh"
 local mediaRepeat = { locked = true, repeating = true }
@@ -267,39 +370,6 @@ bind("XF86Keyboard", hl.dsp.exec_cmd("bash " .. fnKeys .. " kbd-backlight"), med
 bind("XF86Search", hl.dsp.exec_cmd("rofi -show drun"), mediaOnce)
 bind("XF86Favorites", hl.dsp.exec_cmd("rofi -show drun"), mediaOnce)
 
-if profile.split_workspaces then
-  local splitWorkspaces = require("plugins.split-monitor-workspaces")
-
-  splitWorkspaces.setup({
-    workspace_count = 10,
-    monitor_priority = profile.monitor_priority,
-    keep_focused = false,
-    enable_notifications = true,
-    enable_persistent_workspaces = false,
-  })
-
-  for workspace = 1, splitWorkspaces.get_amount_of_workspaces() do
-    local key = tostring(workspace % 10)
-    bind(mainMod .. " + " .. key, splitWorkspaces.workspace(tostring(workspace)))
-    bind(
-      mainMod .. " + SHIFT + " .. key,
-      splitWorkspaces.move_to_workspace(tostring(workspace))
-    )
-  end
-
-  bind(mainMod .. " + mouse_down", splitWorkspaces.cycle_workspaces("next"))
-  bind(mainMod .. " + mouse_up", splitWorkspaces.cycle_workspaces("prev"))
-else
-  for workspace = 1, 10 do
-    local key = tostring(workspace % 10)
-    bind(mainMod .. " + " .. key, hl.dsp.focus({ workspace = workspace }))
-    bind(mainMod .. " + SHIFT + " .. key, hl.dsp.window.move({ workspace = workspace }))
-  end
-
-  bind(mainMod .. " + mouse_down", hl.dsp.focus({ workspace = "e+1" }))
-  bind(mainMod .. " + mouse_up", hl.dsp.focus({ workspace = "e-1" }))
-end
-
 local function borderRule(name, match, colors)
   hl.window_rule({
     name = name,
@@ -317,11 +387,7 @@ hl.window_rule({
   suppress_event = "maximize",
 })
 
-borderRule("brave-border", { class = "brave-browser" }, {
-  "rgba(fab387ee)",
-  "rgba(eba0acee)",
-})
-borderRule("zen-border", { class = "zen-beta" }, {
+borderRule("helium-border", { class = "^helium.*" }, {
   "rgba(f9e2afee)",
   "rgba(f9e2afee)",
 })
@@ -340,7 +406,7 @@ borderRule("code-border", { class = "code-url-handler" }, {
   "rgba(8bd5caee)",
   "rgba(91d7e3ee)",
 })
-borderRule("vesktop-border", { class = "vesktop" }, {
+borderRule("discord-border", { class = "discord" }, {
   "rgba(7287fdee)",
   "rgba(209fb5ee)",
 })

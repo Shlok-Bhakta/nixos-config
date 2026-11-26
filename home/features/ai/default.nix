@@ -20,8 +20,5 @@ in
     ai-unstable.claude-code
     ai-unstable.codex
     t3code
-    ai-unstable.code-cursor-fhs
-    ai-unstable.cursor-cli
-    # ai-unstable.crush
   ];
 }

@@ -1,10 +1,13 @@
+{ ... }:
+
 {
   imports = [
-    ../shared/configuration.nix
     ./hardware-configuration.nix
+    ../../system/profiles/shared.nix
     ../../system/profiles/thinkpad.nix
-    ../../system/features/ios-devices
   ];
+
+  networking.hostName = "shlokthinkpad";
 
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
@@ -19,9 +22,6 @@
       crypttabExtraOpts = [ "tpm2-device=auto" ];
     };
   };
-
-  networking.hostName = "shlokthinkpad";
-  programs.nm-applet.enable = true;
 
   system.stateVersion = "26.05";
 }

@@ -21,6 +21,9 @@
       update = "sudo nixos-rebuild switch";
       gnrs = "git add . && git commit -m \"update config\" && git push && sudo nixos-rebuild switch --flake \"${config.home.homeDirectory}/nixos-config\" | lolcat -f";
       nrs = "nh os switch | lolcat";
+      # Pull the newest prebuilt apps (unstable, AI tools, Helium) and the
+      # newest official Blender release. Rebuild with `nrs` afterwards.
+      bump-apps = "nix flake update UNSTABLE ai-unstable helium --flake ${config.home.homeDirectory}/nixos-config && ${config.home.homeDirectory}/nixos-config/pkgs/blender-bin/update.sh";
       C = "code";
       c = "code .";
       cn = "code ${config.home.homeDirectory}/nixos-config";
@@ -74,22 +77,5 @@
       enable = true;
       plugins = [ "git" ];
     };
-
-    initContent = ''
-      _sunshine_ipad() {
-        local -a commands
-        commands=(
-          'start:Extend DP-1 and start Sunshine'
-          'stop:Stop Sunshine and disable DP-1'
-          'restart:Restart Sunshine'
-          'reset-creds:Delete saved Sunshine web UI credentials'
-          'status:Show Sunshine status'
-        )
-
-        _describe 'sunshine-ipad command' commands
-      }
-
-      compdef _sunshine_ipad sunshine-ipad
-    '';
   };
 }

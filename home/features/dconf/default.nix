@@ -13,9 +13,5 @@
       base = 10;
       word-size = lib.hm.gvariant.mkUint32 64;
     };
-    "org/virt-manager/virt-manager/connections" = {
-      autoconnect = ["qemu:///system"];
-      uris = ["qemu:///system"];
-    };
   };
 }

@@ -2,12 +2,13 @@
   lib,
   pkgs,
   inputs,
+  unstable,
   ...
 }:
 
 let
   hyprlandPkg = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
-  swwwPkg = inputs.swww.packages.${pkgs.stdenv.hostPlatform.system}.swww;
+  awwwPkg = unstable.awww;
 
   wallpaperGif = "$HOME/.config/hypr/wallpaper.gif";
   wallpaperStatic = "$HOME/.config/hypr/wallpaper-static.png";
@@ -44,22 +45,22 @@ let
       pkgs.coreutils
       pkgs.gnugrep
       pkgs.gnused
-      swwwPkg
+      awwwPkg
     ];
     text = ''
       output="''${1:?usage: thinkpad-wallpaper-output OUTPUT}"
 
       ${getAc}
 
-      # swww-daemon picks up new outputs asynchronously.
+      # awww-daemon picks up new outputs asynchronously.
       for _ in $(seq 1 30); do
-        if swww query 2>/dev/null | grep -qF ": $output: "; then
+        if awww query 2>/dev/null | grep -qF ": $output: "; then
           break
         fi
         sleep 0.5
       done
 
-      image="$(swww query 2>/dev/null | grep -vF ": $output: " | sed -n 's/.*currently displaying: image: //p' | head -n 1 || true)"
+      image="$(awww query 2>/dev/null | grep -vF ": $output: " | sed -n 's/.*currently displaying: image: //p' | head -n 1 || true)"
       if [ -z "$image" ] || [ ! -f "$image" ]; then
         if [ "$(get_ac)" = "1" ]; then
           image="${wallpaperGif}"
@@ -69,7 +70,7 @@ let
       fi
 
       if [ -f "$image" ]; then
-        swww img -o "$output" "$image"
+        awww img -o "$output" "$image"
       fi
     '';
   };
@@ -80,7 +81,7 @@ let
       pkgs.brightnessctl
       pkgs.coreutils
       hyprlandPkg
-      swwwPkg
+      awwwPkg
     ];
     text = ''
       set -euo pipefail
@@ -96,8 +97,8 @@ let
         done
       }
 
-      wait_for_swww() {
-        while ! swww query >/dev/null 2>&1; do
+      wait_for_awww() {
+        while ! awww query >/dev/null 2>&1; do
           sleep 1
         done
       }
@@ -106,7 +107,7 @@ let
         echo "Applying AC desktop settings"
         hyprctl eval 'hl.config({ decoration = { blur = { enabled = true }, shadow = { enabled = true } }, animations = { enabled = true } })'
         if [ -f "${wallpaperGif}" ]; then
-          swww img "${wallpaperGif}"
+          awww img "${wallpaperGif}"
         fi
         if [ "$1" = "set-brightness" ]; then
           brightnessctl --class backlight set 100%
@@ -117,7 +118,7 @@ let
         echo "Applying battery desktop settings"
         hyprctl eval 'hl.config({ decoration = { blur = { enabled = false }, shadow = { enabled = false } }, animations = { enabled = false } })'
         if [ -f "${wallpaperStatic}" ]; then
-          swww img "${wallpaperStatic}"
+          awww img "${wallpaperStatic}"
         fi
         if [ "$1" = "set-brightness" ]; then
           brightnessctl --class backlight set 45%
@@ -133,7 +134,7 @@ let
       }
 
       wait_for_hypr
-      wait_for_swww
+      wait_for_awww
       apply set-brightness
 
       prev="$(get_ac)"

@@ -21,11 +21,11 @@ let
   '';
 in
 {
-  services.printing.enable = true;
-
   imports = [
+    ./laptop.nix
     ../features/caps-escape
     ../features/fingerprint
+    ../features/ios-devices
     ../features/tpm-unlock
     ../features/thinkpad-power-profiles
   ];
@@ -130,16 +130,6 @@ in
       // {
         CPU_MAX_PERF_ON_SAV = 40;
       };
-  };
-
-  services.thermald.enable = true;
-  services.fstrim.enable = true;
-  services.fwupd.enable = true;
-
-  nix.gc = {
-    automatic = true;
-    dates = "weekly";
-    options = "--delete-older-than 14d";
   };
 
   services.udev.extraRules = ''

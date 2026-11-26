@@ -24,7 +24,7 @@
     };
   };
 
-  # Allow SSH only over the tailnet. Applies to all hosts via base.nix,
+  # Allow SSH only over the tailnet. Applies to all hosts via profiles/shared.nix,
   # keeping desktop/laptop/thinkpad in parity.
   networking.firewall.interfaces."tailscale0".allowedTCPPorts = [ 22 ];
 
