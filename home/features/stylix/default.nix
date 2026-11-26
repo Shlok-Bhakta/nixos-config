@@ -7,7 +7,7 @@
 
     targets = {
       vscode.enable = false;
-      kitty.enable = false;
+      ghostty.enable = false;
       hyprland.enable = false;
       bat.enable = false;
       hyprlock.enable = false;

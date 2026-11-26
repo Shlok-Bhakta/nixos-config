@@ -31,13 +31,13 @@ in
     ../features/devenv
     ../features/excalidraw
     ../features/eza
+    ../features/ghostty
     ../features/git
     ../features/gitui
     ../features/gnome-keyring
     ../features/gtk
     ../features/helium
     ../features/hyprland
-    ../features/kitty
     ../features/lazyvim
     ../features/nextcloud
     ../features/obs-studio

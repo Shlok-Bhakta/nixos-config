@@ -37,7 +37,7 @@ settings() {
     Sound) pavucontrol ;;
     Displays) wdisplays ;;
     Bluetooth) blueman-manager ;;
-    Wi-Fi) kitty --class nmtui -e nmtui ;;
+    Wi-Fi) ghostty -e nmtui ;;
     "Power profile") power_profile ;;
   esac
 }

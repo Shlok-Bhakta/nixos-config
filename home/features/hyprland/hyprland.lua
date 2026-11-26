@@ -210,7 +210,7 @@ hl.on("hyprland.start", function()
   table.insert(commands, "systemctl --user start gnome-keyring.service")
   table.insert(
     commands,
-    "systemctl --user import-environment WAYLAND_DISPLAY DISPLAY XDG_CURRENT_DESKTOP XDG_SESSION_TYPE HYPRLAND_INSTANCE_SIGNATURE; systemctl --user restart cliphist.service cliphist-images.service"
+    "systemctl --user import-environment WAYLAND_DISPLAY DISPLAY XDG_CURRENT_DESKTOP XDG_SESSION_TYPE HYPRLAND_INSTANCE_SIGNATURE; systemctl --user restart cliphist.service cliphist-images.service; systemctl --user start app-com.mitchellh.ghostty.service"
   )
   table.insert(commands, "awww-daemon")
   table.insert(commands, "sleep 1; waybar")
@@ -257,7 +257,7 @@ end
 --   SUPER + SHIFT + ;                   service mode (Esc to leave)
 --
 -- Apps and actions live on SUPER + CTRL so every plain letter stays free:
---   SUPER + Space     launcher           SUPER + Return     terminal
+--   SUPER + Space     launcher           SUPER + Return     terminal (Ghostty)
 --   SUPER + CTRL + B  browser            SUPER + CTRL + E   files
 --   SUPER + CTRL + Y  VS Code            SUPER + V          clipboard
 --   SUPER + CTRL + R  calculator         SUPER + CTRL + Space  emoji
@@ -325,7 +325,7 @@ hl.define_submap("service", "reset", function()
 end)
 
 bind(mod("Space"), hl.dsp.exec_cmd("rofi -show drun"))
-bind(mod("Return"), hl.dsp.exec_cmd("kitty"))
+bind(mod("Return"), hl.dsp.exec_cmd("ghostty +new-window || ghostty"))
 bind(mod("CTRL + B"), hl.dsp.exec_cmd("helium"))
 bind(mod("CTRL + E"), hl.dsp.exec_cmd("nautilus"))
 bind(mod("CTRL + Y"), hl.dsp.exec_cmd("code"))

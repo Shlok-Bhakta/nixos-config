@@ -83,7 +83,7 @@ configuration {
 	display-filebrowser: "Files";
 
 	/*---------- Misc setting ----------*/
-	terminal: "kitty";
+	terminal: "ghostty";
 	font: "CaskaydiaCove Nerd Font 12";
 	sort: false;
 	threads: 0;

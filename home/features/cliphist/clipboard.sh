@@ -11,15 +11,18 @@ if [ -n "${WAYLAND_DISPLAY:-}" ]; then
 fi
 systemctl --user start cliphist.service cliphist-images.service >/dev/null 2>&1 || true
 
-if ! cliphist list 2>/dev/null | grep -q .; then
+# Read the history once. (Piping it into `grep -q` used to kill cliphist
+# with SIGPIPE on big histories; with pipefail that looked like "empty".)
+history="$(cliphist list 2>/dev/null || true)"
+if [ -z "$history" ]; then
   notify-send --app-name="Clipboard" "Clipboard history is empty" "Copy something, then Super+V again."
   exit 0
 fi
 
-# -sync waits for cliphist stdout before drawing (rofi 2 dmenu can flash empty).
+# -sync waits for input before drawing (rofi 2 dmenu can flash empty).
 # One-column, no icons — the drun theme is a 2-column icon grid.
 selection="$(
-  cliphist list | rofi -dmenu -i -sync -p Clipboard \
+  printf '%s\n' "$history" | rofi -dmenu -i -sync -p Clipboard \
     -no-show-icons \
     -theme-str 'listview { columns: 1; }' \
     -theme-str 'element { children: [element-text]; }'
