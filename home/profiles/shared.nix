@@ -42,6 +42,7 @@ in
     ../features/nextcloud
     ../features/obs-studio
     ../features/ripgrep
+    ../features/ssh
     ../features/rofi
     ../features/starship
     ../features/stylix
